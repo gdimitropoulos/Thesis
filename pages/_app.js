@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import 'antd/dist/antd.css';
 import Head from 'next/head';
 import AppFooter from '../components/AppFooter';
 import AppHeader from '../components/AppHeader';

@@ -30,7 +30,7 @@ export default function AppFooter() {
           style={{ minHeight: '8vh' }}
         >
           <Grid item xs={12}>
-            <Image src="/University_of_Patras_(seal).png" width={110} height={80} />
+            <Image src="/University_of_Patras_(seal).png" width={110} height={80} alt="Picture of the university logo"  />
           </Grid>
           <Grid item xs={12}>
             <Typography style={{ color: 'white' }}>Πανεπηστιμιο Πατρών 2021</Typography>
