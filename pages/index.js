@@ -128,20 +128,20 @@ export default function Home() {
 
   return (
     <> 
-    <Container maxWidth="m" style={{ display: 'flex', justifyContent: 'center', height: '80%', marginBottom: '5%', marginTop: '5%', padding: '5%' }}>
+    <Container maxWidth="md" style={{ display: 'flex', justifyContent: 'center', height: '55vh', marginBottom: '2%', marginTop: '2%', padding: '3%' }}>
       <Card style={{ maxWidth: 500 }}>
         <div style={{ padding: '5%' }}>
           <div style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
 
-            <Typography variant="body2" color="text.secondary" style={{ marginBottom: '5%' }} >
+            <Typography variant="body2"  style={{ marginBottom: '5%' }} >
             Συνδεθείτε στο σύστημα εισάγοντας το email και το password σας.
             </Typography>
           </div>
           <Box style={{  display: 'flex', width: '100%', justifyContent: 'center', marginBottom: '5%'}}>
-            <TextField onChange={handleEmail} id="outlined-basic" size="small" label="email" variant="outlined" type="email" />
+            <TextField  size="small" label="email" variant="outlined" type="email" onChange={handleEmail}  />
           </Box>
           <Box style={{  display: 'flex', width: '100%', justifyContent: 'center', marginBottom: '5%'}}>
-            <TextField onChange={handlePass} id="outlined-basic" size="small" label="password" variant="outlined" type="password" />
+            <TextField size="small" label="password" variant="outlined" type="password" onChange={handlePass}   />
           </Box>
 
           <div style={{ display: 'flex', justifyContent: 'center', width: '100%',marginBottom: '5%' }}>
