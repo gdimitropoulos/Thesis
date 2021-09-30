@@ -7,33 +7,12 @@ import { useRouter } from 'next/router';
 import {
   Button,
   TextField,
-  Grid,
-  Paper,
   Container,
-  AppBar,
   Typography,
-  Toolbar,
   Card,
-  CardContent,
-  FormControl,
-  FormGroup,
   Box,
-  FormControlLabel,
 } from "@material-ui/core";
-
-import localFile from "!!raw-loader!../Components/AppFooter";
 import Cookies from 'js-cookie';
-import {
-  SandpackProvider,
-  SandpackLayout,
-  SandpackCodeEditor,
-  SandpackThemeProvider,
-  SandpackPreview,
-  FileTabs,
-  useSandpack,
-} from "@codesandbox/sandpack-react";
-import "@codesandbox/sandpack-react/dist/index.css";
-import styles from '../styles/Home.module.css'
 import  showNotification from '../Lib/notification'
 import { getAppCookies} from '../Lib/utils'
 
@@ -41,19 +20,12 @@ export default function Home() {
   const router = useRouter();
   const [email, setEmail] = useState([]);
   const [password, setPassword] = useState([]);
-  function validateEmail(email) {
-    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-  }
   const signIn =  async () =>{
     try {
-      console.log( process.env.DB_USER);
-
-      console.log(email,password)
 			if (email && password) {
         const bodyData ={
-          email: 'up1057605@upnet.gr',
-          password: '123123'
+          email: email,
+          password: password
         }
 				const res = await fetch('/api/auth/signin', {
 					method: 'POST',
@@ -99,32 +71,11 @@ export default function Home() {
 
   const handleEmail = (event) => {
     setEmail(event.target.value);
-    console.log(validateEmail(email));
-    console.log(email)
   };
   const handlePass = (event) => {
     setPassword(event.target.value);
-    console.log(password)
   };
 
-  const SimpleCodeViewer = () => {
-    const { sandpack } = useSandpack();
-    const { files, activePath } = sandpack;
-    
-    useEffect(() => {
-
-      console.log(sandpack);
-    }, [sandpack]);
-
-    const code = files[activePath].code;
-    console.log(code);
-    return <div />;
-  };
-
-  const code = `export default function App() {
-  return <h1>Hello Worldddddddd</h1>
-
-  }`;
 
   return (
     <> 
@@ -158,28 +109,6 @@ export default function Home() {
          
         </div>
       </Card>
-      {/*<SandpackProvider template="react" customSetup={{
-        files: {
-            "/App.js": localFile,
-        },
-        options{{
-          editorHeight: 350,
-        }}
-        
-    }} >
-    <SandpackThemeProvider  > 
-     <SandpackLayout theme="codesandbox-dark">
-      <SandpackCodeEditor  showTabs="true"  viewportSize={{ width: 600, height: 600 }} > </SandpackCodeEditor>
-      <SandpackPreview viewportSize={{ width: 600, height: 600 }}/>
-      <SimpleCodeViewer/>
-    </SandpackLayout>
-    </SandpackThemeProvider>
-  </SandpackProvider>*/}
-      {/*<Sandpack  onClick={(event)=>{
-      console.log(event);
-    }} template="react" > </Sandpack>
-
-  */}
     </Container>
     </>
   )
@@ -188,8 +117,6 @@ export default function Home() {
 
 export async function getServerSideProps(context) {
   const KEY = process.env.JWT_KEY;
-  //console.log(process.env.JWT_KEY);
-  console.log('im here')
 	try {
 		let cookies = getAppCookies(context.req);
 		let token = cookies.token;

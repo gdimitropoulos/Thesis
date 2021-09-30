@@ -7,6 +7,7 @@ export default async function handler(req, res) {
 	let client;
 	try {
 		let {email, password} = req.body;
+		console.log(email,password);
 		client = await pool.connect();
 		res.setHeader('Content-Type', 'application/json');
 		const result = await client.query(`

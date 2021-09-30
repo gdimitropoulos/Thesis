@@ -2,32 +2,28 @@ import React, {
   useState, useEffect, useContext, useMemo,
 } from 'react';
 import jwt from 'jsonwebtoken';
+import { red } from '@mui/material/colors';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import * as moment from 'moment'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import BlockSharpIcon from '@mui/icons-material/BlockSharp';
+import { Popconfirm } from 'antd';
 import {
   Button,
-  TextField,
   Grid,
-  Item,
-  Paper,
   Modal,
   Container,
-  AppBar,
   Typography,
-  Toolbar,
   Card,
-  CardContent,
-  FormControl,
-  FormGroup,
   Box,
-  FormControlLabel,
 } from "@material-ui/core";
 import testAppCode from "!!raw-loader!../../Components/FirstReactTutorial/ApprealTest";
 import Appcode from "!!raw-loader!../../Components/FirstReactTutorial/Apptest";
 import indexFile from "!!raw-loader!../../Components/FirstReactTutorial/indexFiles";
 import Cookies from 'js-cookie';
 import { useActiveCode } from "@codesandbox/sandpack-react";
-import { Layout } from 'antd';
+import SyntaxHighlighter from '../../Lib/syntaxHighlighter'; 
 import {
   SandpackProvider,
   SandpackLayout,
@@ -40,44 +36,94 @@ import {
   useSandpackNavigation,
 } from "@codesandbox/sandpack-react";
 import "@codesandbox/sandpack-react/dist/index.css";
-import styles from '../../styles/Home.module.css'
 import showNotification from '../../Lib/notification'
 import { getAppCookies } from '../../Lib/utils'
 
+let backspaces = 0;
+const time = moment();
+
+const style = {
+  position: 'absolute',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '50vw',
+  height: '70vh',
+  bgcolor: 'background.paper',
+  borderRadius: '10%',
+  boxShadow: 24,
+  p: 4,
+};
+
 export default function Start() {
-  const { Sider, Content } = Layout;
   const router = useRouter();
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openFail, setOpenFail] = useState(false);
+  const [answerShown, setAnswerShown] = useState(false);
+  const [showSolution, setshowSolution] = useState(false);
+
   let statuses = [];
   const handleOpen = () => {
-    console.log(statuses)
-    console.log('statuses')
-    if(statuses.includes('fail')){
+    if (statuses.includes('fail')) {
       setOpenFail(true);
-    }else{
+    } else {
       setOpenSuccess(true);
     }
-    statuses=[];
+    statuses = [];
   }
-  const handleCloseSuccess = () => setOpenSuccess(false);
-  const handleCloseFail = () => setOpenFail(false);
-
-  const style = {
-    position: 'absolute',
-    display: 'flex',
-    flexDirection : 'column',
-    justifyContent: 'center',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '40vw',
-    height: '60vh',
-    bgcolor: 'background.paper',
-    borderRadius: '10%',
-    boxShadow: 24,
-    p: 4,
+  
+  const handlecloseSolution = async () => {
+    setshowSolution(false)
+  }
+  const handleCloseSuccess = async () => {
+    console.log(moment().diff(time, 'seconds'));
+    const bodyData ={
+      time: moment().diff(time, 'seconds').toString(),
+      backspaces: backspaces,
+      tutorialName: 'firstreact' ,
+      answer : answerShown
+    }
+    const res = await fetch('/api/finishTutorial', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(bodyData),
+    });
+    setOpenSuccess(false)
+    if (res.status === 200) {
+      showNotification(
+        'success',
+        'Επιτυχής καταγραφή ',
+        'Επιτυχής καταγραφή της προσπάθειας'
+      );
+      await router.push('/react/second')
+    }else{
+      showNotification(
+        'error',
+        'Σφάλμα ',
+        'Κάτι πήγε στραβά'
+      );
+    }
   };
+  const handleCloseFail = () => setOpenFail(false);
+  const showSolutionModal = () => {setshowSolution(true); setAnswerShown(true)}
+  const correctAnswer= `  import React from "react";
+
+  export default function App() {
+    return (
+      
+        <div id="Start"> 
+           <h1> Hello World</h1>
+        </div>
+    );
+  }
+  
+  `
 
 
   const SimpleCodeViewer = () => {
@@ -85,49 +131,65 @@ export default function Start() {
     const { files, activePath, setActiveFile, openFile } = sandpack;
     const { refresh } = useSandpackNavigation();
     const { code, updateCode } = useActiveCode();
-    
 
     useEffect(() => {
-      window.addEventListener('keydown',(event) => {
-        console.log(event);
-      });
+      // will fire on every change
+      console.log(code);
+    }, [code])
+    
+  useEffect(() => {
+    const unsubscribe  = listen((msg) => {
+       if (msg.event == 'test_end') {
+        if (msg.test.status == 'fail') {
+          dispatch({ type: 'refresh' });
+          setActiveFile('/App.js')
+        }
+        statuses.push(event.data.test.status);
+      }
+      if (msg.event == 'total_test_end') {
+        handleOpen();
+      }
 
-      window.addEventListener('message', (event) => {
-        if (event.data.event == 'test_end') {
-          if (event.data.test.status == 'fail') {
-            dispatch({ type: 'refresh' });
+
+    });
+    
+    console.log("im listening")
+    return unsubscribe;
+  }, [listen]);
+
+   
+    useEffect(() => {
+
+      window.addEventListener('keydown', (event) => {
+        if (event.path[0].className == 'cm-content') {
+          console.log(event);
+          if (event.key == 'Backspace') {
+            backspaces++;
           }
-          statuses.push(event.data.test.status);
-        }
-        if(event.data.event =='total_test_end'){
-          handleOpen();
         }
 
       });
+
+   
+        
+        
+
+      
     }, []);
 
-    const handleRefresh = () => {
-      // listens for any message dispatched between sandpack and the bundler
-      // sends the refresh message to the bundler, should be logged by the listener
-      dispatch({ type: 'run-all-tests' });
-
-      // unsubscribe
-    };
-    useEffect(() => {
-     
-    }, [sandpack]);
+    const runTests = () => {dispatch({type: 'run-all-tests' });};
 
     const codee = files[activePath].code;
-    // console.log(codee);
-    //onClick={()=>{ refresh() }}
+
     return (
       <div style={{ width: '100%', height: '40px' }}>
-        <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }} onClick={handleRefresh} > Run Tests  </Button>;
+        <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }} onClick={runTests} > Run Tests  </Button>;
       </div>
     );
   };
 
-  
+  const code = `import '@testing-library/jest-dom';
+  `
 
   return (
 
@@ -147,6 +209,49 @@ export default function Start() {
             </Card>
           </Grid>
           <Grid item xs={12} key="fot">
+          <Popconfirm
+						title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}
+						onConfirm={showSolutionModal}
+						okText={'Ναι'}
+						cancelText={'Οχι'}
+           
+					>
+					
+							<Button variant="contained" color= "secondary" style={{ marginBottom: '5%'}}>
+								Show solution
+							</Button>
+					</Popconfirm>
+          <Modal
+                keepMounted
+                open={showSolution}
+                onClose={handlecloseSolution}
+                aria-labelledby="keep-mounted-modal-title"
+                aria-describedby="keep-mounted-modal-description"
+              >
+                <Card styles={{ padding: '1%' }}>
+
+                  <Box sx={style} >
+
+                    <Box >
+                      <div style={{ width: '100%'}}>
+                      <Typography style={{ marginTop: '2%', marginBottom: '5%' }} align="center"  >
+                       Τό αρχείο index.js πρέπει να έχει την εξής μορφή :  
+                      </Typography>
+                      </div>
+                      <div style={{ width: '100%'}}>
+                      <SyntaxHighlighter code={correctAnswer} language="javascript" showLineNumbers={true} />
+                      </div>
+                      <div style={{ width: '100%' , display: 'flex', justifyContent: 'center'}}>
+                      <Button size="large" style={{ borderRadius: '50%', width :'40%',marginBottom: '1%',  marginTop: '10%' }} variant="contained" color="primary" onClick={handlecloseSolution}>CLOSE</Button>
+                      </div>
+                    </Box>
+                  </Box>
+                </Card>
+
+              </Modal>
+
+            </Grid>
+          <Grid item xs={12}>
             <Card style={{ padding: "1%", width: '100%' }}>
               <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   React Tutorial  </Typography>
 
@@ -158,14 +263,15 @@ export default function Start() {
                   //"/BubbleSort.js": bubblesortCode,
                   //"/index.html": `<div id="root"></div>`
                   "/App.js": Appcode,
-                  "/App.test.js": testAppCode,
+                  "/App.test.js": {
+                    code: testAppCode,
+                    hidden: true
+                  },
                   "index.js": indexFile,
-                  "SetupTest.js":
-
-                    `import '@testing-library/jest-dom';
-
-                                    `
-
+                  "SetupTest.js": {
+                    code: code,
+                    hidden: true
+                  } 
                 },
                 dependencies: {
                   "react-markdown": "latest",
@@ -190,25 +296,33 @@ export default function Start() {
                   </SandpackLayout>
                 </SandpackThemeProvider>
               </SandpackProvider>
+
               <Modal
                 keepMounted
                 open={openSuccess}
-                onClose={handleCloseSuccess}
+                onClose={handleCloseFail}
                 aria-labelledby="keep-mounted-modal-title"
                 aria-describedby="keep-mounted-modal-description"
               >
-                                  <Card>
+                <Card styles={{ padding: '1%' }}>
 
-                <Box sx={style}>
-                  <Typography  id="keep-mounted-modal-title" variant="h6" component="h2">
-                    Text in a modal
-                  </Typography>
-                  <Typography id="keep-mounted-modal-description" sx={{ mt: 2 }}>
-                  YOU PASSED THE TEST 
-                  </Typography>
-                </Box>
+                  <Box sx={style} >
+                    <div style={{ width: '100%' , display: 'flex', justifyContent: 'center'}}>
+                    <CheckCircleIcon color="success" styles={{ marginBottom: '20px' }} id="keep-mounted-modal-title" sx={{ fontSize: 80 }} />
+                    </div>
+                    <Box style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'column' }}>
+                      <Typography style={{ marginTop: '2%' }} align="center" id="keep-mounted-modal-description" >
+                        H απάντηση που δώσατε ήταν σωστή
+                      </Typography>
+                      <Button style={{ marginTop: '10%' }} variant="contained" color="primary" onClick={handleCloseSuccess}> Παμε στο επομενο</Button>
+                    </Box>
+                  </Box>
                 </Card>
+
               </Modal>
+
+
+
               <Modal
                 keepMounted
                 open={openFail}
@@ -216,20 +330,19 @@ export default function Start() {
                 aria-labelledby="keep-mounted-modal-title"
                 aria-describedby="keep-mounted-modal-description"
               >
-                                  <Card styles={{ padding: '1%'}}>
+                <Card styles={{ padding: '1%' }}>
 
-                <Box sx={style} >
-                  <Typography  align="center" styles={{ marginBottom: '20px'}} id="keep-mounted-modal-title" variant="h6" component="h2">
-                    Text in a modal
-                    
-                  </Typography>
-                  <Box style={{ display: 'flex', justifyContent: 'space-around', flexDirection : 'column'}}>
-                  <Typography style={{ marginTop: '2%'}} align="center" id="keep-mounted-modal-description" >
-            H απάντηση που δώσατε ήταν λανθασμένη 
-                               </Typography>
-                            <Button style={{ marginTop: '10%'}} variant="contained" color="primary" onClick={handleCloseFail}> Προσπαθηστε ξανα</Button>
-                            </Box>
-                </Box>
+                  <Box sx={style} >
+                  <div style={{ width: '100%' , display: 'flex', justifyContent: 'center'}}>
+                    <BlockSharpIcon  styles={{ marginBottom: '20px' }} id="keep-mounted-modal-title"   sx={{ color: red[500] , fontSize: 80  }}  />
+                    </div>
+                    <Box style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'column' }}>
+                      <Typography style={{ marginTop: '2%' }} align="center" id="keep-mounted-modal-description" >
+                        H απάντηση που δώσατε ήταν λανθασμένη
+                      </Typography>
+                      <Button style={{ marginTop: '10%' }} variant="contained" color="secondary" onClick={handleCloseFail}> Προσπαθηστε ξανα</Button>
+                    </Box>
+                  </Box>
                 </Card>
 
               </Modal>
@@ -262,18 +375,14 @@ export async function getServerSideProps(context) {
 
     }
     else {
-      return {
-        props: {},
-      };
-
-      /*)
+     
         return {
             redirect: {
                 destination: '/',
                 permanent: false,
             },
         }
-        */
+        
     }
   }
   catch (e) {

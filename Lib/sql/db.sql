@@ -20,6 +20,25 @@ CREATE TABLE public.users (
                               pwd text NOT NULL
 );
 
+CREATE TABLE public.tutorial (
+	id int8 NOT NULL GENERATED ALWAYS AS IDENTITY,
+	tutorial_name text NOT null,
+	CONSTRAINT tutorial_pk PRIMARY KEY (id),
+	CONSTRAINT tutorialuk UNIQUE (tutorial_name)
+);
+
+CREATE TABLE public.tutorial_taken (
+	id int8 NOT NULL GENERATED ALWAYS AS IDENTITY,
+	tutorial_name text NOT NULL,
+	user_id int8 NOT NULL,
+	"time" varchar(100) NOT NULL,
+	anwser_shown bool NOT NULL,
+	backspaces int8 NOT NULL
+	
+);
+
+
+
 
 ALTER TABLE public.users ALTER COLUMN user_id ADD GENERATED ALWAYS AS IDENTITY (
     SEQUENCE NAME public.users_user_id_seq
@@ -30,17 +49,30 @@ START WITH 1
           CACHE 1
           );
 
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_pk PRIMARY KEY (user_id);
-
-
 --
 -- Name: users users_un_email; Type: CONSTRAINT; Schema: public; Owner: rsvp
 --
 
 ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pk PRIMARY KEY (user_id);
+
+ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_un_email UNIQUE (email);
+
+ALTER TABLE ONLY public.tutorial
+    ADD CONSTRAINT users_un_email UNIQUE (tutorial_name);
+
+ALTER TABLE ONLY public.tutorial
+    ADD CONSTRAINT users_pk PRIMARY KEY (id);
+
+ALTER TABLE ONLY public.tutorial_taken
+    CONSTRAINT tutorial_taken_pk PRIMARY KEY (id);
+
+ALTER TABLE ONLY public.tutorial_taken
+    ADD CONSTRAINT tutorial_takenfk1 FOREIGN KEY (tutorial_name) REFERENCES public.tutorial(tutorial_name);
+    
+ALTER TABLE ONLY public.tutorial_taken
+    ADD CONSTRAINT tutorial_takenfk12 FOREIGN KEY (user_id) REFERENCES public.users(user_id);
 
 
 --
