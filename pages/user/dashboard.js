@@ -49,10 +49,10 @@ export default function Home() {
         await router.push('/react/start')
     };
     const handleVue =  async (event) => {
-        await router.push('/')
+        await router.push('/vueTutorial/start')
     };
     const handleAngular=  async (event) => {
-        await router.push('/')
+        await router.push('/vueTutorial/start')
     };
 
 
@@ -79,8 +79,8 @@ export default function Home() {
             </Button>                  
                 </Card>
                 <Card style= {{ width: '50%' ,padding: '1%' , display: 'flex', justifyContent: 'space-around', marginBottom: '5%'}}>
-                <Typography variant= "overline" onClick={handleVue}>  Vue tutorial    </Typography>  
-                <Button  size="small" variant="contained" color="error" >
+                <Typography variant= "overline">  Vue tutorial    </Typography>  
+                <Button   onClick={handleVue} size="small" variant="contained" color="error" >
                 Πατηστε εδω
             </Button> 
                 </Card>

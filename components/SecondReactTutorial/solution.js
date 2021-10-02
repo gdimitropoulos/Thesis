@@ -6,7 +6,7 @@ export default function App() {
         <>
             {/* you should write your inside div below */}
             <div id="second-tutorial" >
-
+                <Button />
             </ div>
         </>
     );

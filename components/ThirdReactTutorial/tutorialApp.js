@@ -1,9 +1,12 @@
 import React from "react";
+import FlavorForm from "./MyForm";
+
 
 export default function App() {
   return (
+    
       <div id="Start"> 
-         <h1> You should replace this !</h1>
+         <FlavorForm />
       </div>
   );
 }
