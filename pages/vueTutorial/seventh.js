@@ -18,19 +18,27 @@ import React, {
     Card,
     Box,
   } from "@material-ui/core";
-  import solutionfile from "!!raw-loader!../../Components/vueTutorial/secondTutorial/solution";
-  import appvue from "!!raw-loader!../../Components/vueTutorial/secondTutorial/appvue";
-  import mainjs from "!!raw-loader!../../Components/vueTutorial/secondTutorial/main";
-  import helloworld from "!!raw-loader!../../Components/vueTutorial/secondTutorial/helloworld";
-  import testing from "!!raw-loader!../../Components/vueTutorial/secondTutorial/testing";
+  import appvue from "!!raw-loader!../../Components/vueTutorial/seventhTutorial/appvue";
+  import mainjs from "!!raw-loader!../../Components/vueTutorial/seventhTutorial/main";
+  import helloworld from "!!raw-loader!../../Components/vueTutorial/seventhTutorial/news";
+  import testing from "!!raw-loader!../../Components/vueTutorial/seventhTutorial/testing";
+  import homejs from "!!raw-loader!../../Components/vueTutorial/seventhTutorial/home";
+  import routerjs from "!!raw-loader!../../Components/vueTutorial/seventhTutorial/router";
+  import first from "!!raw-loader!../../Components/vueTutorial/seventhTutorial/first";
+  import second from "!!raw-loader!../../Components/vueTutorial/seventhTutorial/second";
+  import third from "!!raw-loader!../../Components/vueTutorial/seventhTutorial/third";
+  import solutionfile from "!!raw-loader!../../Components/vueTutorial/seventhTutorial/solution";
   import SyntaxHighlighter from '../../Lib/syntaxHighlighter'; 
   import {
     SandpackProvider,
     SandpackLayout,
     SandpackCodeEditor,
+    Sandpack,
     SandpackThemeProvider,
     SandpackPreview,
+    FileTabs,
     useSandpack,
+    useSandpackNavigation,
   } from "@codesandbox/sandpack-react";
   import "@codesandbox/sandpack-react/dist/index.css";
   import showNotification from '../../Lib/notification'
@@ -80,7 +88,7 @@ import React, {
       const bodyData ={
         time: moment().diff(time, 'seconds').toString(),
         backspaces: backspaces,
-        tutorialName: 'secondvue' ,
+        tutorialName: 'sixthvue' ,
         answer : answerShown
       }
       const res = await fetch('/api/finishTutorial', {
@@ -98,7 +106,7 @@ import React, {
           'Επιτυχής καταγραφή ',
           'Επιτυχής καταγραφή της προσπάθειας'
         );
-        await router.push('/vueTutorial/third')
+        await router.push('/vueTutorial/seventh')
       }else{
         showNotification(
           'error',
@@ -108,7 +116,21 @@ import React, {
       }
     };
     const handleCloseFail = () => setOpenFail(false);
-    const showSolutionModal = () => {setshowSolution(true); setAnswerShown(true)}  
+    const showSolutionModal = () => {setshowSolution(true); setAnswerShown(true)}
+    const correctAnswer= `  import React from "react";
+  
+    export default function App() {
+      return (
+        
+          <div id="Start"> 
+             <h1> Hello World</h1>
+          </div>
+      );
+    }
+    
+    `
+  
+  
     const SimpleCodeViewer = () => {
       const { sandpack, dispatch, listen } = useSandpack();
       const { files, activePath, setActiveFile, openFile } = sandpack;
@@ -172,10 +194,10 @@ import React, {
     return (
   
       <div style={{ height: '60%' }}>
-        <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', height: '80%', marginBottom: '1%', marginTop: '5%', paddingTop: '3%', paddingBottom: '3%',paddingLeft: '2%', paddingRight: '2%' }}>
+        <Container style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', height: '80%', marginBottom: '1%', marginTop: '5%', paddingTop: '3%', paddingBottom: '3%' }}>
           <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
-            <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4}  key="geo">
-              <Card style={{ maxHeight: "80vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
+            <Grid style={{ display: "flex", flex: 1 }} item xs={12} key="geo">
+              <Card style={{ maxHeight: "80%", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
                 <Typography variant="overline" style={{ width: '100%', marginBottom: '2%' }}>  Say Hello with React Js  </Typography>
                 <Typography variant="subtitle1" style={{ width: '100%', marginBottom: '1%' }}>  Καλώς ήρθατε στο tutorial της react! </Typography>
                 <Typography variant="subtitle1" style={{ width: '100%', marginBottom: '1%' }}> Στο πρώτο στάδιο σας ζητειται να συμπληρώσετε στο αρχείο App.js
@@ -186,9 +208,52 @@ import React, {
   
               </Card>
             </Grid>
-            <Grid item  md={12} lg={8}>
+            <Grid item xs={12} key="fot">
+            <Popconfirm
+                          title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}
+                          onConfirm={showSolutionModal}
+                          okText={'Ναι'}
+                          cancelText={'Οχι'}
+             
+                      >
+                      
+                              <Button variant="contained" color= "secondary" style={{ marginBottom: '5%'}}>
+                                  Show solution
+                              </Button>
+                      </Popconfirm>
+                      <Modal
+              keepMounted
+              open={showSolution}
+              onClose={handlecloseSolution}
+              aria-labelledby="keep-mounted-modal-title"
+              aria-describedby="keep-mounted-modal-description"
+            >
+              <Card styles={{ padding: '1%' }}>
+
+                <Box sx={style} >
+
+                  <Box >
+                    <div style={{ width: '100%' }}>
+                      <Typography style={{ marginTop: '2%', marginBottom: '5%' }} align="center"  >
+                        Τό template του  App.vue  πρέπει να έχει την εξής μορφή :
+                      </Typography>
+                    </div>
+                    <div style={{ width: '100%' }}>
+                      <SyntaxHighlighter code={solutionfile} language="html" showLineNumbers={true} />
+                    </div>
+                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                      <Button size="large" style={{ borderRadius: '50%', width: '40%', marginBottom: '1%', marginTop: '10%' }} variant="contained" color="primary" onClick={handlecloseSolution}>CLOSE</Button>
+                    </div>
+                  </Box>
+                </Box>
+              </Card>
+
+            </Modal>
+  
+              </Grid>
+            <Grid item xs={12}>
               <Card style={{ padding: "1%", width: '100%' }}>
-              <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Vue js Tutorial  </Typography>
+                <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Vue js Tutorial  </Typography>
   
                 <SandpackProvider template="vue"  customSetup={{
                 files: {
@@ -196,8 +261,13 @@ import React, {
                   "/src/main.js": {
                     code: mainjs,
                   },
-                  "/components/HelloWorld.vue": helloworld,
-                  "/tests/unit/app.spec.js": {code: testing, hidden: true}
+                  "/tests/unit/app.spec.js": {code: testing, hidden: true},
+                  "/src/components/News.vue": {code: helloworld,hidden: false},
+                  "/src/views/Home.vue": {code: homejs, hidden: false},
+                  "/src/views/First.vue": {code: first, hidden: false},
+                  "/src/views/Second.vue": { code: second, hidden: false},
+                  "/src/views/Third.vue": {code: third,hidden: false},
+                  "/src/router/index.js": {code: routerjs, hidden: true},
                 },
                 dependencies: {
                   "babel-runtime": "latest",
@@ -206,9 +276,10 @@ import React, {
                   "vue": "^3.2.19",
                   "vue-template-compiler": "latest",
                   "vue-loader": "latest",
+                  "vue-router": "^4.0.11"
 
                 },
-              }} entry>
+              }} >
                   <SandpackThemeProvider  >
                   <SimpleCodeViewer />
                     <SandpackLayout theme="codesandbox-dark">
@@ -271,52 +342,8 @@ import React, {
   
               </Card>
             </Grid>
-            <Grid item xs={10}>
-              </Grid>
-            <Grid item xs={2} key="fot">
-            <Popconfirm
-                          title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}
-                          onConfirm={showSolutionModal}
-                          okText={'Ναι'}
-                          cancelText={'Οχι'}
-             
-                      >
-                      
-                              <Button variant="contained" color= "secondary" style={{ marginTop: '4%', marginBottom: '5%'}}>
-                                  Show solution
-                              </Button>
-                      </Popconfirm>
-                      <Modal
-              keepMounted
-              open={showSolution}
-              onClose={handlecloseSolution}
-              aria-labelledby="keep-mounted-modal-title"
-              aria-describedby="keep-mounted-modal-description"
-            >
-              <Card styles={{ padding: '1%' }}>
-
-                <Box sx={style} >
-
-                  <Box >
-                    <div style={{ width: '100%' }}>
-                      <Typography style={{ marginTop: '4%', marginBottom: '5%' }} align="center"  >
-                        Τό template του  App.vue  πρέπει να έχει την εξής μορφή :
-                      </Typography>
-                    </div>
-                    <div style={{ width: '100%' }}>
-                      <SyntaxHighlighter code={solutionfile} language="html" showLineNumbers={true} />
-                    </div>
-                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                      <Button size="large" style={{ borderRadius: '50%', width: '40%', marginBottom: '1%', marginTop: '10%' }} variant="contained" color="primary" onClick={handlecloseSolution}>CLOSE</Button>
-                    </div>
-                  </Box>
-                </Box>
-              </Card>
-
-            </Modal>
-              </Grid>
           </Grid>
-        </div>
+        </Container>
       </div>
     )
   }

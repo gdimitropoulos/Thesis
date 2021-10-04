@@ -1,19 +1,24 @@
 <template>
-<!-- Only change code here -->
-  <div id="nav">
-    <p> Change me </p>
-   </div>
+  <HelloWorld msg="" />
 </template>
 
-
 <script>
+import HelloWorld from '../components/HelloWorld.vue'
+
 export default {
   name: 'App',
   components: {
-  }
-}
+    HelloWorld
+  },
+   data() {
+    return {
+      message : 'Hello World'
+    }
+  },
 
+}
 </script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -21,18 +26,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+  margin-top: 60px;
 }
 </style>

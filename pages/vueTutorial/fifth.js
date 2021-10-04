@@ -18,19 +18,26 @@ import React, {
     Card,
     Box,
   } from "@material-ui/core";
-  import solutionfile from "!!raw-loader!../../Components/vueTutorial/secondTutorial/solution";
-  import appvue from "!!raw-loader!../../Components/vueTutorial/secondTutorial/appvue";
-  import mainjs from "!!raw-loader!../../Components/vueTutorial/secondTutorial/main";
-  import helloworld from "!!raw-loader!../../Components/vueTutorial/secondTutorial/helloworld";
-  import testing from "!!raw-loader!../../Components/vueTutorial/secondTutorial/testing";
+  import appvue from "!!raw-loader!../../Components/vueTutorial/fifthTutorial/appvue";
+  import mainjs from "!!raw-loader!../../Components/vueTutorial/fifthTutorial/main";
+  import helloworld from "!!raw-loader!../../Components/vueTutorial/fifthTutorial/news";
+  import testing from "!!raw-loader!../../Components/vueTutorial/fifthTutorial/testing";
+  import solutionfile from "!!raw-loader!../../Components/vueTutorial/fifthTutorial/solution";
+
+  import Cookies from 'js-cookie';
+  import { useActiveCode } from "@codesandbox/sandpack-react";
   import SyntaxHighlighter from '../../Lib/syntaxHighlighter'; 
   import {
     SandpackProvider,
     SandpackLayout,
     SandpackCodeEditor,
+    Sandpack,
+    FileExplorer,
     SandpackThemeProvider,
     SandpackPreview,
+    FileTabs,
     useSandpack,
+    useSandpackNavigation,
   } from "@codesandbox/sandpack-react";
   import "@codesandbox/sandpack-react/dist/index.css";
   import showNotification from '../../Lib/notification'
@@ -80,7 +87,7 @@ import React, {
       const bodyData ={
         time: moment().diff(time, 'seconds').toString(),
         backspaces: backspaces,
-        tutorialName: 'secondvue' ,
+        tutorialName: 'fifthvue' ,
         answer : answerShown
       }
       const res = await fetch('/api/finishTutorial', {
@@ -98,7 +105,7 @@ import React, {
           'Επιτυχής καταγραφή ',
           'Επιτυχής καταγραφή της προσπάθειας'
         );
-        await router.push('/vueTutorial/third')
+        await router.push('/vueTutorial/sixth')
       }else{
         showNotification(
           'error',
@@ -108,7 +115,21 @@ import React, {
       }
     };
     const handleCloseFail = () => setOpenFail(false);
-    const showSolutionModal = () => {setshowSolution(true); setAnswerShown(true)}  
+    const showSolutionModal = () => {setshowSolution(true); setAnswerShown(true)}
+    const correctAnswer= `  import React from "react";
+  
+    export default function App() {
+      return (
+        
+          <div id="Start"> 
+             <h1> Hello World</h1>
+          </div>
+      );
+    }
+    
+    `
+  
+  
     const SimpleCodeViewer = () => {
       const { sandpack, dispatch, listen } = useSandpack();
       const { files, activePath, setActiveFile, openFile } = sandpack;
@@ -174,20 +195,33 @@ import React, {
       <div style={{ height: '60%' }}>
         <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', height: '80%', marginBottom: '1%', marginTop: '5%', paddingTop: '3%', paddingBottom: '3%',paddingLeft: '2%', paddingRight: '2%' }}>
           <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
-            <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4}  key="geo">
-              <Card style={{ maxHeight: "80vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
+         
+            <Grid style={{ display: "flex", flex: 1 }} item xs={4} key="geo">
+              <Card style={{ maxHeight: '80vh', overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
                 <Typography variant="overline" style={{ width: '100%', marginBottom: '2%' }}>  Say Hello with React Js  </Typography>
                 <Typography variant="subtitle1" style={{ width: '100%', marginBottom: '1%' }}>  Καλώς ήρθατε στο tutorial της react! </Typography>
                 <Typography variant="subtitle1" style={{ width: '100%', marginBottom: '1%' }}> Στο πρώτο στάδιο σας ζητειται να συμπληρώσετε στο αρχείο App.js
                   έτσι ώστε να τυπώνεται το μήνυμα Hello World! </Typography>
                 <Typography variant="subtitle1" style={{ width: '100%' }}> Στα αρχεία index.js και App.js βλέπουμε την αρχική κατάσταση που βρίσκοντα
                   τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
+                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε.  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
+                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε.  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
+                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε.  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
+                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε.  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
+                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε.  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
+                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε.  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
+                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε.  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
+                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε.  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
+                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε.  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
+                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε.  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
+                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε.  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
                   render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε. </Typography>
   
               </Card>
             </Grid>
-            <Grid item  md={12} lg={8}>
-              <Card style={{ padding: "1%", width: '100%' }}>
+            
+            <Grid item xs={8}>
+              <Card style={{ height: '80vh', padding: "1%", width: '100%' }}>
               <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Vue js Tutorial  </Typography>
   
                 <SandpackProvider template="vue"  customSetup={{
@@ -196,8 +230,9 @@ import React, {
                   "/src/main.js": {
                     code: mainjs,
                   },
-                  "/components/HelloWorld.vue": helloworld,
-                  "/tests/unit/app.spec.js": {code: testing, hidden: true}
+                  "/tests/unit/app.spec.js": {code: testing, hidden: true},
+                  "/src/components/News.vue":{code:  helloworld, active: true}
+
                 },
                 dependencies: {
                   "babel-runtime": "latest",
@@ -208,12 +243,12 @@ import React, {
                   "vue-loader": "latest",
 
                 },
-              }} entry>
+              }} >
                   <SandpackThemeProvider  >
                   <SimpleCodeViewer />
                     <SandpackLayout theme="codesandbox-dark">
                       <SandpackCodeEditor showTabs="true" customStyle={{ marginTop: '10px', height: '500px', width: '400px' }}    > </SandpackCodeEditor>
-                      <SandpackPreview viewportSize={{ width: 500, height: 500 }} />
+                      <SandpackPreview viewportSize={{ width: 500, height:  '60vh' }} />
                     </SandpackLayout>
                   </SandpackThemeProvider>
                 </SandpackProvider>
@@ -271,18 +306,19 @@ import React, {
   
               </Card>
             </Grid>
-            <Grid item xs={10}>
+            <Grid style={{ display: 'flex', width: '100%' , marginTop: '2%'}} item xs={10} key="fot">
               </Grid>
-            <Grid item xs={2} key="fot">
+            <Grid style={{ display: 'flex', width: '100%' , marginTop: '2%'}} item xs={2} key="fot">
             <Popconfirm
                           title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}
                           onConfirm={showSolutionModal}
                           okText={'Ναι'}
                           cancelText={'Οχι'}
+                         
              
                       >
                       
-                              <Button variant="contained" color= "secondary" style={{ marginTop: '4%', marginBottom: '5%'}}>
+                              <Button   variant="contained" color= "secondary" style={{ float: 'right', marginBottom: '5%'}}>
                                   Show solution
                               </Button>
                       </Popconfirm>
@@ -299,8 +335,8 @@ import React, {
 
                   <Box >
                     <div style={{ width: '100%' }}>
-                      <Typography style={{ marginTop: '4%', marginBottom: '5%' }} align="center"  >
-                        Τό template του  App.vue  πρέπει να έχει την εξής μορφή :
+                      <Typography style={{ marginTop: '2%', marginBottom: '5%' }} align="center"  >
+                        {"Τό <template> του  News.vue  πρέπει να έχει την εξής μορφή :"}
                       </Typography>
                     </div>
                     <div style={{ width: '100%' }}>
@@ -314,6 +350,7 @@ import React, {
               </Card>
 
             </Modal>
+  
               </Grid>
           </Grid>
         </div>

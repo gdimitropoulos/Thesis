@@ -18,11 +18,11 @@ import React, {
     Card,
     Box,
   } from "@material-ui/core";
-  import solutionfile from "!!raw-loader!../../Components/vueTutorial/secondTutorial/solution";
-  import appvue from "!!raw-loader!../../Components/vueTutorial/secondTutorial/appvue";
-  import mainjs from "!!raw-loader!../../Components/vueTutorial/secondTutorial/main";
-  import helloworld from "!!raw-loader!../../Components/vueTutorial/secondTutorial/helloworld";
-  import testing from "!!raw-loader!../../Components/vueTutorial/secondTutorial/testing";
+  import appvue from "!!raw-loader!../../Components/vueTutorial/thirdTutorial/appvue";
+  import mainjs from "!!raw-loader!../../Components/vueTutorial/thirdTutorial/main";
+  import helloworld from "!!raw-loader!../../Components/vueTutorial/thirdTutorial/helloworld";
+  import testing from "!!raw-loader!../../Components/vueTutorial/thirdTutorial/testing";
+  import solutionfile from "!!raw-loader!../../Components/vueTutorial/thirdTutorial/solution";
   import SyntaxHighlighter from '../../Lib/syntaxHighlighter'; 
   import {
     SandpackProvider,
@@ -80,7 +80,7 @@ import React, {
       const bodyData ={
         time: moment().diff(time, 'seconds').toString(),
         backspaces: backspaces,
-        tutorialName: 'secondvue' ,
+        tutorialName: 'thirdvue' ,
         answer : answerShown
       }
       const res = await fetch('/api/finishTutorial', {
@@ -98,7 +98,7 @@ import React, {
           'Επιτυχής καταγραφή ',
           'Επιτυχής καταγραφή της προσπάθειας'
         );
-        await router.push('/vueTutorial/third')
+        await router.push('/vueTutorial/fourth')
       }else{
         showNotification(
           'error',
@@ -108,7 +108,21 @@ import React, {
       }
     };
     const handleCloseFail = () => setOpenFail(false);
-    const showSolutionModal = () => {setshowSolution(true); setAnswerShown(true)}  
+    const showSolutionModal = () => {setshowSolution(true); setAnswerShown(true)}
+    const correctAnswer= `  import React from "react";
+  
+    export default function App() {
+      return (
+        
+          <div id="Start"> 
+             <h1> Hello World</h1>
+          </div>
+      );
+    }
+    
+    `
+  
+  
     const SimpleCodeViewer = () => {
       const { sandpack, dispatch, listen } = useSandpack();
       const { files, activePath, setActiveFile, openFile } = sandpack;
@@ -172,23 +186,34 @@ import React, {
     return (
   
       <div style={{ height: '60%' }}>
-        <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', height: '80%', marginBottom: '1%', marginTop: '5%', paddingTop: '3%', paddingBottom: '3%',paddingLeft: '2%', paddingRight: '2%' }}>
+         <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', height: '80%', marginBottom: '1%', marginTop: '5%', paddingTop: '3%', paddingBottom: '3%',paddingLeft: '2%', paddingRight: '2%' }}>
           <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
             <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4}  key="geo">
-              <Card style={{ maxHeight: "80vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
+              <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
                 <Typography variant="overline" style={{ width: '100%', marginBottom: '2%' }}>  Say Hello with React Js  </Typography>
                 <Typography variant="subtitle1" style={{ width: '100%', marginBottom: '1%' }}>  Καλώς ήρθατε στο tutorial της react! </Typography>
                 <Typography variant="subtitle1" style={{ width: '100%', marginBottom: '1%' }}> Στο πρώτο στάδιο σας ζητειται να συμπληρώσετε στο αρχείο App.js
                   έτσι ώστε να τυπώνεται το μήνυμα Hello World! </Typography>
                 <Typography variant="subtitle1" style={{ width: '100%' }}> Στα αρχεία index.js και App.js βλέπουμε την αρχική κατάσταση που βρίσκοντα
                   τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
-                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε. </Typography>
+                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε. Στα αρχεία index.js και App.js βλέπουμε την αρχική κατάσταση που βρίσκοντα
+                  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
+                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμεΣτα αρχεία index.js και App.js βλέπουμε την αρχική κατάσταση που βρίσκοντα
+                  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
+                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμεΣτα αρχεία index.js και App.js βλέπουμε την αρχική κατάσταση που βρίσκοντα
+                  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
+                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμεΣτα αρχεία index.js και App.js βλέπουμε την αρχική κατάσταση που βρίσκοντα
+                  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
+                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμεΣτα αρχεία index.js και App.js βλέπουμε την αρχική κατάσταση που βρίσκοντα
+                  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
+                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε</Typography>
   
               </Card>
             </Grid>
+           
             <Grid item  md={12} lg={8}>
-              <Card style={{ padding: "1%", width: '100%' }}>
-              <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Vue js Tutorial  </Typography>
+              <Card style={{ padding: "1%", height:'75vh', width: '100%' }}>
+                <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   React Tutorial  </Typography>
   
                 <SandpackProvider template="vue"  customSetup={{
                 files: {
@@ -272,7 +297,7 @@ import React, {
               </Card>
             </Grid>
             <Grid item xs={10}>
-              </Grid>
+            </Grid>
             <Grid item xs={2} key="fot">
             <Popconfirm
                           title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}
@@ -282,7 +307,7 @@ import React, {
              
                       >
                       
-                              <Button variant="contained" color= "secondary" style={{ marginTop: '4%', marginBottom: '5%'}}>
+                              <Button variant="contained" color= "secondary" style={{ marginTop: '4%',marginBottom: '5%'}}>
                                   Show solution
                               </Button>
                       </Popconfirm>
@@ -299,7 +324,7 @@ import React, {
 
                   <Box >
                     <div style={{ width: '100%' }}>
-                      <Typography style={{ marginTop: '4%', marginBottom: '5%' }} align="center"  >
+                      <Typography style={{ marginTop: '2%', marginBottom: '5%' }} align="center"  >
                         Τό template του  App.vue  πρέπει να έχει την εξής μορφή :
                       </Typography>
                     </div>
@@ -314,6 +339,7 @@ import React, {
               </Card>
 
             </Modal>
+  
               </Grid>
           </Grid>
         </div>

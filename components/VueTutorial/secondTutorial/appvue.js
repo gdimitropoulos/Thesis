@@ -1,15 +1,17 @@
 <template>
-<!-- Only change code here -->
   <div id="nav">
-    <p> Change me </p>
+  <!-- Inser Component Here -->
+   
    </div>
 </template>
 
 
 <script>
+import HelloWorld from '../components/HelloWorld'
 export default {
   name: 'App',
   components: {
+    HelloWorld,
   }
 }
 
