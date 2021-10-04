@@ -193,11 +193,10 @@ import React, {
     return (
   
       <div style={{ height: '60%' }}>
-        <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', height: '80%', marginBottom: '1%', marginTop: '5%', paddingTop: '3%', paddingBottom: '3%',paddingLeft: '2%', paddingRight: '2%' }}>
-          <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
-         
-            <Grid style={{ display: "flex", flex: 1 }} item xs={4} key="geo">
-              <Card style={{ maxHeight: '80vh', overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
+      <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', height: '80%', marginBottom: '1%', marginTop: '5%', paddingTop: '3%', paddingBottom: '3%',paddingLeft: '2%', paddingRight: '2%' }}>
+       <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
+         <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4}  key="geo">
+           <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
                 <Typography variant="overline" style={{ width: '100%', marginBottom: '2%' }}>  Say Hello with React Js  </Typography>
                 <Typography variant="subtitle1" style={{ width: '100%', marginBottom: '1%' }}>  Καλώς ήρθατε στο tutorial της react! </Typography>
                 <Typography variant="subtitle1" style={{ width: '100%', marginBottom: '1%' }}> Στο πρώτο στάδιο σας ζητειται να συμπληρώσετε στο αρχείο App.js
@@ -220,8 +219,8 @@ import React, {
               </Card>
             </Grid>
             
-            <Grid item xs={8}>
-              <Card style={{ height: '80vh', padding: "1%", width: '100%' }}>
+            <Grid item md={12} lg={8}>
+              <Card style={{ height: '75vh', padding: "1%", width: '100%' }}>
               <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Vue js Tutorial  </Typography>
   
                 <SandpackProvider template="vue"  customSetup={{

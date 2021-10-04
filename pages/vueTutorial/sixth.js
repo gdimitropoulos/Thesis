@@ -200,11 +200,11 @@ import React, {
     return (
   
       <div style={{ height: '60%' }}>
-        <Container style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', height: '80%', marginBottom: '1%', marginTop: '5%', paddingTop: '3%', paddingBottom: '3%' }}>
-          <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
-            <Grid style={{ display: "flex", flex: 1 }} item xs={12} key="geo">
-              <Card style={{ maxHeight: "80%", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
-                <Typography variant="overline" style={{ width: '100%', marginBottom: '2%' }}>  Say Hello with React Js  </Typography>
+      <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', height: '80%', marginBottom: '1%', marginTop: '5%', paddingTop: '3%', paddingBottom: '3%',paddingLeft: '2%', paddingRight: '2%' }}>
+       <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
+         <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4}  key="geo">
+           <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
+                <Typography variant="overline" style={{ width: '100%', marginBottom: '2%' }}>  Say Hello with Vue Js  </Typography>
                 <Typography variant="subtitle1" style={{ width: '100%', marginBottom: '1%' }}>  Καλώς ήρθατε στο tutorial της react! </Typography>
                 <Typography variant="subtitle1" style={{ width: '100%', marginBottom: '1%' }}> Στο πρώτο στάδιο σας ζητειται να συμπληρώσετε στο αρχείο App.js
                   έτσι ώστε να τυπώνεται το μήνυμα Hello World! </Typography>
@@ -214,52 +214,10 @@ import React, {
   
               </Card>
             </Grid>
-            <Grid item xs={12} key="fot">
-            <Popconfirm
-                          title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}
-                          onConfirm={showSolutionModal}
-                          okText={'Ναι'}
-                          cancelText={'Οχι'}
-             
-                      >
-                      
-                              <Button variant="contained" color= "secondary" style={{ marginBottom: '5%'}}>
-                                  Show solution
-                              </Button>
-                      </Popconfirm>
-                      <Modal
-              keepMounted
-              open={showSolution}
-              onClose={handlecloseSolution}
-              aria-labelledby="keep-mounted-modal-title"
-              aria-describedby="keep-mounted-modal-description"
-            >
-              <Card styles={{ padding: '1%' }}>
-
-                <Box sx={style} >
-
-                  <Box >
-                    <div style={{ width: '100%' }}>
-                      <Typography style={{ marginTop: '2%', marginBottom: '5%' }} align="center"  >
-                        Τό router/index,js πρέπει να έχει την εξής μορφή :
-                      </Typography>
-                    </div>
-                    <div style={{ width: '100%' }}>
-                      <SyntaxHighlighter code={solutionfile} language="javascript" showLineNumbers={true} />
-                    </div>
-                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                      <Button size="large" style={{ borderRadius: '50%', width: '40%', marginBottom: '1%', marginTop: '10%' }} variant="contained" color="primary" onClick={handlecloseSolution}>CLOSE</Button>
-                    </div>
-                  </Box>
-                </Box>
-              </Card>
-
-            </Modal>
-  
-              </Grid>
-            <Grid item xs={12}>
-              <Card style={{ padding: "1%", width: '100%' }}>
-                <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   React Tutorial  </Typography>
+           
+            <Grid item md={12} lg={8}>
+              <Card style={{ padding: "1%",height:'75vh', width: '100%' }}>
+                <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Vue js Tutorial  </Typography>
   
                 <SandpackProvider template="vue"  customSetup={{
                 files: {
@@ -351,8 +309,54 @@ import React, {
   
               </Card>
             </Grid>
+            <Grid item xs={10}>
+
+            </Grid>
+            <Grid item xs={2} key="fot">
+            <Popconfirm
+                          title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}
+                          onConfirm={showSolutionModal}
+                          okText={'Ναι'}
+                          cancelText={'Οχι'}
+             
+                      >
+                      
+                              <Button variant="contained" color= "secondary" style={{ marginTop: '4%', marginBottom: '5%'}}>
+                                  Show solution
+                              </Button>
+                      </Popconfirm>
+                      <Modal
+              keepMounted
+              open={showSolution}
+              onClose={handlecloseSolution}
+              aria-labelledby="keep-mounted-modal-title"
+              aria-describedby="keep-mounted-modal-description"
+            >
+              <Card styles={{ padding: '1%' }}>
+
+                <Box sx={style} >
+
+                  <Box >
+                    <div style={{ width: '100%' }}>
+                      <Typography style={{ marginTop: '2%', marginBottom: '5%' }} align="center"  >
+                        Τό router/index,js πρέπει να έχει την εξής μορφή :
+                      </Typography>
+                    </div>
+                    <div style={{ width: '100%' }}>
+                      <SyntaxHighlighter code={solutionfile} language="javascript" showLineNumbers={true} />
+                    </div>
+                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                      <Button size="large" style={{ borderRadius: '50%', width: '40%', marginBottom: '1%', marginTop: '10%' }} variant="contained" color="primary" onClick={handlecloseSolution}>CLOSE</Button>
+                    </div>
+                  </Box>
+                </Box>
+              </Card>
+
+            </Modal>
+  
+              </Grid>
           </Grid>
-        </Container>
+        </div>
       </div>
     )
   }
