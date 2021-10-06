@@ -15,11 +15,13 @@ import {
   Card,
   Box,
 } from "@material-ui/core";
-import testAppCode from "!!raw-loader!../../Components/SecondReactTutorial/tutorialApptest";
-import Appcode from "!!raw-loader!../../Components/SecondReactTutorial/tutorialApp";
-import indexFile from "!!raw-loader!../../Components/SecondReactTutorial/tutorialIndex";
-import componentCode from "!!raw-loader!../../Components/SecondReactTutorial/tutorialComponent";
-import solutionCode from "!!raw-loader!../../Components/SecondReactTutorial/solution";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import BlockSharpIcon from '@mui/icons-material/BlockSharp';
+import testAppCode from "!!raw-loader!../../Components/reactTutorial/SecondReactTutorial/tutorialApptest";
+import Appcode from "!!raw-loader!../../Components/reactTutorial/SecondReactTutorial/tutorialApp";
+import indexFile from "!!raw-loader!../../Components/reactTutorial/SecondReactTutorial/tutorialIndex";
+import componentCode from "!!raw-loader!../../Components/reactTutorial/SecondReactTutorial/tutorialComponent";
+import solutionCode from "!!raw-loader!../../Components/reactTutorial/SecondReactTutorial/solution";
 import Cookies from 'js-cookie';
 import { useActiveCode } from "@codesandbox/sandpack-react";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
@@ -172,10 +174,10 @@ export default function Start() {
   return (
 
     <div style={{ height: '60%' }}>
-      <Container style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', height: '80%', marginBottom: '1%', marginTop: '5%', paddingTop: '3%', paddingBottom: '3%' }}>
-        <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
-          <Grid style={{ display: "flex", flex: 1 }} item xs={12} key="geo">
-            <Card style={{ maxHeight: "80%", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
+    <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', height: '80%', marginBottom: '1%', marginTop: '5%', paddingTop: '3%', paddingBottom: '3%',paddingLeft: '2%', paddingRight: '2%' }}>
+      <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
+        <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4}  key="geo">
+          <Card style={{ maxHeight: "80vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
               <Typography variant="overline" style={{ width: '100%', marginBottom: '2%' }}> React Js Tutorial  </Typography>
               <Typography variant="subtitle1" style={{ width: '100%', marginBottom: '1%' }}>  Βήμα 2ο </Typography>
               <Typography variant="subtitle1" style={{ width: '100%', marginBottom: '1%' }}> Στο δεύτερο  στάδιο σας ζητειται να συμπληρώσετε στο αρχείο App.js
@@ -185,51 +187,9 @@ export default function Start() {
 
             </Card>
           </Grid>
-          <Grid item xs={12} key="fot">
-            <Popconfirm
-              title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}
-              onConfirm={showSolutionModal}
-              okText={'Ναι'}
-              cancelText={'Οχι'}
-
-            >
-
-              <Button variant="contained" color="secondary" style={{ marginBottom: '5%' }}>
-                Show solution
-              </Button>
-            </Popconfirm>
-            <Modal
-              keepMounted
-              open={showSolution}
-              onClose={handlecloseSolution}
-              aria-labelledby="keep-mounted-modal-title"
-              aria-describedby="keep-mounted-modal-description"
-            >
-              <Card styles={{ padding: '1%' }}>
-
-                <Box sx={style} >
-
-                  <Box >
-                    <div style={{ width: '100%' }}>
-                      <Typography style={{ marginTop: '2%', marginBottom: '5%' }} align="center" id="keep-mounted-modal-description" >
-                        Τό αρχείο index.js πρέπει να έχει την εξής μορφή :
-                      </Typography>
-                    </div>
-                    <div style={{ width: '100%' }}>
-                      <SyntaxHighlighter code={solutionCode} language="javascript" showLineNumbers={true} />
-                    </div>
-                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                      <Button size="large" style={{ borderRadius: '50%', width: '40%', marginBottom: '1%', marginTop: '10%' }} variant="contained" color="primary" onClick={handlecloseSolution}>CLOSE</Button>
-                    </div>
-                  </Box>
-                </Box>
-              </Card>
-
-            </Modal>
-
-          </Grid>
-          <Grid item xs={12}>
-            <Card style={{ padding: "1%", width: '100%' }}>
+         
+          <Grid item md={12} lg={8}>
+            <Card style={{ padding: "1%",height: '75vh' , width: '100%' }}>
               <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   React Tutorial  </Typography>
 
               <SandpackProvider template="react" customSetup={{
@@ -303,35 +263,77 @@ export default function Start() {
 
 
               <Modal
-                keepMounted
-                open={openFail}
-                onClose={handleCloseFail}
-                aria-labelledby="keep-mounted-modal-title"
-                aria-describedby="keep-mounted-modal-description"
-              >
-                <Card styles={{ padding: '1%' }}>
-
-                  <Box sx={style} >
-                    <Typography align="center" styles={{ marginBottom: '20px' }} id="keep-mounted-modal-title" variant="h6" component="h2">
-                      Text in a modal
-
-                    </Typography>
-                    <Box style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'column' }}>
-                      <Typography style={{ marginTop: '2%' }} align="center" id="keep-mounted-modal-description" >
-                        H απάντηση που δώσατε ήταν λανθασμένη
-                      </Typography>
-                      <Button style={{ marginTop: '10%' }} variant="contained" color="primary" onClick={handleCloseFail}> Προσπαθηστε ξανα</Button>
+                  keepMounted
+                  open={openFail}
+                  onClose={handleCloseFail}
+                  aria-labelledby="keep-mounted-modal-title"
+                  aria-describedby="keep-mounted-modal-description"
+                >
+                  <Card styles={{ padding: '1%' }}>
+  
+                    <Box sx={style} >
+                    <div style={{ width: '100%' , display: 'flex', justifyContent: 'center'}}>
+                      <BlockSharpIcon  styles={{ marginBottom: '20px' }} id="keep-mounted-modal-title"   sx={{ color: red[500] , fontSize: 80  }}  />
+                      </div>
+                      <Box style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'column' }}>
+                        <Typography style={{ marginTop: '2%' }} align="center" id="keep-mounted-modal-description" >
+                          H απάντηση που δώσατε ήταν λανθασμένη
+                        </Typography>
+                        <Button style={{ marginTop: '10%' }} variant="contained" color="secondary" onClick={handleCloseFail}> Προσπαθηστε ξανα</Button>
+                      </Box>
                     </Box>
-                  </Box>
-                </Card>
-
-              </Modal>
-
+                  </Card>
+  
+                </Modal>
 
             </Card>
           </Grid>
+          <Grid item xs={10}></Grid>
+          <Grid item xs={2} key="fot">
+            <Popconfirm
+              title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}
+              onConfirm={showSolutionModal}
+              okText={'Ναι'}
+              cancelText={'Οχι'}
+
+            >
+
+              <Button variant="contained" color="secondary" style={{ marginBottom: '5%' }}>
+                Show solution
+              </Button>
+            </Popconfirm>
+            <Modal
+              keepMounted
+              open={showSolution}
+              onClose={handlecloseSolution}
+              aria-labelledby="keep-mounted-modal-title"
+              aria-describedby="keep-mounted-modal-description"
+            >
+              <Card styles={{ padding: '1%' }}>
+
+                <Box sx={style} >
+
+                  <Box >
+                    <div style={{ width: '100%' }}>
+                      <Typography style={{ marginTop: '2%', marginBottom: '5%' }} align="center" id="keep-mounted-modal-description" >
+                        Τό αρχείο index.js πρέπει να έχει την εξής μορφή :
+                      </Typography>
+                    </div>
+                    <div style={{ width: '100%' }}>
+                      <SyntaxHighlighter code={solutionCode} language="javascript" showLineNumbers={true} />
+                    </div>
+                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                      <Button size="large" style={{ borderRadius: '50%', width: '40%', marginBottom: '1%', marginTop: '10%' }} variant="contained" color="primary" onClick={handlecloseSolution}>CLOSE</Button>
+                    </div>
+                  </Box>
+                </Box>
+              </Card>
+
+            </Modal>
+
+          </Grid>
         </Grid>
-      </Container>
+      </div>
     </div>
   )
 }

@@ -6,7 +6,6 @@ import App from './App';
 
 test('renders learn react link', async () => {
   render(<App />);
-   fireEvent.change(screen.getByTestId('select') , { target: { value: 'lime' } })
-  const h1Element= screen.getByTestId('h1');
-  expect(h1Element).toHaveTextContent(/lime/i)
+  const element = screen.getByTestId('test');
+  expect(element).toHaveTextContent(/Hello World/i)
 });

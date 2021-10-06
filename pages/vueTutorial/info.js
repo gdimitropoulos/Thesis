@@ -10,6 +10,9 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import BlockSharpIcon from '@mui/icons-material/BlockSharp';
 import { CopyBlock, dracula } from "react-code-blocks";
 import { Popconfirm } from 'antd';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import {
     Button,
     Grid,
@@ -71,21 +74,40 @@ export default function Start() {
             <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', height: '75%', marginBottom: '1%', marginTop: '1%', paddingTop: '1%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
                 <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
                     <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
-                        <Card style={{ maxHeight: '75%', overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
-                            <Typography variant="overline" style={{ width: '100%', marginBottom: '2%' }}>  Say Hello with Vue Js  </Typography>
-                            <Typography variant="subtitle1" style={{ width: '100%', marginBottom: '1%' }}>  Καλώς ήρθατε στο tutorial της react! </Typography>
-                            <Typography variant="subtitle1" style={{ width: '100%', marginBottom: '1%' }}> Στο πρώτο στάδιο σας ζητειται να συμπληρώσετε στο αρχείο App.js
-                                έτσι ώστε να τυπώνεται το μήνυμα Hello World! </Typography>
-                            <Typography variant="subtitle1" style={{ width: '100%' }}>= vue js είναι  ένα  open-source MVM front end JavaScript framework και χρησιμοποιείται ευρεως για την ανάπτυκη single page applications
-                Το vue js ασχολείται κυρίως με το view κομμάτι της εφαρμογής αλλά διαθέτει επίσημμε</Typography>
+                        <Card style={{ maxHeight: '75vh', overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
+                        <div style={{ height: '40px', backgroundColor: '#f4f4f4',display: 'flex', justifyContent:'Center' }}>  <MenuBookIcon style={{ fontSize: 30}} />  <h3 style={{ marginLeft: '5px', display: 'flex' , flexDirection: 'column' ,justifyContent: 'center'}}>Εκμάθηση </h3>  </div>
+                            <Typography variant="subtitle1" style={{ width: '100%', marginBottom: '1%' }}> Καλώς ήρθατε στο tutorial της Vue js! </Typography>
+                            <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}> 
+                        Η Vue js ειναι ένα καινοτόμο JavaScript framework που χρησιμοποιείται για την ανάπτυξη
+                             διαδραστικών διαδικτυακών διεπαφών. Κατά την εκμάθηση της Vue μπορεί κάποιος να ξεκινήσει εισάγωντας κάποια απλά γνωρίσματα της
+                             και έπειτα να αυξήσει την πολυπλοκότητα, γεγονός που την κάθιστά φιλική προς τους νέους χρήστες.
+                            </Typography>
+                            <Typography variant="subtitle1" style={{ marginTop: '2%' , textAlign: 'justify',width: '100%' }}> 
+                            Κατά την διάρκεια αυτού του tutorial στόχος είναι η εξοικείωσή σας με τα βασικά γνώρισματα της Vue καθώς και με την επίσημη βιβλιοθήκη της
+                            που επιτρέπει τον σχεδιασμό ενός single page application. Έτσι, δεν θα κληθείτε να αναπτύξετε ολόκληρες εφαρμογές και
+                            θα έχετε πρόσβαση μόνο σε ορισμένα αρχεία, στα οποία θα χρειαστεί να δουλέψετε. Παρακάτω, παρουσιάζουμε εν συντομία έναν ενδεικτικό τρόπο αρχικοποίησης ενός Vue js πρότζεκτ.
+                    
+                            </Typography>
+                            <ul>
+                                <li>  <Typography variant="subtitle1" style={{ marginTop: '2%' , textAlign: 'justify',width: '100%' }}> 
+                             O πιο δημοφιλής τρόπος αρχικοποίησης είναι μέσω του Vue CLI. Για να κατεβάσουμε το Vue CLI χρησιμοποιούμε την εντολή <span style={{backgroundColor:'#f4f4f4'}}>npm install -g @vue/cli</span>
+                    
+                            </Typography></li>
+                            <li>  <Typography variant="subtitle1" style={{ marginTop: '2%' , textAlign: 'justify',width: '100%' }}> 
+                             Έπειτα χρησιμοποιώντας την εντολή <span style={{backgroundColor:'#f4f4f4'}}>vue create όνομα_πρότζεκτ</span> μπορούμε να δημιουργήσουμε το πρότζεκτ μας, το οποίο για την πιο καινούρια έκδοση του Vue θα έχει την εξής μορφή :
+                    
+                            </Typography></li>
+                            </ul>
+                          
+                <div style={{ height: '40px', backgroundColor: '#f4f4f4',display: 'flex', justifyContent:'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30}} />  <h3 style={{ marginLeft: '5px', display: 'flex' , flexDirection: 'column' ,justifyContent: 'center'}}>Οδηγίες </h3>  </div>
 
                         </Card>
                     </Grid>
 
                     <Grid item md={12} lg={8}>
-                        <Card style={{ display:'flex', flexDirection: 'column', justifyContent:'center', height: '75%', padding: "1%", width: '100%' }}>
+                        <Card style={{ display:'flex', flexDirection: 'column', justifyContent:'center', height: '75vh', padding: "1%", width: '100%' }}>
                             <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Vue js Tutorial  </Typography>
-                            <div style={{ overflow: "auto", flex: 1, maxHeight:'75%' }}>
+                            <div style={{ overflow: "auto", flex: 1, maxHeight:'75vh' }}>
                                 <CopyBlock
                                     text={index}
                                     language="html"
@@ -99,7 +121,7 @@ export default function Start() {
                     <Grid item xs={10}></Grid>
                     <Grid item xs={2} key="fot">
 
-                            <Button variant="contained" onClick={Move} color="secondary" style={{ marginBottom: '5%' }}>
+                            <Button variant="contained" onClick={Move} color="secondary" style={{ marginTop: '5%' , marginBottom: '5%' }}>
                                 Παμε στο επομενο
                             </Button>
 

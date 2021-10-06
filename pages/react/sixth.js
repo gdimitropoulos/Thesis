@@ -5,6 +5,7 @@ import React, {
   import Link from 'next/link';
   import { useRouter } from 'next/router';
   import * as moment from 'moment'
+  import { red } from '@mui/material/colors';
   import { Popconfirm } from 'antd';
   import {
     Button,
@@ -17,12 +18,13 @@ import React, {
   } from "@material-ui/core";
   import CheckCircleIcon from '@mui/icons-material/CheckCircle';
   import BlockSharpIcon from '@mui/icons-material/BlockSharp';
-  import testAppCode from "!!raw-loader!../../Components/reactTutorial/ThirdReactTutorial/tutorialAppTest";
-  import Appcode from "!!raw-loader!../../Components/reactTutorial/ThirdReactTutorial/tutorialApp";
-  import indexFile from "!!raw-loader!../../Components/reactTutorial/ThirdReactTutorial/tutorialIndex";
-  import componentCode from "!!raw-loader!../../Components/reactTutorial/ThirdReactTutorial/tutorialComponent";
-  import appcss from "!!raw-loader!../../Components/reactTutorial/ThirdReactTutorial/App.css";
-  import solutionCode from "!!raw-loader!../../Components/reactTutorial/SecondReactTutorial/solution";
+  import testAppCode from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/tutorialAppTest";
+  import Appcode from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/tutorialApp";
+  import indexFile from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/tutorialIndex";
+  import componentCode from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/tutorialComponent";
+  import appcss from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/App.css";
+  import news from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/News";
+  import solutionCode from "!!raw-loader!../../Components/reactTutorial/FifthTutorial/solution";
   import Cookies from 'js-cookie';
   import { useActiveCode } from "@codesandbox/sandpack-react";
   import SyntaxHighlighter from '../../Lib/syntaxHighlighter'; 
@@ -88,7 +90,7 @@ import React, {
       const bodyData ={
         time: moment().diff(time, 'seconds').toString(),
         backspaces: backspaces,
-        tutorialName: 'thirdreact' ,
+        tutorialName: 'sixthreact' ,
         answer : answerShown
       }
       const res = await fetch('/api/finishTutorial', {
@@ -105,7 +107,7 @@ import React, {
           'Επιτυχής καταγραφή ',
           'Επιτυχής καταγραφή της προσπάθειας'
         );
-        await router.push('/react/fourth')
+        await router.push('/react/sixth')
       }else{
         showNotification(
           'error',
@@ -141,6 +143,7 @@ import React, {
   
         });
         window.addEventListener('message', (event) => {
+            console.log(event)
           if (event.data.event == 'test_end') {
             if (event.data.test.status == 'fail') {
               dispatch({ type: 'refresh' });
@@ -204,11 +207,12 @@ import React, {
                     },
                     "/public/App.css": {code: appcss, hidden: true},
                     "index.js": indexFile,
+                    "/News.js": { code: news, active: true},
                     "SetupTest.js": {
                       code: code,
                       hidden: true
                     } ,
-                    "/HelloWorld.js": componentCode
+                    "/Home.js": {code: componentCode, active: true}
                   },
                   dependencies: {
                     "react-markdown": "latest",
@@ -257,6 +261,7 @@ import React, {
                   </Card>
   
                 </Modal>
+  
   
   
                 <Modal

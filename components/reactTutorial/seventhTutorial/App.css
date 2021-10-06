@@ -1,0 +1,134 @@
+* { margin: 0 ; }
+
+#root {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  margin-top: 0px;
+  color: #2c3e50;
+}
+
+em {
+  font-weight: bold;
+}
+
+.image-container {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.image-container img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+h1 {
+  padding: .75rem;
+  background-color: #5919d9;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 900;
+  font-stretch: condensed;
+  line-height: 0.87;
+  letter-spacing: 1.1px;
+  color: #ffffff;
+}
+
+.user {
+  width: '100%';
+  padding: 1.5rem;
+  font-size: .875rem;
+}
+
+.user-information {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.user-information .image-container {
+  width: 100%;
+  height: 100px;
+  border-radius: 50px;
+  margin-right: 2rem;
+}
+
+.user-information h3 {
+  font-size: 1.125rem;
+  font-weight: bold;
+}
+
+.tweet {
+  border: solid black 1px;
+  background-color: #f4f4f4;
+  margin-left: 10%;
+  margin-right: 10%;
+  padding: 1.5rem;
+  margin-bottom: 2px;
+  font-size: .875rem;
+}
+.tweet h3 {
+  font-weight: bold;
+    margin-bottom: 14px;
+
+}
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  font-size: .875rem;
+}
+
+.settings h2 {
+  padding-bottom: 1.1875rem;
+  font-weight: bold;
+  line-height: 1.64;
+}
+
+.settings label {
+  font-weight: bold;
+  font-size: .75rem;
+}
+
+.settings input,
+.settings textarea,
+.settings button {
+  padding: 1rem;
+  border: solid 1px #7098f5;
+}
+
+.settings input::placeholder,
+.settings textarea::placeholder {
+  color: #9b9b9b;
+}
+
+.settings input,
+.settings textarea {
+  margin-bottom: .625rem;
+}
+
+.new-tweet {
+  display: flex;
+}
+
+.new-tweet input {
+  flex-grow: 1;
+  margin-right: 2rem;
+  margin-bottom: 0;
+}
+
+.new-tweet button {
+  cursor: pointer;
+  border-radius: 2px;
+  background-color: #5919d973;
+  color: #ffffff;
+  transition: .25s;
+}
+
+.new-tweet button:hover {
+  background-color: #5919d9;
+}
