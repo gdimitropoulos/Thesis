@@ -16,6 +16,7 @@ import {
   Box,
 } from "@material-ui/core";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { red } from '@mui/material/colors';
 import BlockSharpIcon from '@mui/icons-material/BlockSharp';
 import testAppCode from "!!raw-loader!../../Components/reactTutorial/SecondReactTutorial/tutorialApptest";
 import Appcode from "!!raw-loader!../../Components/reactTutorial/SecondReactTutorial/tutorialApp";
@@ -236,33 +237,32 @@ export default function Start() {
               </SandpackProvider>
 
               <Modal
-                keepMounted
-                open={openSuccess}
-                onClose={handleCloseFail}
-                aria-labelledby="keep-mounted-modal-title"
-                aria-describedby="keep-mounted-modal-description"
-              >
-                <Card styles={{ padding: '1%' }}>
-
-                  <Box sx={style} >
-                    <Typography align="center" styles={{ marginBottom: '20px' }} id="keep-mounted-modal-title" variant="h6" component="h2">
-                      Text in a modal
-
-                    </Typography>
-                    <Box style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'column' }}>
-                      <Typography style={{ marginTop: '2%' }} align="center" id="keep-mounted-modal-description" >
-                        H απάντηση που δώσατε ήταν σωστή
-                      </Typography>
-                      <Button style={{ marginTop: '10%' }} variant="contained" color="primary" onClick={handleCloseSuccess}> Παμε στο επομενο</Button>
+                  keepMounted
+                  open={openSuccess}
+                  onClose={handleCloseFail}
+                  aria-labelledby="keep-mounted-modal-title"
+                  aria-describedby="keep-mounted-modal-description"
+                >
+                  <Card styles={{ padding: '1%' }}>
+  
+                    <Box sx={style} >
+                    <div style={{ width: '100%' , display: 'flex', justifyContent: 'center'}}>
+                      <CheckCircleIcon color="success" styles={{ marginBottom: '20px' }} id="keep-mounted-modal-title" sx={{ fontSize: 80 }} />
+                      </div>
+                      <Box style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'column' }}>
+                        <Typography style={{ marginTop: '2%' }} align="center" id="keep-mounted-modal-description" >
+                          H απάντηση που δώσατε ήταν σωστή
+                        </Typography>
+                        <Button style={{ marginTop: '10%' }} variant="contained" color="primary" onClick={handleCloseSuccess}> Παμε στο επομενο</Button>
+                      </Box>
                     </Box>
-                  </Box>
-                </Card>
-
-              </Modal>
-
-
-
-              <Modal
+                  </Card>
+  
+                </Modal>
+  
+  
+  
+                <Modal
                   keepMounted
                   open={openFail}
                   onClose={handleCloseFail}
@@ -298,7 +298,7 @@ export default function Start() {
 
             >
 
-              <Button variant="contained" color="secondary" style={{ marginBottom: '5%' }}>
+              <Button variant="contained" color="secondary" style={{ marginTop: '4%' , marginBottom: '5%' }}>
                 Show solution
               </Button>
             </Popconfirm>
@@ -316,7 +316,7 @@ export default function Start() {
                   <Box >
                     <div style={{ width: '100%' }}>
                       <Typography style={{ marginTop: '2%', marginBottom: '5%' }} align="center" id="keep-mounted-modal-description" >
-                        Τό αρχείο index.js πρέπει να έχει την εξής μορφή :
+                        Τό αρχείο App.js πρέπει να έχει την εξής μορφή :
                       </Typography>
                     </div>
                     <div style={{ width: '100%' }}>

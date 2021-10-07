@@ -1,9 +1,11 @@
 import React, {
     useState, useEffect, useContext, useMemo,
 } from 'react';
+import Image from 'next/image'
 import jwt from 'jsonwebtoken';
 import { red } from '@mui/material/colors';
 import Link from 'next/link';
+import treePic from '../../public/treefolders.png'
 import { useRouter } from 'next/router';
 import * as moment from 'moment'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -66,7 +68,7 @@ export default function Start() {
     const [openSuccess, setOpenSuccess] = useState(false);
 
     const Move = ()=>{
-        router.push('/secondinfo')
+        router.push('/vueTutorial/info1')
     }
     return (
 
@@ -95,12 +97,27 @@ export default function Start() {
                             </Typography></li>
                             <li>  <Typography variant="subtitle1" style={{ marginTop: '2%' , textAlign: 'justify',width: '100%' }}> 
                              Έπειτα χρησιμοποιώντας την εντολή <span style={{backgroundColor:'#f4f4f4'}}>vue create όνομα_πρότζεκτ</span> μπορούμε να δημιουργήσουμε το πρότζεκτ μας, το οποίο για την πιο καινούρια έκδοση του Vue θα έχει την εξής μορφή :
-                    
-                            </Typography></li>
+                            </Typography>
+                            <Image style={{ marginTop: 5}} src={treePic} alt="Picture of the folders tree" />
+                            <Typography variant="subtitle1" style={{ marginTop: '2%' , textAlign: 'justify',width: '100%' }}>
+                                To index.html που βλέπετε  είναι  η κεντρική σελίδα στην οποία γίνεται render όλη η 
+                                πληροφορία από την Vue js και πιο συγκεκριμένα στο :
+                                <CopyBlock
+                                    text={'<div id="app"></div>'}
+                                    language="html"
+                                    showLineNumbers={false}
+                                    theme={dracula}
+                                    codeBlock
+                                    style={{ marginTop: 10, marginBottom: 10}}
+                                />
+                            </Typography>
+                            </li>
                             </ul>
                           
                 <div style={{ height: '40px', backgroundColor: '#f4f4f4',display: 'flex', justifyContent:'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30}} />  <h3 style={{ marginLeft: '5px', display: 'flex' , flexDirection: 'column' ,justifyContent: 'center'}}>Οδηγίες </h3>  </div>
-
+                <Typography variant="subtitle1" style={{ marginTop: '2%' , textAlign: 'justify',width: '100%' }}> 
+                        Μελετήστε την  θεωρία και τη μορφή του html αρχείου και όταν είστε έτοιμοι πάμε στο επόμενο!
+                 </Typography>
                         </Card>
                     </Grid>
 

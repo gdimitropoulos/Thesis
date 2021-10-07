@@ -5,7 +5,6 @@ import App from "./App";
 
 test("renders learn react link", async () => {
   render(<App />);
-  console.log("her");
   const element = screen.getAllByText(`Read More`);
   console.log(element);
   fireEvent.click(element[2]);

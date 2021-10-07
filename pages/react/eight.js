@@ -2,41 +2,58 @@ import React, {
   useState, useEffect, useContext, useMemo,
 } from 'react';
 import jwt from 'jsonwebtoken';
-import { red } from '@mui/material/colors';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as moment from 'moment'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import BlockSharpIcon from '@mui/icons-material/BlockSharp';
+import { red } from '@mui/material/colors';
 import { Popconfirm } from 'antd';
 import {
   Button,
   Grid,
   Modal,
   Container,
+  Tab,
+  Tabs,
   Typography,
   Card,
   Box,
 } from "@material-ui/core";
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import appvue from "!!raw-loader!../../Components/vueTutorial/thirdTutorial/appvue";
-import mainjs from "!!raw-loader!../../Components/vueTutorial/thirdTutorial/main";
-import helloworld from "!!raw-loader!../../Components/vueTutorial/thirdTutorial/helloworld";
-import testing from "!!raw-loader!../../Components/vueTutorial/thirdTutorial/testing";
-import solutionfile from "!!raw-loader!../../Components/vueTutorial/thirdTutorial/solution";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import BlockSharpIcon from '@mui/icons-material/BlockSharp';
+import testAppCode from "!!raw-loader!../../Components/reactTutorial/eightTutorial/tutorialAppTest";
+import testAppCode1 from "!!raw-loader!../../Components/reactTutorial/eightTutorial/tutorialAppTest1";
+import testAppCode2 from "!!raw-loader!../../Components/reactTutorial/eightTutorial/tutorialAppTest2";
+import Appcode from "!!raw-loader!../../Components/reactTutorial/eightTutorial/tutorialApp";
+import indexFile from "!!raw-loader!../../Components/reactTutorial/eightTutorial/tutorialIndex";
+import componentCode from "!!raw-loader!../../Components/reactTutorial/eightTutorial/tutorialComponent";
+import appcss from "!!raw-loader!../../Components/reactTutorial/eightTutorial/App.css";
+import news from "!!raw-loader!../../Components/reactTutorial/eightTutorial/News";
+import first from "!!raw-loader!../../Components/reactTutorial/eightTutorial/First";
+import second from "!!raw-loader!../../Components/reactTutorial/eightTutorial/Second";
+import third from "!!raw-loader!../../Components/reactTutorial/eightTutorial/Third";
+import solutionCode from "!!raw-loader!../../Components/reactTutorial/eightTutorial/solution";
+import solutionCode1 from "!!raw-loader!../../Components/reactTutorial/eightTutorial/solution1";
+import solutionCode2 from "!!raw-loader!../../Components/reactTutorial/eightTutorial/solution2";
+import Cookies from 'js-cookie';
+import { useActiveCode } from "@codesandbox/sandpack-react";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import {
   SandpackProvider,
   SandpackLayout,
   SandpackCodeEditor,
+  Sandpack,
   SandpackThemeProvider,
   SandpackPreview,
+  FileTabs,
   useSandpack,
+  useSandpackNavigation,
 } from "@codesandbox/sandpack-react";
 import "@codesandbox/sandpack-react/dist/index.css";
+import styles from '../../styles/Home.module.css'
 import showNotification from '../../Lib/notification'
 import { getAppCookies } from '../../Lib/utils'
+import { Backspace } from '@mui/icons-material';
+import { display } from '@mui/system';
 
 let backspaces = 0;
 const time = moment();
@@ -49,16 +66,48 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '50vw',
-  height: '70vh',
+  width: '60vw',
+  height: '80vh',
   bgcolor: 'background.paper',
   borderRadius: '10%',
   boxShadow: 24,
   p: 4,
 };
 
-export default function Start() {
+function a11yProps(index) {
+  return {
+    id: `vertical-tab-${index}`,
+    'aria-controls': `vertical-tabpanel-${index}`,
+  };
+}
+
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+export default function Eight() {
   const router = useRouter();
+  const [value, setValue] = useState(0);
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
+  };
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openFail, setOpenFail] = useState(false);
   const [answerShown, setAnswerShown] = useState(false);
@@ -82,7 +131,7 @@ export default function Start() {
     const bodyData = {
       time: moment().diff(time, 'seconds').toString(),
       backspaces: backspaces,
-      tutorialName: 'thirdvue',
+      tutorialName: 'sixthreact',
       answer: answerShown
     }
     const res = await fetch('/api/finishTutorial', {
@@ -93,14 +142,13 @@ export default function Start() {
       },
       body: JSON.stringify(bodyData),
     });
-    setOpenSuccess(false)
     if (res.status === 200) {
       showNotification(
         'success',
         'Επιτυχής καταγραφή ',
         'Επιτυχής καταγραφή της προσπάθειας'
       );
-      await router.push('/vueTutorial/fourth')
+      await router.push('/react/sixth')
     } else {
       showNotification(
         'error',
@@ -108,49 +156,20 @@ export default function Start() {
         'Κάτι πήγε στραβά'
       );
     }
+    setOpenSuccess(false)
   };
   const handleCloseFail = () => setOpenFail(false);
   const showSolutionModal = () => { setshowSolution(true); setAnswerShown(true) }
-  const correctAnswer = `  import React from "react";
-  
-    export default function App() {
-      return (
-        
-          <div id="Start"> 
-             <h1> Hello World</h1>
-          </div>
-      );
-    }
-    
-    `
+
+
+
 
 
   const SimpleCodeViewer = () => {
     const { sandpack, dispatch, listen } = useSandpack();
     const { files, activePath, setActiveFile, openFile } = sandpack;
-
-
-
-    useEffect(() => {
-      const unsubscribe = listen((msg) => {
-        console.log(msg);
-        if (msg.event == 'test_end') {
-          if (msg.test.status == 'fail') {
-            dispatch({ type: 'refresh' });
-            setActiveFile('/src/App.vue')
-          }
-          statuses.push(event.data.test.status);
-        }
-        if (msg.event == 'total_test_end') {
-          handleOpen();
-        }
-
-
-      });
-
-      console.log("im listening")
-      return unsubscribe;
-    }, [listen]);
+    const { refresh } = useSandpackNavigation();
+    const { code, updateCode } = useActiveCode();
 
 
     useEffect(() => {
@@ -164,16 +183,25 @@ export default function Start() {
         }
 
       });
+      window.addEventListener('message', (event) => {
+        console.log(event)
+        if (event.data.event == 'test_end') {
+          if (event.data.test.status == 'fail') {
+            dispatch({ type: 'refresh' });
+            setActiveFile('/App.js')
+          }
+          statuses.push(event.data.test.status);
+        }
+        if (event.data.event == 'total_test_end') {
+          handleOpen();
+        }
 
-
-
-
-
-
+      });
     }, []);
 
     const runTests = () => { dispatch({ type: 'run-all-tests' }); };
 
+    const codee = files[activePath].code;
 
     return (
       <div style={{ width: '100%', height: '40px' }}>
@@ -191,61 +219,73 @@ export default function Start() {
       <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', height: '80%', marginBottom: '1%', marginTop: '5%', paddingTop: '3%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
         <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
           <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
-            <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
-              <div style={{ marginBottom: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
-              <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}> To πρώτο σας custom Component </Typography>
-              <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
-                Σε αυτό το μάθημα  θα πρέπει να κάνετε import to πρώτο σας <span style={{ fontWeight: 'bold' }}> component </span>!
-              </Typography>
-              <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
-                <span style={{ fontWeight: 'bold' }}>Σημείωση:</span> Θυμηθείτε πως με τον
-                όρο <span style={{ fontWeight: 'bold' }}> component </span> εννοoύμε ένα επαναχρησιμοποιήσιμο κομμάτι
-                κώδικα το οποίο μπορούμε να κάνουμε import όπου χρειάζεται.
-              </Typography>
-              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                Έχουμε αρχικοποιήσει για εσάς το HelloWorld.vue  το οποίο είναι το component που θα πρέπει να χρησιμοποιήσετε. Τώρα είναι λοιπόν η ώρα
-                να εξηγήσουμε εκτενέστερα την δομή <span style={{ backgroundColor: '#f4f4f4' }}>{`<script>`}</span>
-              </Typography>
-              <div style={{ marginTop: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
-              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+            <Card style={{ maxHeight: "80vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
+              <Typography variant="overline" style={{ width: '100%', marginBottom: '2%' }}> React Js Tutorial  </Typography>
+              <Typography variant="subtitle1" style={{ width: '100%', marginBottom: '1%' }}>  Βήμα 2ο </Typography>
+              <Typography variant="subtitle1" style={{ width: '100%', marginBottom: '1%' }}> Στο δεύτερο  στάδιο σας ζητειται να συμπληρώσετε στο αρχείο App.js
+                έτσι ώστε να να κάνετε import ένα το react component που βρισκεται στο button.js φάκελο  </Typography>
+              <Typography variant="subtitle1" style={{ width: '100%' }}>
+                Όπως είδαμε και στο πρώτο στάδιο το React χρησιμοποιεί τα λεγόμενα component για να έχει επαναχρησιμότηττα στον κώδικα ο χρήστης. Ένα react component είναι ένα κομμάτι κώδικα που μπορείς να αρχικοποιήσεις και μετά να το καλέις παντού στον πρότζεκτ σου </Typography>
 
-                Όπως αναφέραμε προηγουμένως έχουμε αρχικοποιήσει για έσας ένα απλό πρότζεκτ που περιέχει το componennt HelloWorld και την βασική δομή ενός Vue js πρότζεκτ.
-                Πάρτε τον χρόνο σας να μελετήσετε τα αρχεία ώστε να καταλάβετε τι περιέχεται στο καθένα!
-              </Typography>
-
-              <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
-                Τροποποιήστε το   <span style={{ backgroundColor: '#f4f4f4' }}>{`<template>`} </span> του App.vue έτσι ώστε να περνάτε ως prop στο Component HelloWorld
-                το κείμενο Hello World .
-              </Typography>
             </Card>
           </Grid>
 
           <Grid item md={12} lg={8}>
             <Card style={{ padding: "1%", height: '75vh', width: '100%' }}>
-              <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Vue js Tutorial  </Typography>
+              <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   React Tutorial  </Typography>
 
-              <SandpackProvider template="vue" customSetup={{
+              <SandpackProvider template="react" customSetup={{
                 files: {
-                  "/src/App.vue": appvue,
-                  "/src/main.js": {
-                    code: mainjs,
+                  // "/index.js": code,
+                  //"/Test.js":testCode,
+                  //"/QuickSort.js": quicksortCode,
+                  //"/BubbleSort.js": bubblesortCode,
+                  //"/index.html": `<div id="root"></div>`
+                  "/App.js": { code: Appcode, active: true },
+                  "/App.test.js": {
+                    code: testAppCode,
+                    hidden: true
                   },
-                  "/components/HelloWorld.vue": helloworld,
-                  "/tests/unit/app.spec.js": { code: testing, hidden: true }
+                  "/Second.test.js": {
+                    code: testAppCode1,
+                    hidden: true
+                  },
+                  "/Third.test.js": {
+                    code: testAppCode2,
+                    hidden: true
+                  },
+                  "/public/App.css": { code: appcss, hidden: true },
+                  "index.js": indexFile,
+                  "/News.js": { code: news, active: true },
+                  "SetupTest.js": {
+                    code: code,
+                    hidden: true
+                  },
+                  "/Home.js": { code: componentCode, active: false },
+                  "/First.js": { code: first },
+                  "/Second.js": { code: second },
+                  "/Third.js": { code: third },
                 },
                 dependencies: {
+                  "react-markdown": "latest",
+                  "jest-matchers": "latest",
+                  "history": "latest",
+                  "react-dom": "latest",
+                  "react-test-renderer": "latest",
+                  "react-router-dom": "latest",
                   "babel-runtime": "latest",
-                  "@vue/test-utils": "^2.0.0-rc.15",
-                  "vue-jest": "latest",
-                  "vue": "^3.2.19",
-                  "vue-template-compiler": "latest",
-                  "vue-loader": "latest",
-
+                  "@testing-library/jest-dom": "^5.14.1",
+                  "@testing-library/react": "^11.2.7",
+                  "@testing-library/user-event": "^12.8.3",
                 },
-              }} entry>
+                entry: '/intex.html'
+
+
+              }}   >
+
                 <SandpackThemeProvider  >
-                  <SimpleCodeViewer />
                   <SandpackLayout theme="codesandbox-dark">
+                    <SimpleCodeViewer />
                     <SandpackCodeEditor showTabs="true" customStyle={{ marginTop: '10px', height: '500px', width: '400px' }}    > </SandpackCodeEditor>
                     <SandpackPreview viewportSize={{ width: 500, height: 500 }} />
                   </SandpackLayout>
@@ -303,10 +343,10 @@ export default function Start() {
               </Modal>
 
 
+
             </Card>
           </Grid>
-          <Grid item xs={10}>
-          </Grid>
+          <Grid item xs={10}></Grid>
           <Grid item xs={2} key="fot">
             <Popconfirm
               title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}
@@ -332,16 +372,43 @@ export default function Start() {
                 <Box sx={style} >
 
                   <Box >
+
                     <div style={{ width: '100%' }}>
-                      <Typography style={{ marginTop: '2%', marginBottom: '5%' }} align="center"  >
-                        Τό template του  App.vue  πρέπει να έχει την εξής μορφή :
-                      </Typography>
-                    </div>
-                    <div style={{ width: '100%' }}>
-                      <SyntaxHighlighter code={solutionfile} language="html" showLineNumbers={true} />
+
+                      <div style={{ width: '100%',display: 'flex', justifyContent:'center' }}>
+                        <Typography  variant="p" style={{ width:'100%', marginTop: '2%', marginBottom: '5%' }} align="center" id="keep-mounted-modal-description" >
+                          Τα αρχεία First.js, Second.js και Third.js πρέπει να έχουν την παρακάτω μορφή:
+                        </Typography>
+                      </div>
+
+                      <div>
+                        <Box sx={{ width: '100%', marginTop: '4%' }}>
+                          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                            <Tabs value={value} onChange={handleTabChange} aria-label="basic tabs example" indicatorColor="primary"
+                              textColor="primary">
+                              <Tab label="First.js" {...a11yProps(0)} />
+                              <Tab label="Second.js" {...a11yProps(1)} />
+                              <Tab label="Third.js" {...a11yProps(2)} />
+                            </Tabs>
+                          </Box>
+                          <TabPanel value={value} index={0}>
+                            <SyntaxHighlighter code={solutionCode} language="javascript" showLineNumbers={true} />
+                          </TabPanel>
+                          <TabPanel value={value} index={1}>
+                            <SyntaxHighlighter code={solutionCode1} language="javascript" showLineNumbers={true} />
+                          </TabPanel>
+                          <TabPanel value={value} index={2}>
+                            <SyntaxHighlighter code={solutionCode2} language="javascript" showLineNumbers={true} />
+                          </TabPanel>
+                        </Box>
+                      </div>
+
+
+
+
                     </div>
                     <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                      <Button size="large" style={{ borderRadius: '50%', width: '40%', marginBottom: '1%', marginTop: '10%' }} variant="contained" color="primary" onClick={handlecloseSolution}>CLOSE</Button>
+                      <Button size="large" style={{ borderRadius: '50%', width: '40%', marginBottom: '1%', marginTop: '5%' }} variant="contained" color="primary" onClick={handlecloseSolution}>CLOSE</Button>
                     </div>
                   </Box>
                 </Box>
@@ -352,7 +419,7 @@ export default function Start() {
           </Grid>
         </Grid>
       </div>
-    </div>
+    </div >
   )
 }
 

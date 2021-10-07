@@ -305,7 +305,7 @@ import React, {
              
                       >
                       
-                              <Button variant="contained" color= "secondary" style={{ marginBottom: '5%'}}>
+                              <Button variant="contained" color= "secondary" style={{ marginTop: '4%', marginBottom: '5%'}}>
                                   Show solution
                               </Button>
                       </Popconfirm>
@@ -323,7 +323,7 @@ import React, {
                       <Box >
                         <div style={{ width: '100%'}}>
                         <Typography style={{ marginTop: '2%', marginBottom: '5%' }} align="center" id="keep-mounted-modal-description" >
-                         Τό αρχείο index.js πρέπει να έχει την εξής μορφή :  
+                         Τό αρχείο Home.js πρέπει να έχει την εξής μορφή :  
                         </Typography>
                         </div>
                         <div style={{ width: '100%'}}>

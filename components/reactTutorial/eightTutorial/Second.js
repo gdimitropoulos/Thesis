@@ -6,7 +6,9 @@ class Second extends React.Component {
   render() {
 
     return <div> <h2> I am on the Second page</h2>
-    <Link to='/'>Go back</Link></div>;
+        {/* write code below */}
+
+    </div>;
   }
 }
 

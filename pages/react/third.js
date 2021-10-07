@@ -15,6 +15,7 @@ import React, {
     Card,
     Box,
   } from "@material-ui/core";
+  import { red } from '@mui/material/colors';
   import CheckCircleIcon from '@mui/icons-material/CheckCircle';
   import BlockSharpIcon from '@mui/icons-material/BlockSharp';
   import testAppCode from "!!raw-loader!../../Components/reactTutorial/ThirdReactTutorial/tutorialAppTest";
@@ -22,7 +23,7 @@ import React, {
   import indexFile from "!!raw-loader!../../Components/reactTutorial/ThirdReactTutorial/tutorialIndex";
   import componentCode from "!!raw-loader!../../Components/reactTutorial/ThirdReactTutorial/tutorialComponent";
   import appcss from "!!raw-loader!../../Components/reactTutorial/ThirdReactTutorial/App.css";
-  import solutionCode from "!!raw-loader!../../Components/reactTutorial/SecondReactTutorial/solution";
+  import solutionCode from "!!raw-loader!../../Components/reactTutorial/ThirdReactTutorial/solution";
   import Cookies from 'js-cookie';
   import { useActiveCode } from "@codesandbox/sandpack-react";
   import SyntaxHighlighter from '../../Lib/syntaxHighlighter'; 
@@ -297,7 +298,7 @@ import React, {
              
                       >
                       
-                              <Button variant="contained" color= "secondary" style={{ marginBottom: '5%'}}>
+                              <Button variant="contained" color= "secondary" style={{ marginTop: '4%', marginBottom: '5%'}}>
                                   Show solution
                               </Button>
                       </Popconfirm>
@@ -315,7 +316,7 @@ import React, {
                       <Box >
                         <div style={{ width: '100%'}}>
                         <Typography style={{ marginTop: '2%', marginBottom: '5%' }} align="center" id="keep-mounted-modal-description" >
-                         Τό αρχείο index.js πρέπει να έχει την εξής μορφή :  
+                         Τό αρχείο App.js πρέπει να έχει την εξής μορφή :  
                         </Typography>
                         </div>
                         <div style={{ width: '100%'}}>

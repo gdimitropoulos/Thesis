@@ -23,6 +23,9 @@ import mainjs from "!!raw-loader!../../Components/vueTutorial/firstTutorial/inde
 import testing from "!!raw-loader!../../Components/vueTutorial/firstTutorial/testing";
 import solutionfile from "!!raw-loader!../../Components/vueTutorial/firstTutorial/solution";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import Image from 'next/image'
 import {
   SandpackProvider,
   SandpackLayout,
@@ -177,23 +180,35 @@ export default function Start() {
   return (
 
     <div style={{ height: '60%' }}>
-        <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', height: '80%', marginBottom: '1%', marginTop: '5%', paddingTop: '3%', paddingBottom: '3%',paddingLeft: '2%', paddingRight: '2%' }}>
+      <div style={{ height: '80%', marginBottom: '1%', marginTop: '2%', paddingTop: '2%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
         <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
           <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
-          <Card style={{ maxHeight: '80vh', overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
-              <Typography variant="overline" style={{ width: '100%', marginBottom: '2%' }}>  Say Hello with Vue Js  </Typography>
-              <Typography variant="subtitle1" style={{ width: '100%', marginBottom: '1%' }}>  Καλώς ήρθατε στο tutorial της vue js! </Typography>
-              <Typography variant="subtitle1" style={{ width: '100%' }}>
-                 To vue js είναι  ένα  open-source MVM front end JavaScript framework και χρησιμοποιείται ευρεως για την ανάπτυκη single page applications
-                
-                τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής 
-                αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components
-                 τα οποία γίνονται
-                render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε. </Typography>
+            <Card style={{ maxHeight: '80vh', overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
+              <div style={{ marginBottom: '2%' , height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
+              <Typography variant="h6" style={{ marginBottom: '2%' ,width: '100%', marginBottom: '1%' }}> To πρώτο σας Hello World </Typography>
+              <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
+                Ήρθε η ώρα να γνωρίσετε την Vue js στην πράξη!
+              </Typography>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%' , textAlign: 'justify', width: '100%' }}>
+                 Για αρχή θα εκτυπώσουμε στην οθόνη ένα απλό μήνυμα "Hello World" με βάση όσα γνωρίζετε απο την απλή Html.
+              </Typography>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%' , textAlign: 'justify', width: '100%' }}>
+                 Έχουμε αρχικοποιήσει για έσας ένα απλό πρότζεκτ ακολουθώντας όσα αναφέραμε προηγουμένως. Από τα αρχεία στα οποία αναφερθήκαμε συνοπτικά
+                 στα προηγούμενα μαθήματα, εμφανίζονται μόνο όσα  απαιτούν τροποποιήσεις από εσάς ή κρίνονται απαραίτητα  ώστε να γνωρίσετε την Vue js σε ένα εισαγωγικό επίπεδο.
+              </Typography>
+              <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%',marginTop: '1%' }}>
+                 Στα δεξιά βλέπετε το αρχείο App.vue του οποίου η δομή {`<template>`} είναι αρχικοποιημένη με απλή Html. Όσα γνωρίζετε από την Html
+                 μπορούν να χρησιμοποιηθούν και στην Vue! 
+              </Typography>
 
+
+              <div style={{ marginTop: '2%' , height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
+              <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
+                Τροποποιήστε  τον κώδικα στη γραμμή 4 ώστε να εκτυπώνεται το κείμενο Hello World  και πατήστε Run Tests.
+              </Typography>
             </Card>
           </Grid>
-          
+
           <Grid item md={12} lg={8}>
             <Card style={{ padding: "1%", width: '100%' }}>
               <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Vue js Tutorial  </Typography>
@@ -219,7 +234,7 @@ export default function Start() {
                 <SandpackThemeProvider  >
                   <SimpleCodeViewer />
                   <SandpackLayout theme="codesandbox-dark">
-                    <SandpackCodeEditor showTabs="true" customStyle={{ marginTop: '10px', height: '500px', width: '400px' }}    > </SandpackCodeEditor>
+                    <SandpackCodeEditor showLineNumbers={true} showTabs="true" customStyle={{ marginTop: '10px', height: '500px', width: '400px' }}    > </SandpackCodeEditor>
                     <SandpackPreview viewportSize={{ width: 500, height: 500 }} />
                   </SandpackLayout>
                 </SandpackThemeProvider>
@@ -288,8 +303,8 @@ export default function Start() {
 
             >
 
-              <Button variant="contained" color="secondary" style={{ marginTop:'4%', marginBottom: '2%' }}>
-                Show solution
+              <Button variant="contained" color="secondary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+                λυση
               </Button>
             </Popconfirm>
             <Modal
@@ -304,7 +319,7 @@ export default function Start() {
                 <Box sx={style} >
 
                   <Box >
-                    <div style={{  width: '100%' }}>
+                    <div style={{ width: '100%' }}>
                       <Typography style={{ marginTop: '2%', marginBottom: '5%' }} align="center"  >
                         Τό template του  App.vue  πρέπει να έχει την εξής μορφή :
                       </Typography>

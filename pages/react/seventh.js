@@ -18,13 +18,18 @@ import React, {
   } from "@material-ui/core";
   import CheckCircleIcon from '@mui/icons-material/CheckCircle';
   import BlockSharpIcon from '@mui/icons-material/BlockSharp';
-  import testAppCode from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/tutorialAppTest";
-  import Appcode from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/tutorialApp";
-  import indexFile from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/tutorialIndex";
-  import componentCode from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/tutorialComponent";
-  import appcss from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/App.css";
-  import news from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/News";
-  import solutionCode from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/solution";
+  import testAppCode from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/tutorialAppTest";
+  import testAppCode1 from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/tutorialAppTest1";
+  import testAppCode2 from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/tutorialAppTest2";
+  import Appcode from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/tutorialApp";
+  import indexFile from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/tutorialIndex";
+  import componentCode from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/tutorialComponent";
+  import appcss from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/App.css";
+  import news from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/News";
+  import first from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/First";
+  import second from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/Second";
+  import third from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/Third";
+  import solutionCode from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/solution";
   import Cookies from 'js-cookie';
   import { useActiveCode } from "@codesandbox/sandpack-react";
   import SyntaxHighlighter from '../../Lib/syntaxHighlighter'; 
@@ -107,7 +112,7 @@ import React, {
           'Επιτυχής καταγραφή ',
           'Επιτυχής καταγραφή της προσπάθειας'
         );
-        await router.push('/react/sixth')
+        await router.push('/react/eight')
       }else{
         showNotification(
           'error',
@@ -200,29 +205,42 @@ import React, {
                     //"/QuickSort.js": quicksortCode,
                     //"/BubbleSort.js": bubblesortCode,
                     //"/index.html": `<div id="root"></div>`
-                    "/App.js": Appcode,
+                    "/App.js": {code: Appcode, active : true},
                     "/App.test.js": {
                       code: testAppCode,
                       hidden: true
                     },
+                    "/Second.test.js": {
+                        code: testAppCode1,
+                        hidden: true
+                      },
+                      "/Third.test.js": {
+                        code: testAppCode2,
+                        hidden: true
+                      },
                     "/public/App.css": {code: appcss, hidden: true},
                     "index.js": indexFile,
                     "/News.js": { code: news, active: true},
                     "SetupTest.js": {
                       code: code,
                       hidden: true
-                    } ,
-                    "/Home.js": {code: componentCode, active: true}
+                    },
+                    "/Home.js": {code: componentCode, active: false},
+                    "/First.js": {code: first },
+                    "/Second.js": { code: second},
+                    "/Third.js": {code: third},
                   },
                   dependencies: {
                     "react-markdown": "latest",
                     "jest-matchers": "latest",
+                    "history": "latest",
                     "react-dom": "latest",
                     "react-test-renderer": "latest",
                     "react-router-dom": "latest",
                     "babel-runtime": "latest",
-                    "@testing-library/react": "latest",
-                    "@testing-library/jest-dom": "latest"
+                    "@testing-library/jest-dom": "^5.14.1",
+                    "@testing-library/react": "^11.2.7",
+                    "@testing-library/user-event": "^12.8.3",
                   },
                   entry: '/intex.html'
   
@@ -302,7 +320,7 @@ import React, {
              
                       >
                       
-                              <Button variant="contained" color= "secondary" style={{ marginTop: '4%', marginBottom: '5%'}}>
+                              <Button variant="contained" color= "secondary" style={{  marginTop: '4%',marginBottom: '5%'}}>
                                   Show solution
                               </Button>
                       </Popconfirm>
@@ -320,7 +338,7 @@ import React, {
                       <Box >
                         <div style={{ width: '100%'}}>
                         <Typography style={{ marginTop: '2%', marginBottom: '5%' }} align="center" id="keep-mounted-modal-description" >
-                         Τό αρχείο News.js πρέπει να έχει την εξής μορφή :  
+                         Τό αρχείο App.js πρέπει να έχει την εξής μορφή :  
                         </Typography>
                         </div>
                         <div style={{ width: '100%'}}>

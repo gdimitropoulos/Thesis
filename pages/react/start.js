@@ -335,7 +335,7 @@ export default function Start() {
                     <Box >
                       <div style={{ width: '100%'}}>
                       <Typography style={{ marginTop: '2%', marginBottom: '5%' }} align="center"  >
-                       Τό αρχείο index.js πρέπει να έχει την εξής μορφή :  
+                       Τό αρχείο App.js πρέπει να έχει την εξής μορφή :  
                       </Typography>
                       </div>
                       <div style={{ width: '100%'}}>
