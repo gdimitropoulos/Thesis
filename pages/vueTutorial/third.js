@@ -1,3 +1,4 @@
+/* eslint-disable  react/no-unescaped-entities*/
 import React, {
   useState, useEffect, useContext, useMemo,
 } from 'react';
@@ -25,6 +26,7 @@ import mainjs from "!!raw-loader!../../Components/vueTutorial/thirdTutorial/main
 import helloworld from "!!raw-loader!../../Components/vueTutorial/thirdTutorial/helloworld";
 import testing from "!!raw-loader!../../Components/vueTutorial/thirdTutorial/testing";
 import solutionfile from "!!raw-loader!../../Components/vueTutorial/thirdTutorial/solution";
+import { CopyBlock, dracula } from "react-code-blocks";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import {
   SandpackProvider,
@@ -193,29 +195,112 @@ export default function Start() {
           <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
             <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
               <div style={{ marginBottom: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
-              <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}> To πρώτο σας custom Component </Typography>
+              <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}> Ας μετατρέψουμε το προηγούμενο πρόγραμμα σε δυναμικό! </Typography>
               <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
-                Σε αυτό το μάθημα  θα πρέπει να κάνετε import to πρώτο σας <span style={{ fontWeight: 'bold' }}> component </span>!
+                Σε αυτό το μάθημα  θα πρέπει να χρησιμοποιήσετε χαρακτηριστικά της Vue js  ωστε το πρόγραμμά μας, να αποκτήσει δυναμικότητα.
               </Typography>
-              <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
-                <span style={{ fontWeight: 'bold' }}>Σημείωση:</span> Θυμηθείτε πως με τον
-                όρο <span style={{ fontWeight: 'bold' }}> component </span> εννοoύμε ένα επαναχρησιμοποιήσιμο κομμάτι
-                κώδικα το οποίο μπορούμε να κάνουμε import όπου χρειάζεται.
+
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Έχουμε αρχικοποιήσει για εσάς το HelloWorld.vue  το οποίο είναι το component που θα πρέπει να χρησιμοποιήσετε
+                με ακριβώς τον ίδιο τρόπο όπως και στο προηγούμενο μάθημα.
               </Typography>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                Έχουμε αρχικοποιήσει για εσάς το HelloWorld.vue  το οποίο είναι το component που θα πρέπει να χρησιμοποιήσετε. Τώρα είναι λοιπόν η ώρα
-                να εξηγήσουμε εκτενέστερα την δομή <span style={{ backgroundColor: '#f4f4f4' }}>{`<script>`}</span>
+                Ένα πολύ σημαντικό feature της Vue js ειναι τα λεγόμενα <span style={{ fontWeight: 'bold' }}>directives</span> τα οποία είναι ένα συντακτικό για τα  attributes που βάζουμε σε Html tags και components,
+                και προσφέρουν την δυναμικότητα που επιθυμούμε. Εμείς θα εξετάσουμε μόνο μερικά εξ αυτών, τα οποία είναι τα πιο βασικά.
+                Για την πλήρη λίστα με τα directives της Vue μπορείτε να ανατρέξετε <a href="https://v3.vuejs.org/api/directives.html" rel="noreferrer" target="_blank" >εδώ</a>.
+
               </Typography>
-              <div style={{ marginTop: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Ένα από τα  πιο συχνά χρησιμοποιούμενα directives είναι το <span style={{ fontWeight: 'bold' }}> v-bind</span>,  το οποίο "δένει"
+                μια μεταβλήτη με ένα attribute έτσι ώστε το attribute να έχει πάντα την τιμή αυτής της μεταβλητής.
+              </Typography>
+              <CopyBlock
+                text={`<template>
+  <h1 v-bind:id="propName">{{ propName }}</h1>
+</template>
+                
+<script>
+   export default {
+     name: 'App',
+     props: {
+      propName: String
+          }
+      }
+</script>,`}
+                language="html"
+                showLineNumbers={true}
+                theme={dracula}
+                codeBlock
+              />
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Στο παραπάνω παράδειγμα βλέπουμε να συνδέεται το prop με όνομα propName με το id του {`<h1> tag`} έτσι ώστε το id να παίρνει πάντα την τιμή της μεταβλητής propName.
+              </Typography>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Σε κάθε component που φτιάχνουμε μπορούμε να αρχικοποιήσουμε δεδομένα. Για να το κάνουμε αυτό
+                χρησιμοποιούμε την συνάρτηση <span style={{ fontWeight: 'bold' }}>data() </span> με την οποία μπορούμε να επιστρέψουμε ότι δεδομένα θέλουμε.
+                Ένα απλό παράδειγμα της συνάρτησης αυτής δίνεται παρακάτω :
+              </Typography>
+              <CopyBlock
+                text={`<template>
+  <div id="app">
+    <h2>{{title}} </h2>
+  </div>
+</template>
+<script>
+  export default {
+   name: 'App',
+   data(){
+     return{
+       title: 'welcome in vue data function'
+       }
+    }
+  }
+</script>`}
+                language="html"
+                showLineNumbers={true}
+                theme={dracula}
+                codeBlock
+              />
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Είναι σημαντικό να προσθέσουμε ότι όταν θέλουμε να κάνουμε access σε κάποια μεταβλητή μέσα στο scope της export default μπορούμε να το
+                κάνουμε μέσω του keyword <span style={{ fontWeight: 'bold' }}> this </span> .
+              </Typography>
+              <CopyBlock
+                text={`<template>
+  <div id="app">
+    <h2>{{title}} </h2>
+  </div>
+</template>
+<script>
+  export default {
+   name: 'App',
+   props: {
+     propName: 'Hello World'
+   }
+   data(){
+     return{
+       title: this.propName
+       }
+    }
+  }
+</script>`}
+                language="html"
+                showLineNumbers={true}
+                theme={dracula}
+                codeBlock
+              />
+
+
+              <div style={{ marginTop: '4%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
 
-                Όπως αναφέραμε προηγουμένως έχουμε αρχικοποιήσει για έσας ένα απλό πρότζεκτ που περιέχει το componennt HelloWorld και την βασική δομή ενός Vue js πρότζεκτ.
+                Όπως αναφέραμε προηγουμένως έχουμε αρχικοποιήσει για έσας ένα απλό πρότζεκτ που περιέχει το component HelloWorld και την βασική δομή ενός Vue js πρότζεκτ.
                 Πάρτε τον χρόνο σας να μελετήσετε τα αρχεία ώστε να καταλάβετε τι περιέχεται στο καθένα!
               </Typography>
 
               <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
                 Τροποποιήστε το   <span style={{ backgroundColor: '#f4f4f4' }}>{`<template>`} </span> του App.vue έτσι ώστε να περνάτε ως prop στο Component HelloWorld
-                το κείμενο Hello World .
+                την μεταβλητή mesage  που έχουμε αρχικοποιήσει στo data() μέσω του <span style={{ fontWeight: 'bold' }}> v-bind </span> directive.
               </Typography>
             </Card>
           </Grid>
@@ -316,8 +401,8 @@ export default function Start() {
 
             >
 
-              <Button variant="contained" color="secondary" style={{ marginTop: '4%', marginBottom: '5%' }}>
-                Show solution
+              <Button variant="contained" color="secondary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+                λυση
               </Button>
             </Popconfirm>
             <Modal

@@ -7,5 +7,5 @@ import Home from './components/Home';
 test('renders learn react link', async () => {
   render(<Home message="ewnewje" />);
   const element = screen.getByTestId('test');
-  expect(element).toHaveTextContent(/Νέα Πανεπηστημίου πατρών/i)
+  expect(element).toHaveTextContent(/Νέα πανεπιστημίου Πατρών/i)
 });

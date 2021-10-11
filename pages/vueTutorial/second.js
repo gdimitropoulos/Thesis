@@ -261,7 +261,7 @@ export default function Start() {
               <div style={{ marginTop: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
 
-                Όπως αναφέραμε προηγουμένως έχουμε αρχικοποιήσει για έσας ένα απλό πρότζεκτ που περιέχει το componennt HelloWorld και την βασική δομή ενός Vue js πρότζεκτ.
+                Όπως αναφέραμε προηγουμένως έχουμε αρχικοποιήσει για έσας ένα απλό πρότζεκτ που περιέχει το component HelloWorld και την βασική δομή ενός Vue js πρότζεκτ.
                 Πάρτε τον χρόνο σας να μελετήσετε τα αρχεία ώστε να καταλάβετε τι περιέχεται στο καθένα!
               </Typography>
 
@@ -269,8 +269,8 @@ export default function Start() {
                 Τροποποιήστε το   <span style={{ backgroundColor: '#f4f4f4' }}>{`<template>`} </span> του App.vue έτσι ώστε να περνάτε ως prop στο Component HelloWorld
                 το κείμενο Hello World .
               </Typography>
-              
-              
+
+
             </Card>
           </Grid>
           <Grid item md={12} lg={8}>
@@ -369,8 +369,8 @@ export default function Start() {
 
             >
 
-              <Button variant="contained" color="secondary" style={{ marginTop: '4%', marginBottom: '5%' }}>
-                Show solution
+              <Button variant="contained" color="secondary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+                λυση
               </Button>
             </Popconfirm>
             <Modal

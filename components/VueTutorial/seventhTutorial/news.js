@@ -12,8 +12,6 @@
 export default {
   name: 'Home',
   props: {
-      author : String,
-      message : String,
       articles: Array
     }
 }

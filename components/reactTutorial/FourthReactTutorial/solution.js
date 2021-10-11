@@ -8,8 +8,8 @@ class Home extends React.Component {
   }
 
   componentDidMount(){
-      // change state here so every time it mounts message is 'Νέα Πανεπηστημίου πατρών'
-        this.setState({message: 'Νέα Πανεπηστημίου πατρών'});
+      // change state here so every time it mounts message is ' Νέα πανεπιστημίου Πατρών'
+        this.setState({message: ' Νέα πανεπιστημίου Πατρών'});
     }
   render() {
 

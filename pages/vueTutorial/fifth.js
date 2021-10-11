@@ -1,122 +1,127 @@
+/* eslint-disable  react/no-unescaped-entities*/
 import React, {
-    useState, useEffect, useContext, useMemo,
-  } from 'react';
-  import jwt from 'jsonwebtoken';
-  import { red } from '@mui/material/colors';
-  import Link from 'next/link';
-  import { useRouter } from 'next/router';
-  import * as moment from 'moment'
-  import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-  import BlockSharpIcon from '@mui/icons-material/BlockSharp';
-  import { Popconfirm } from 'antd';
-  import {
-    Button,
-    Grid,
-    Modal,
-    Container,
-    Typography,
-    Card,
-    Box,
-  } from "@material-ui/core";
-  import appvue from "!!raw-loader!../../Components/vueTutorial/fifthTutorial/appvue";
-  import mainjs from "!!raw-loader!../../Components/vueTutorial/fifthTutorial/main";
-  import helloworld from "!!raw-loader!../../Components/vueTutorial/fifthTutorial/news";
-  import testing from "!!raw-loader!../../Components/vueTutorial/fifthTutorial/testing";
-  import solutionfile from "!!raw-loader!../../Components/vueTutorial/fifthTutorial/solution";
+  useState, useEffect, useContext, useMemo,
+} from 'react';
+import Image from 'next/image'
+import jwt from 'jsonwebtoken';
+import { red } from '@mui/material/colors';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import * as moment from 'moment'
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import { CopyBlock, dracula } from "react-code-blocks";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import BlockSharpIcon from '@mui/icons-material/BlockSharp';
+import treePic from '../../public/array.png'
+import { Popconfirm } from 'antd';
+import {
+  Button,
+  Grid,
+  Modal,
+  Container,
+  Typography,
+  Card,
+  Box,
+} from "@material-ui/core";
+import appvue from "!!raw-loader!../../Components/vueTutorial/fifthTutorial/appvue";
+import mainjs from "!!raw-loader!../../Components/vueTutorial/fifthTutorial/main";
+import helloworld from "!!raw-loader!../../Components/vueTutorial/fifthTutorial/news";
+import testing from "!!raw-loader!../../Components/vueTutorial/fifthTutorial/testing";
+import solutionfile from "!!raw-loader!../../Components/vueTutorial/fifthTutorial/solution";
+import Cookies from 'js-cookie';
+import { useActiveCode } from "@codesandbox/sandpack-react";
+import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
+import {
+  SandpackProvider,
+  SandpackLayout,
+  SandpackCodeEditor,
+  Sandpack,
+  FileExplorer,
+  SandpackThemeProvider,
+  SandpackPreview,
+  FileTabs,
+  useSandpack,
+  useSandpackNavigation,
+} from "@codesandbox/sandpack-react";
+import "@codesandbox/sandpack-react/dist/index.css";
+import showNotification from '../../Lib/notification'
+import { getAppCookies } from '../../Lib/utils'
 
-  import Cookies from 'js-cookie';
-  import { useActiveCode } from "@codesandbox/sandpack-react";
-  import SyntaxHighlighter from '../../Lib/syntaxHighlighter'; 
-  import {
-    SandpackProvider,
-    SandpackLayout,
-    SandpackCodeEditor,
-    Sandpack,
-    FileExplorer,
-    SandpackThemeProvider,
-    SandpackPreview,
-    FileTabs,
-    useSandpack,
-    useSandpackNavigation,
-  } from "@codesandbox/sandpack-react";
-  import "@codesandbox/sandpack-react/dist/index.css";
-  import showNotification from '../../Lib/notification'
-  import { getAppCookies } from '../../Lib/utils'
-  
-  let backspaces = 0;
-  const time = moment();
-  
-  const style = {
-    position: 'absolute',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '50vw',
-    height: '70vh',
-    bgcolor: 'background.paper',
-    borderRadius: '10%',
-    boxShadow: 24,
-    p: 4,
+let backspaces = 0;
+const time = moment();
+
+const style = {
+  position: 'absolute',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '50vw',
+  height: '70vh',
+  bgcolor: 'background.paper',
+  borderRadius: '10%',
+  boxShadow: 24,
+  p: 4,
+};
+
+export default function Start() {
+  const router = useRouter();
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openFail, setOpenFail] = useState(false);
+  const [answerShown, setAnswerShown] = useState(false);
+  const [showSolution, setshowSolution] = useState(false);
+
+  let statuses = [];
+  const handleOpen = () => {
+    if (statuses.includes('fail')) {
+      setOpenFail(true);
+    } else {
+      setOpenSuccess(true);
+    }
+    statuses = [];
+  }
+
+  const handlecloseSolution = async () => {
+    setshowSolution(false)
+  }
+  const handleCloseSuccess = async () => {
+    console.log(moment().diff(time, 'seconds'));
+    const bodyData = {
+      time: moment().diff(time, 'seconds').toString(),
+      backspaces: backspaces,
+      tutorialName: 'fifthvue',
+      answer: answerShown
+    }
+    const res = await fetch('/api/finishTutorial', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(bodyData),
+    });
+    setOpenSuccess(false)
+    if (res.status === 200) {
+      showNotification(
+        'success',
+        'Επιτυχής καταγραφή ',
+        'Επιτυχής καταγραφή της προσπάθειας'
+      );
+      await router.push('/vueTutorial/sixth')
+    } else {
+      showNotification(
+        'error',
+        'Σφάλμα ',
+        'Κάτι πήγε στραβά'
+      );
+    }
   };
-  
-  export default function Start() {
-    const router = useRouter();
-    const [openSuccess, setOpenSuccess] = useState(false);
-    const [openFail, setOpenFail] = useState(false);
-    const [answerShown, setAnswerShown] = useState(false);
-    const [showSolution, setshowSolution] = useState(false);
-  
-    let statuses = [];
-    const handleOpen = () => {
-      if (statuses.includes('fail')) {
-        setOpenFail(true);
-      } else {
-        setOpenSuccess(true);
-      }
-      statuses = [];
-    }
-    
-    const handlecloseSolution = async () => {
-      setshowSolution(false)
-    }
-    const handleCloseSuccess = async () => {
-      console.log(moment().diff(time, 'seconds'));
-      const bodyData ={
-        time: moment().diff(time, 'seconds').toString(),
-        backspaces: backspaces,
-        tutorialName: 'fifthvue' ,
-        answer : answerShown
-      }
-      const res = await fetch('/api/finishTutorial', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(bodyData),
-      });
-      setOpenSuccess(false)
-      if (res.status === 200) {
-        showNotification(
-          'success',
-          'Επιτυχής καταγραφή ',
-          'Επιτυχής καταγραφή της προσπάθειας'
-        );
-        await router.push('/vueTutorial/sixth')
-      }else{
-        showNotification(
-          'error',
-          'Σφάλμα ',
-          'Κάτι πήγε στραβά'
-        );
-      }
-    };
-    const handleCloseFail = () => setOpenFail(false);
-    const showSolutionModal = () => {setshowSolution(true); setAnswerShown(true)}
-    const correctAnswer= `  import React from "react";
+  const handleCloseFail = () => setOpenFail(false);
+  const showSolutionModal = () => { setshowSolution(true); setAnswerShown(true) }
+  const correctAnswer = `  import React from "react";
   
     export default function App() {
       return (
@@ -128,18 +133,18 @@ import React, {
     }
     
     `
-  
-  
-    const SimpleCodeViewer = () => {
-      const { sandpack, dispatch, listen } = useSandpack();
-      const { files, activePath, setActiveFile, openFile } = sandpack;
-  
 
-      
+
+  const SimpleCodeViewer = () => {
+    const { sandpack, dispatch, listen } = useSandpack();
+    const { files, activePath, setActiveFile, openFile } = sandpack;
+
+
+
     useEffect(() => {
-      const unsubscribe  = listen((msg) => {
+      const unsubscribe = listen((msg) => {
         console.log(msg);
-         if (msg.event == 'test_end') {
+        if (msg.event == 'test_end') {
           if (msg.test.status == 'fail') {
             dispatch({ type: 'refresh' });
             setActiveFile('/src/App.vue')
@@ -149,88 +154,184 @@ import React, {
         if (msg.event == 'total_test_end') {
           handleOpen();
         }
-  
-  
+
+
       });
-      
+
       console.log("im listening")
       return unsubscribe;
     }, [listen]);
-  
-     
-      useEffect(() => {
-  
-        window.addEventListener('keydown', (event) => {
-          if (event.path[0].className == 'cm-content') {
-            console.log(event);
-            if (event.key == 'Backspace') {
-              backspaces++;
-            }
+
+
+    useEffect(() => {
+
+      window.addEventListener('keydown', (event) => {
+        if (event.path[0].className == 'cm-content') {
+          console.log(event);
+          if (event.key == 'Backspace') {
+            backspaces++;
           }
-  
-        });
-  
-     
-          
-          
-  
-        
-      }, []);
-  
-      const runTests = () => {dispatch({type: 'run-all-tests' });};
-  
-  
-      return (
-        <div style={{ width: '100%', height: '40px' }}>
-          <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }} onClick={runTests} > Run Tests  </Button>;
-        </div>
-      );
-    };
-  
-    const code = `import '@testing-library/jest-dom';
-    `
-  
+        }
+
+      });
+
+
+
+
+
+
+    }, []);
+
+    const runTests = () => { dispatch({ type: 'run-all-tests' }); };
+
+
     return (
-  
-      <div style={{ height: '60%' }}>
-      <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', height: '80%', marginBottom: '1%', marginTop: '5%', paddingTop: '3%', paddingBottom: '3%',paddingLeft: '2%', paddingRight: '2%' }}>
-       <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
-         <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4}  key="geo">
-           <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
-                <Typography variant="overline" style={{ width: '100%', marginBottom: '2%' }}>  Say Hello with React Js  </Typography>
-                <Typography variant="subtitle1" style={{ width: '100%', marginBottom: '1%' }}>  Καλώς ήρθατε στο tutorial της react! </Typography>
-                <Typography variant="subtitle1" style={{ width: '100%', marginBottom: '1%' }}> Στο πρώτο στάδιο σας ζητειται να συμπληρώσετε στο αρχείο App.js
-                  έτσι ώστε να τυπώνεται το μήνυμα Hello World! </Typography>
-                <Typography variant="subtitle1" style={{ width: '100%' }}> Στα αρχεία index.js και App.js βλέπουμε την αρχική κατάσταση που βρίσκοντα
-                  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
-                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε.  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
-                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε.  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
-                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε.  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
-                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε.  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
-                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε.  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
-                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε.  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
-                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε.  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
-                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε.  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
-                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε.  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
-                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε.  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
-                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε.  τα αρχεία μετά την εκτέλεση του create-react-app που είναι ο ποιο δημοφιλής αρχικοποιητής του react js.Μπορούμε να παρατηρήσουμε ότι η React λειτουργεί με components τα οποία γίνονται
-                  render σε ένα html αρχείο το οποίο αυτήν την στιγμή για λόγους ευχρήστιας δεν σας δείχνουμε. </Typography>
-  
-              </Card>
-            </Grid>
-            
-            <Grid item md={12} lg={8}>
-              <Card style={{ height: '75vh', padding: "1%", width: '100%' }}>
+      <div style={{ width: '100%', height: '40px' }}>
+        <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }} onClick={runTests} > Run Tests  </Button>;
+      </div>
+    );
+  };
+
+  const code = `import '@testing-library/jest-dom';
+    `
+
+  return (
+
+    <div style={{ height: '60%' }}>
+      <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', height: '80%', marginBottom: '1%', marginTop: '5%', paddingTop: '3%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
+        <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
+          <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
+            <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
+              <div style={{ marginBottom: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
+              <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}> Aς εμβαθύνουμε λίγο στα directives! </Typography>
+              <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
+                Σε αυτό το μάθημα  θα πρέπει να χρησιμοποιήσετε τo directive <span style={{ fontWeight: 'bold' }}>v-for</span> της Vue js.
+              </Typography>
+
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Στο προηγούμενο μάθημα διδαχθήκατε τι είναι τα  <span style={{ fontWeight: 'bold' }}>directives</span> της Vue και είδατε στην πράξη πως λειτουργεί το <span style={{ fontWeight: 'bold' }}>v-bind</span>.
+                Tώρα ήρθε η ώρα να δούμε ένα λίγο πιο πολύπλοκο παράδειγμα για να εξοικειωθείτε περισσότερο με τα directives. Το <span style={{ fontWeight: 'bold' }}>v-for</span> λειουργεί σαν iterator πανω σε μια λίστα
+                και κάνει render το εσωτερικό περιεχόμενο του. Ας δούμε ένα παράδειγμα!
+              </Typography>
+              <CopyBlock
+                text={`<template>
+  <div id="example-1">
+    <ul>
+      <li v-for="item in items" :key="item.message">
+         {{ item.message }}
+      </li>
+    </ul>
+  </div>
+</template>
+              
+<script>
+export default {
+   name: "Example",
+   data() {
+    return {
+      items: [{ message: "Foo" }, { message: "Bar" }],
+      };
+  },
+};
+</script>
+              
+ <!-- Add "scoped" attribute to limit CSS to this component only -->
+ <style scoped>
+ #example-1{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+  }
+h3 {
+   margin: 40px 0 0;
+  }
+ul {
+    border: 1px solid black;
+    min-width: 300px;
+    list-style-type: none;
+    padding: 0;
+  }
+li {
+    margin: 10px 10px;
+   }
+a {
+  color: #42b983;
+  }
+  </style>
+          
+              `}
+                language="html"
+                showLineNumbers={true}
+                theme={dracula}
+                codeBlock
+              />
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Στο παραπάνω παράδειγμα βλέπουμε πως μπορεί κανείς να χρησιμοποιήσει τη <span style={{ fontWeight: 'bold' }}>v-for </span>
+                για να φτιάξει μια λίστα με δυναμικά δεδομένα. Ας το δούμε βήμα-βήμα! Στην γραμμή :
+              </Typography>
+              <CopyBlock
+                text={`<li v-for="item in items" :key="item.message">`}
+                language="html"
+                showLineNumbers={false}
+                theme={dracula}
+                codeBlock
+              />
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                μπορούμε να δούμε ακριβώς πως το χρησιμοποιούμε! 
+               
+              </Typography>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Δεδομένου ενός πινάκα δηλώνουμε μια μεταβλητή με την οποία θα κάνουμε iteration,
+                 στην δική μας περίπτωση το "item" . Έπειτα αυτή την μεταβλητή μπορούμε να την χρησιμοποιήσουμε όπως εδώ :
+              </Typography>
+              <CopyBlock
+                text={`<li v-for="item in items" :key="item.message">
+  {{ item.message }}
+</li>`}
+                language="html"
+                showLineNumbers={false}
+                theme={dracula}
+                codeBlock
+              />
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                To αποτέλεσμα του παραπάνω κώδικα είναι το εξής:
+              </Typography>
+              <div style={{ width: "100%", height: 120, display: 'flex', justifyContent: 'center' }}>
+                <div style={{ height: 300, maxWidth: 300 }}>
+                  <Image style={{ marginTop: 5 }} src={treePic} alt="Picture of the folders tree" />
+                </div>
+              </div>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                <span style={{ fontWeight: 'bold'}}>Σημείωση</span>: όταν χρησιμοποιούμε την <span style={{ fontWeight: 'bold' }}>v-for </span> πρέπει να ορίζουμε
+                και unique keys στα component που γίνονται iterate.
+              </Typography>
+
+              <div style={{ marginTop: '4%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+
+                Έχουμε αρχικοποιήσει ένα απλό πρότζεκτ Vue js. Πάρτε όσο χρόνο χρειάζεστε για να μελετήσετε τις δομές των αρχείων Home.vue, News.vue και App.vue .
+              </Typography>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Σε αυτό το μάθημα πρέπει να χρησιμοποιήσετε την <span style={{ fontWeight: 'bold' }}>v-for </span>
+                και να τροποποιήσετε το αρχείο News.vue στην γραμμή 4 έτσι ώστε να φαίνεται το title των Νέων στο <span style={{ backgroundColor: '#f4f4f4' }}> {`<h3></h3>`}</span> και
+                το text στο <span style={{ backgroundColor: '#f4f4f4' }}>{`<p></p>`}</span>
+              </Typography>
+
+            </Card>
+          </Grid>
+
+          <Grid item md={12} lg={8}>
+            <Card style={{ height: '75vh', padding: "1%", width: '100%' }}>
               <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Vue js Tutorial  </Typography>
-  
-                <SandpackProvider template="vue"  customSetup={{
+
+              <SandpackProvider template="vue" customSetup={{
                 files: {
-                  "/src/App.vue": appvue,
+                  "/src/App.vue": { code: appvue, active: true },
                   "/src/main.js": {
                     code: mainjs,
                   },
-                  "/tests/unit/app.spec.js": {code: testing, hidden: true},
-                  "/src/components/News.vue":{code:  helloworld, active: true}
+                  "/tests/unit/app.spec.js": { code: testing, hidden: true },
+                  "/src/components/News.vue": { code: helloworld, active: false }
 
                 },
                 dependencies: {
@@ -243,85 +344,85 @@ import React, {
 
                 },
               }} >
-                  <SandpackThemeProvider  >
+                <SandpackThemeProvider  >
                   <SimpleCodeViewer />
-                    <SandpackLayout theme="codesandbox-dark">
-                      <SandpackCodeEditor showTabs="true" customStyle={{ marginTop: '10px', height: '500px', width: '400px' }}    > </SandpackCodeEditor>
-                      <SandpackPreview viewportSize={{ width: 500, height:  '60vh' }} />
-                    </SandpackLayout>
-                  </SandpackThemeProvider>
-                </SandpackProvider>
-  
-                <Modal
-                  keepMounted
-                  open={openSuccess}
-                  onClose={handleCloseFail}
-                  aria-labelledby="keep-mounted-modal-title"
-                  aria-describedby="keep-mounted-modal-description"
-                >
-                  <Card styles={{ padding: '1%' }}>
-  
-                    <Box sx={style} >
-                      <div style={{ width: '100%' , display: 'flex', justifyContent: 'center'}}>
+                  <SandpackLayout theme="codesandbox-dark">
+                    <SandpackCodeEditor showLineNumbers="true" showTabs="true" customStyle={{ marginTop: '10px', height: '500px', width: '400px' }}    > </SandpackCodeEditor>
+                    <SandpackPreview viewportSize={{ width: 500, height: '60vh' }} />
+                  </SandpackLayout>
+                </SandpackThemeProvider>
+              </SandpackProvider>
+
+              <Modal
+                keepMounted
+                open={openSuccess}
+                onClose={handleCloseFail}
+                aria-labelledby="keep-mounted-modal-title"
+                aria-describedby="keep-mounted-modal-description"
+              >
+                <Card styles={{ padding: '1%' }}>
+
+                  <Box sx={style} >
+                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                       <CheckCircleIcon color="success" styles={{ marginBottom: '20px' }} id="keep-mounted-modal-title" sx={{ fontSize: 80 }} />
-                      </div>
-                      <Box style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'column' }}>
-                        <Typography style={{ marginTop: '2%' }} align="center" id="keep-mounted-modal-description" >
-                          H απάντηση που δώσατε ήταν σωστή
-                        </Typography>
-                        <Button style={{ marginTop: '10%' }} variant="contained" color="primary" onClick={handleCloseSuccess}> Παμε στο επομενο</Button>
-                      </Box>
+                    </div>
+                    <Box style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'column' }}>
+                      <Typography style={{ marginTop: '2%' }} align="center" id="keep-mounted-modal-description" >
+                        H απάντηση που δώσατε ήταν σωστή
+                      </Typography>
+                      <Button style={{ marginTop: '10%' }} variant="contained" color="primary" onClick={handleCloseSuccess}> Παμε στο επομενο</Button>
                     </Box>
-                  </Card>
-  
-                </Modal>
-  
-  
-  
-                <Modal
-                  keepMounted
-                  open={openFail}
-                  onClose={handleCloseFail}
-                  aria-labelledby="keep-mounted-modal-title"
-                  aria-describedby="keep-mounted-modal-description"
-                >
-                  <Card styles={{ padding: '1%' }}>
-  
-                    <Box sx={style} >
-                    <div style={{ width: '100%' , display: 'flex', justifyContent: 'center'}}>
-                      <BlockSharpIcon  styles={{ marginBottom: '20px' }} id="keep-mounted-modal-title"   sx={{ color: red[500] , fontSize: 80  }}  />
-                      </div>
-                      <Box style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'column' }}>
-                        <Typography style={{ marginTop: '2%' }} align="center" id="keep-mounted-modal-description" >
-                          H απάντηση που δώσατε ήταν λανθασμένη
-                        </Typography>
-                        <Button style={{ marginTop: '10%' }} variant="contained" color="secondary" onClick={handleCloseFail}> Προσπαθηστε ξανα</Button>
-                      </Box>
+                  </Box>
+                </Card>
+
+              </Modal>
+
+
+
+              <Modal
+                keepMounted
+                open={openFail}
+                onClose={handleCloseFail}
+                aria-labelledby="keep-mounted-modal-title"
+                aria-describedby="keep-mounted-modal-description"
+              >
+                <Card styles={{ padding: '1%' }}>
+
+                  <Box sx={style} >
+                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                      <BlockSharpIcon styles={{ marginBottom: '20px' }} id="keep-mounted-modal-title" sx={{ color: red[500], fontSize: 80 }} />
+                    </div>
+                    <Box style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'column' }}>
+                      <Typography style={{ marginTop: '2%' }} align="center" id="keep-mounted-modal-description" >
+                        H απάντηση που δώσατε ήταν λανθασμένη
+                      </Typography>
+                      <Button style={{ marginTop: '10%' }} variant="contained" color="secondary" onClick={handleCloseFail}> Προσπαθηστε ξανα</Button>
                     </Box>
-                  </Card>
-  
-                </Modal>
-  
-  
-              </Card>
-            </Grid>
-            <Grid style={{ display: 'flex', width: '100%' , marginTop: '2%'}} item xs={10} key="fot">
-              </Grid>
-            <Grid style={{ display: 'flex', width: '100%' , marginTop: '2%'}} item xs={2} key="fot">
+                  </Box>
+                </Card>
+
+              </Modal>
+
+
+            </Card>
+          </Grid>
+          <Grid style={{ display: 'flex', width: '100%', marginTop: '2%' }} item xs={10} key="fot">
+          </Grid>
+          <Grid style={{ display: 'flex', width: '100%', marginTop: '2%' }} item xs={2} key="fot">
             <Popconfirm
-                          title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}
-                          onConfirm={showSolutionModal}
-                          okText={'Ναι'}
-                          cancelText={'Οχι'}
-                         
-             
-                      >
-                      
-                              <Button   variant="contained" color= "secondary" style={{ float: 'right', marginBottom: '5%'}}>
-                                  Show solution
-                              </Button>
-                      </Popconfirm>
-                      <Modal
+              title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}
+              onConfirm={showSolutionModal}
+              okText={'Ναι'}
+              cancelText={'Οχι'}
+
+
+            >
+
+              <Button variant="contained" color="secondary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+                λυση
+              </Button>
+            </Popconfirm>
+            <Modal
               keepMounted
               open={showSolution}
               onClose={handlecloseSolution}
@@ -349,52 +450,51 @@ import React, {
               </Card>
 
             </Modal>
-  
-              </Grid>
+
           </Grid>
-        </div>
+        </Grid>
       </div>
-    )
-  }
-  
-  
-  export async function getServerSideProps(context) {
-    const KEY = process.env.JWT_KEY;
-    //console.log(process.env.JWT_KEY);
-    try {
-      let cookies = getAppCookies(context.req);
-      let token = cookies.token;
-  
-      if (token) {
-        token = token.replace('Bearer ', '');
-        token = jwt.verify(token, KEY);
-  
-  
-        return {
-          props: {},
-        };
-  
-      }
-      else {
-       
-          return {
-              redirect: {
-                  destination: '/',
-                  permanent: false,
-              },
-          }
-          
-      }
+    </div>
+  )
+}
+
+
+export async function getServerSideProps(context) {
+  const KEY = process.env.JWT_KEY;
+  //console.log(process.env.JWT_KEY);
+  try {
+    let cookies = getAppCookies(context.req);
+    let token = cookies.token;
+
+    if (token) {
+      token = token.replace('Bearer ', '');
+      token = jwt.verify(token, KEY);
+
+
+      return {
+        props: {},
+      };
+
     }
-    catch (e) {
-      console.error(e);
+    else {
+
       return {
         redirect: {
           destination: '/',
           permanent: false,
         },
-      };
+      }
+
     }
   }
-  
-  
+  catch (e) {
+    console.error(e);
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+}
+

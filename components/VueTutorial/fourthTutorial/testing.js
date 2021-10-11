@@ -7,10 +7,10 @@ describe('HelloWorld.vue', async () => {
     await wrapper.setData({ mydata: 'bar' })
 
      const todo = wrapper.get('[data-test="message"]')
-     expect(todo.text()).toContain('Nέα πανεπηστημίου πατρών')
+     expect(todo.text()).toContain('Nέα πανεπιστημίου Πατρών')
      await wrapper.setData({ mydata: 'newss' })
 
      const todos = wrapper.get('[data-test="message"]')
-     expect(todos.text()).toContain('Nέα πανεπηστημίου πατρών')
+     expect(todos.text()).toContain('Nέα πανεπιστημίου Πατρών')
   })
 })

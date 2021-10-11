@@ -52,7 +52,7 @@ export default function Home() {
         await router.push('/vueTutorial/start')
     };
     const handleAngular=  async (event) => {
-        await router.push('/vueTutorial/start')
+        await router.push('/angular/start')
     };
 
 

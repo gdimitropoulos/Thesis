@@ -15,6 +15,9 @@ import {
   Card,
   Box,
 } from "@material-ui/core";
+import { CopyBlock, dracula } from "react-code-blocks";
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { red } from '@mui/material/colors';
 import BlockSharpIcon from '@mui/icons-material/BlockSharp';
@@ -179,12 +182,98 @@ export default function Start() {
       <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
         <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4}  key="geo">
           <Card style={{ maxHeight: "80vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
-              <Typography variant="overline" style={{ width: '100%', marginBottom: '2%' }}> React Js Tutorial  </Typography>
-              <Typography variant="subtitle1" style={{ width: '100%', marginBottom: '1%' }}>  Βήμα 2ο </Typography>
-              <Typography variant="subtitle1" style={{ width: '100%', marginBottom: '1%' }}> Στο δεύτερο  στάδιο σας ζητειται να συμπληρώσετε στο αρχείο App.js
-                έτσι ώστε να να κάνετε import ένα το react component που βρισκεται στο button.js φάκελο  </Typography>
-              <Typography variant="subtitle1" style={{ width: '100%' }}>
-                Όπως είδαμε και στο πρώτο στάδιο το React χρησιμοποιεί τα λεγόμενα component για να έχει επαναχρησιμότηττα στον κώδικα ο χρήστης. Ένα react component είναι ένα κομμάτι κώδικα που μπορείς να αρχικοποιήσεις και μετά να το καλέις παντού στον πρότζεκτ σου </Typography>
+          <div style={{ marginBottom: '2%' , height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
+          <div style={{ marginBottom: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
+              <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}> To πρώτο σας custom Component </Typography>
+              <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
+                Σε αυτό το μάθημα  θα πρέπει να κάνετε import to πρώτο σας <span style={{ fontWeight: 'bold' }}> component </span>!
+              </Typography>
+              <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
+                <span style={{ fontWeight: 'bold' }}>Σημείωση:</span> Θυμηθείτε πως με τον
+                όρο <span style={{ fontWeight: 'bold' }}> component </span> εννοoύμε ένα επαναχρησιμοποιήσιμο κομμάτι
+                κώδικα το οποίο μπορούμε να κάνουμε import όπου χρειάζεται.
+              </Typography>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Έχουμε αρχικοποιήσει για εσάς το HelloWorld.vue  το οποίο είναι το component που θα πρέπει να χρησιμοποιήσετε. Τώρα είναι λοιπόν η ώρα
+                να εξηγήσουμε εκτενέστερα την δομή <span style={{ backgroundColor: '#f4f4f4' }}>{`<script>`}</span>
+              </Typography>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
+                Σε κάθε δομή <span style={{ backgroundColor: '#f4f4f4' }}>{`<script>`}</span> θα υπάρχει o κώδικας :
+                <CopyBlock
+                  text=
+                  {` export default {
+      name: 'Name of the Component',
+      props: {  }
+       }`}
+                  language="javascript"
+                  showLineNumbers={true}
+                  theme={dracula}
+                  codeBlock
+                />
+                Σε αυτό τον κώδικα ουσιαστικά δηλώνουμε το component μας ώστε να είναι διαθέσιμο για το υπόλοιπο πρότζεκτ.
+                Μέσα στο  <span style={{ backgroundColor: '#f4f4f4' }}>{`<script>`}</span>  tag γίνεται και το import των διαφόρων component με τον εξής
+                τρόπο :
+                <CopyBlock
+                  text={` import MyComponent from '../components/MyComponent'`}
+                  language="javascript"
+                  showLineNumbers={true}
+                  theme={dracula}
+                  codeBlock
+                />
+                Όλα τα imported components μπορούμε πλέον να τα χρησιμποιούμε μέσα στο  <span style={{ backgroundColor: '#f4f4f4' }}>{`<template>`} </span> tag :
+                <CopyBlock
+                  text={`<template>
+  <MyComponent  />
+</template>`}
+                  language="html"
+                  showLineNumbers={true}
+                  theme={dracula}
+                  codeBlock
+                />
+
+
+                Μια πολύ σημαντική έννοια είναι τα <span style={{ fontWeight: 'bold' }}>props</span>. Τα props είναι ουσιαστικά, δεδομένα που μπορούμε να περνάμε δυναμικά μέσα στο component
+                όταν το κάλουμε σε κάποιo άλλο αρχείο και τα δηλώνουμε με τον εξής τρόπο :
+                <CopyBlock
+                  text=
+                  {`export default {
+  name: 'Name of the Component',
+  props: { message: String }
+}`} language="javascript"
+                  showLineNumbers={true}
+                  theme={dracula}
+                  codeBlock
+                />
+                Στο παραπάνω παράδειγμα δηλώνουμε  ως prop την μεταβλήτη message που πρέπει να  είναι τύπου string .
+              </Typography>
+              <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
+                Για να χρησιμοποιήοσυμε τώρα αυτήν την μεταβλητή στο <span style={{ backgroundColor: '#f4f4f4' }}>{`<template>`} </span> tag μπορούμε να ακολουθήσουμε το παρακάτω παράδειγμα :
+                <CopyBlock
+                  text=
+                  {`<template>
+    <div>
+     <p> {{ message }} </p> 
+    </div>
+ </template>
+                `} language="html"
+                  showLineNumbers={true}
+                  theme={dracula}
+                  codeBlock
+                />
+              </Typography>
+
+
+              <div style={{ marginTop: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+
+                Όπως αναφέραμε προηγουμένως έχουμε αρχικοποιήσει για έσας ένα απλό πρότζεκτ που περιέχει το component HelloWorld και την βασική δομή ενός Vue js πρότζεκτ.
+                Πάρτε τον χρόνο σας να μελετήσετε τα αρχεία ώστε να καταλάβετε τι περιέχεται στο καθένα!
+              </Typography>
+
+              <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
+                Τροποποιήστε το   <span style={{ backgroundColor: '#f4f4f4' }}>{`<template>`} </span> του App.vue έτσι ώστε να περνάτε ως prop στο Component HelloWorld
+                το κείμενο Hello World .
+              </Typography>
 
             </Card>
           </Grid>
