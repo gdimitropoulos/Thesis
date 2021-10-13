@@ -46,10 +46,10 @@ export default function Home() {
     const [password, setPassword] = useState([]);
 
     const handleReact =  async (event) => {
-        await router.push('/react/start')
+        await router.push('/react/info')
     };
     const handleVue =  async (event) => {
-        await router.push('/vueTutorial/start')
+        await router.push('/vueTutorial/info')
     };
     const handleAngular=  async (event) => {
         await router.push('/angular/start')

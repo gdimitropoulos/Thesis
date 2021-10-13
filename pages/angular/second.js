@@ -1,3 +1,4 @@
+/* eslint-disable  react/no-unescaped-entities*/
 import React, {
     useState, useEffect, useContext, useMemo,
   } from 'react';
@@ -25,7 +26,7 @@ import React, {
   import testing from "!!raw-loader!../../Components/AngularTutorial/secondTutorial/testing";
   import appcss from "!!raw-loader!../../Components/AngularTutorial/secondTutorial/app.css";
   import Helloworldjs from "!!raw-loader!../../Components/AngularTutorial/secondTutorial/helloworldcomponent";
-  import solutionfile from "!!raw-loader!../../Components/AngularTutorial/secondTutorial/helloworldcomponent";
+  import solutionfile from "!!raw-loader!../../Components/AngularTutorial/secondTutorial/solution.js";
   import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
   import MenuBookIcon from '@mui/icons-material/MenuBook';
   import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';

@@ -58,7 +58,7 @@ const style = {
   p: 4,
 };
 
-export default function Start() {
+export default function VueFourth() {
   const router = useRouter();
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openFail, setOpenFail] = useState(false);

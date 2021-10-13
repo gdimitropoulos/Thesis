@@ -67,7 +67,7 @@ const style = {
   p: 4,
 };
 
-export default function Start() {
+export default function VueFifth() {
   const router = useRouter();
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openFail, setOpenFail] = useState(false);

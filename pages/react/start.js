@@ -26,7 +26,7 @@ import Appcode from "!!raw-loader!../../Components/reactTutorial/FirstReactTutor
 import indexFile from "!!raw-loader!../../Components/reactTutorial/FirstReactTutorial/indexFiles";
 import Cookies from 'js-cookie';
 import { useActiveCode } from "@codesandbox/sandpack-react";
-import SyntaxHighlighter from '../../Lib/syntaxHighlighter'; 
+import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import {
   SandpackProvider,
   SandpackLayout,
@@ -77,17 +77,17 @@ export default function Start() {
     }
     statuses = [];
   }
-  
+
   const handlecloseSolution = async () => {
     setshowSolution(false)
   }
   const handleCloseSuccess = async () => {
     console.log(moment().diff(time, 'seconds'));
-    const bodyData ={
+    const bodyData = {
       time: moment().diff(time, 'seconds').toString(),
       backspaces: backspaces,
-      tutorialName: 'firstreact' ,
-      answer : answerShown
+      tutorialName: 'firstreact',
+      answer: answerShown
     }
     const res = await fetch('/api/finishTutorial', {
       method: 'POST',
@@ -104,8 +104,8 @@ export default function Start() {
         'Επιτυχής καταγραφή ',
         'Επιτυχής καταγραφή της προσπάθειας'
       );
-      await router.push('/react/second')
-    }else{
+      await router.push('/react/third')
+    } else {
       showNotification(
         'error',
         'Σφάλμα ',
@@ -114,8 +114,8 @@ export default function Start() {
     }
   };
   const handleCloseFail = () => setOpenFail(false);
-  const showSolutionModal = () => {setshowSolution(true); setAnswerShown(true)}
-  const correctAnswer= `  import React from "react";
+  const showSolutionModal = () => { setshowSolution(true); setAnswerShown(true) }
+  const correctAnswer = `  import React from "react";
 
   export default function App() {
     return (
@@ -139,28 +139,28 @@ export default function Start() {
       // will fire on every change
       console.log(code);
     }, [code])
-    
-  useEffect(() => {
-    const unsubscribe  = listen((msg) => {
-       if (msg.event == 'test_end') {
-        if (msg.test.status == 'fail') {
-          dispatch({ type: 'refresh' });
-          setActiveFile('/App.js')
+
+    useEffect(() => {
+      const unsubscribe = listen((msg) => {
+        if (msg.event == 'test_end') {
+          if (msg.test.status == 'fail') {
+            dispatch({ type: 'refresh' });
+            setActiveFile('/App.js')
+          }
+          statuses.push(event.data.test.status);
         }
-        statuses.push(event.data.test.status);
-      }
-      if (msg.event == 'total_test_end') {
-        handleOpen();
-      }
+        if (msg.event == 'total_test_end') {
+          handleOpen();
+        }
 
 
-    });
-    
-    console.log("im listening")
-    return unsubscribe;
-  }, [listen]);
+      });
 
-   
+      console.log("im listening")
+      return unsubscribe;
+    }, [listen]);
+
+
     useEffect(() => {
 
       window.addEventListener('keydown', (event) => {
@@ -173,14 +173,14 @@ export default function Start() {
 
       });
 
-   
-        
-        
 
-      
+
+
+
+
     }, []);
 
-    const runTests = () => {dispatch({type: 'run-all-tests' });};
+    const runTests = () => { dispatch({ type: 'run-all-tests' }); };
 
     const codee = files[activePath].code;
 
@@ -195,38 +195,38 @@ export default function Start() {
   `
 
   return (
-<div style={{ height: '60%' }}>
-        <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', height: '80%', marginBottom: '1%', marginTop: '5%', paddingTop: '3%', paddingBottom: '3%',paddingLeft: '2%', paddingRight: '2%' }}>
-          <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
-            <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4}  key="geo">
-              <Card style={{ maxHeight: "80vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
-              <div style={{ marginBottom: '2%' , height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
-              <Typography variant="h6" style={{ marginBottom: '2%' ,width: '100%', marginBottom: '1%' }}> To πρώτο σας Hello World </Typography>
+    <div style={{ height: '60%' }}>
+      <div style={{ height: '80%', marginBottom: '1%', marginTop: '2%', paddingTop: '2%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
+        <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
+          <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
+            <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
+              <div style={{ marginBottom: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
+              <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}> To πρώτο σας Hello World </Typography>
               <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
                 Ήρθε η ώρα να γνωρίσετε την React js στην πράξη!
               </Typography>
-              <Typography variant="subtitle1" style={{ marginBottom: '2%' , textAlign: 'justify', width: '100%' }}>
-                 Για αρχή θα εκτυπώσουμε στην οθόνη ένα απλό μήνυμα "Hello World" με βάση όσα γνωρίζετε απο την απλή Html.
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Για αρχή θα εκτυπώσουμε στην οθόνη ένα απλό μήνυμα "Hello World" με βάση όσα γνωρίζετε απο την απλή Html.
               </Typography>
-              <Typography variant="subtitle1" style={{ marginBottom: '2%' , textAlign: 'justify', width: '100%' }}>
-                 Έχουμε αρχικοποιήσει για έσας ένα απλό πρότζεκτ ακολουθώντας όσα αναφέραμε προηγουμένως. Από τα αρχεία στα οποία αναφερθήκαμε συνοπτικά
-                 στα προηγούμενα μαθήματα, εμφανίζονται μόνο όσα  απαιτούν τροποποιήσεις από εσάς ή κρίνονται απαραίτητα  ώστε να γνωρίσετε την React σε ένα εισαγωγικό επίπεδο.
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Έχουμε αρχικοποιήσει για έσας ένα απλό πρότζεκτ ακολουθώντας όσα αναφέραμε προηγουμένως. Από τα αρχεία στα οποία αναφερθήκαμε συνοπτικά
+                στα προηγούμενα μαθήματα, εμφανίζονται μόνο όσα  απαιτούν τροποποιήσεις από εσάς ή κρίνονται απαραίτητα  ώστε να γνωρίσετε την React σε ένα εισαγωγικό επίπεδο.
               </Typography>
-              <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%',marginTop: '1%' }}>
-                 Στα δεξιά βλέπετε το αρχείο App.js του οποίου η δομή  είναι αρχικοποιημένη με απλή Html. Όσα γνωρίζετε από την Html
-                 μπορούν να χρησιμοποιηθούν και στην React! 
+              <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%', marginTop: '1%' }}>
+                Στα δεξιά βλέπετε το αρχείο App.js του οποίου η δομή  είναι αρχικοποιημένη με απλή Html. Όσα γνωρίζετε από την Html
+                μπορούν να χρησιμοποιηθούν και στην React!
               </Typography>
 
 
-              <div style={{ marginTop: '2%' , height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
+              <div style={{ marginTop: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
               <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
-                Τροποποιήστε  τον κώδικα στη γραμμή 4 ώστε να εκτυπώνεται το κείμενο Hello World  και πατήστε <span style={{fontStyle:'italic'}}>RUN TESTS</span>.
+                Τροποποιήστε  τον κώδικα στη γραμμή 4 ώστε να εκτυπώνεται το κείμενο Hello World  και πατήστε <span style={{ fontStyle: 'italic' }}>RUN TESTS</span>.
               </Typography>
             </Card>
           </Grid>
-          
+
           <Grid item md={12} lg={8}>
-            <Card style={{ padding: "1%", height:'75vh', width: '100%' }}>
+            <Card style={{ padding: "1%", height: '75vh', width: '100%' }}>
               <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   React Tutorial  </Typography>
 
               <SandpackProvider template="react" customSetup={{
@@ -245,7 +245,7 @@ export default function Start() {
                   "SetupTest.js": {
                     code: code,
                     hidden: true
-                  } 
+                  }
                 },
                 dependencies: {
                   "react-markdown": "latest",
@@ -281,8 +281,8 @@ export default function Start() {
                 <Card styles={{ padding: '1%' }}>
 
                   <Box sx={style} >
-                    <div style={{ width: '100%' , display: 'flex', justifyContent: 'center'}}>
-                    <CheckCircleIcon color="success" styles={{ marginBottom: '20px' }} id="keep-mounted-modal-title" sx={{ fontSize: 80 }} />
+                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                      <CheckCircleIcon color="success" styles={{ marginBottom: '20px' }} id="keep-mounted-modal-title" sx={{ fontSize: 80 }} />
                     </div>
                     <Box style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'column' }}>
                       <Typography style={{ marginTop: '2%' }} align="center" id="keep-mounted-modal-description" >
@@ -298,76 +298,76 @@ export default function Start() {
 
 
               <Modal
-                  keepMounted
-                  open={openFail}
-                  onClose={handleCloseFail}
-                  aria-labelledby="keep-mounted-modal-title"
-                  aria-describedby="keep-mounted-modal-description"
-                >
-                  <Card styles={{ padding: '1%' }}>
-  
-                    <Box sx={style} >
-                    <div style={{ width: '100%' , display: 'flex', justifyContent: 'center'}}>
-                      <BlockSharpIcon  styles={{ marginBottom: '20px' }} id="keep-mounted-modal-title"   sx={{ color: red[500] , fontSize: 80  }}  />
-                      </div>
-                      <Box style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'column' }}>
-                        <Typography style={{ marginTop: '2%' }} align="center" id="keep-mounted-modal-description" >
-                          H απάντηση που δώσατε ήταν λανθασμένη
-                        </Typography>
-                        <Button style={{ marginTop: '10%' }} variant="contained" color="secondary" onClick={handleCloseFail}> Προσπαθηστε ξανα</Button>
-                      </Box>
-                    </Box>
-                  </Card>
-  
-                </Modal>
-
-
-            </Card>
-          </Grid>
-          <Grid item xs={10}></Grid>
-          <Grid item xs={2} key="fot">
-          <Popconfirm
-						title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}
-						onConfirm={showSolutionModal}
-						okText={'Ναι'}
-						cancelText={'Οχι'}
-           
-					>
-					
-          <Button variant="contained" color="secondary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
-                λυση
-              </Button>
-					</Popconfirm>
-          <Modal
                 keepMounted
-                open={showSolution}
-                onClose={handlecloseSolution}
+                open={openFail}
+                onClose={handleCloseFail}
                 aria-labelledby="keep-mounted-modal-title"
                 aria-describedby="keep-mounted-modal-description"
               >
                 <Card styles={{ padding: '1%' }}>
 
                   <Box sx={style} >
-
-                    <Box >
-                      <div style={{ width: '100%'}}>
-                      <Typography style={{ marginTop: '2%', marginBottom: '5%' }} align="center"  >
-                       Τό αρχείο App.js πρέπει να έχει την εξής μορφή :  
+                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                      <BlockSharpIcon styles={{ marginBottom: '20px' }} id="keep-mounted-modal-title" sx={{ color: red[500], fontSize: 80 }} />
+                    </div>
+                    <Box style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'column' }}>
+                      <Typography style={{ marginTop: '2%' }} align="center" id="keep-mounted-modal-description" >
+                        H απάντηση που δώσατε ήταν λανθασμένη
                       </Typography>
-                      </div>
-                      <div style={{ width: '100%'}}>
-                      <SyntaxHighlighter code={correctAnswer} language="javascript" showLineNumbers={true} />
-                      </div>
-                      <div style={{ width: '100%' , display: 'flex', justifyContent: 'center'}}>
-                      <Button size="large" style={{ borderRadius: '50%', width :'40%',marginBottom: '1%',  marginTop: '10%' }} variant="contained" color="primary" onClick={handlecloseSolution}>CLOSE</Button>
-                      </div>
+                      <Button style={{ marginTop: '10%' }} variant="contained" color="secondary" onClick={handleCloseFail}> Προσπαθηστε ξανα</Button>
                     </Box>
                   </Box>
                 </Card>
 
               </Modal>
 
-            </Grid>
+
+            </Card>
+          </Grid>
+          <Grid item xs={10}></Grid>
+          <Grid item xs={2} key="fot">
+            <Popconfirm
+              title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}
+              onConfirm={showSolutionModal}
+              okText={'Ναι'}
+              cancelText={'Οχι'}
+
+            >
+
+              <Button variant="contained" color="secondary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+                λυση
+              </Button>
+            </Popconfirm>
+            <Modal
+              keepMounted
+              open={showSolution}
+              onClose={handlecloseSolution}
+              aria-labelledby="keep-mounted-modal-title"
+              aria-describedby="keep-mounted-modal-description"
+            >
+              <Card styles={{ padding: '1%' }}>
+
+                <Box sx={style} >
+
+                  <Box >
+                    <div style={{ width: '100%' }}>
+                      <Typography style={{ marginTop: '2%', marginBottom: '5%' }} align="center"  >
+                        Τό αρχείο App.js πρέπει να έχει την εξής μορφή :
+                      </Typography>
+                    </div>
+                    <div style={{ width: '100%' }}>
+                      <SyntaxHighlighter code={correctAnswer} language="javascript" showLineNumbers={true} />
+                    </div>
+                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                      <Button size="large" style={{ borderRadius: '50%', width: '40%', marginBottom: '1%', marginTop: '10%' }} variant="contained" color="primary" onClick={handlecloseSolution}>CLOSE</Button>
+                    </div>
+                  </Box>
+                </Box>
+              </Card>
+
+            </Modal>
+
+          </Grid>
         </Grid>
       </div>
     </div>
@@ -393,14 +393,14 @@ export async function getServerSideProps(context) {
 
     }
     else {
-     
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false,
-            },
-        }
-        
+
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false,
+        },
+      }
+
     }
   }
   catch (e) {

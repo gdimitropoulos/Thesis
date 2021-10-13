@@ -1,3 +1,4 @@
+/* eslint-disable  react/no-unescaped-entities*/
 import React, {
   useState, useEffect, useContext, useMemo,
 } from 'react';
@@ -18,6 +19,14 @@ import {
   Card,
   Box,
 } from "@material-ui/core";
+import { CopyBlock, dracula } from "react-code-blocks";
+import Image from 'next/image'
+import treePic from '../../public/routertree.png'
+import mainfile from '!!raw-loader!../../components/VueTutorial/main'
+import appfile from '!!raw-loader!../../components/VueTutorial/app'
+import routerfile from '!!raw-loader!../../components/reactTutorial/router'
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import BlockSharpIcon from '@mui/icons-material/BlockSharp';
 import testAppCode from "!!raw-loader!../../Components/reactTutorial/eightTutorial/tutorialAppTest";
@@ -176,7 +185,7 @@ export default function Eight() {
 
       window.addEventListener('keydown', (event) => {
         if (event.path[0].className == 'cm-content') {
-          console.log(event);
+         // console.log(event);
           if (event.key == 'Backspace') {
             backspaces++;
           }
@@ -216,16 +225,72 @@ export default function Eight() {
   return (
 
     <div style={{ height: '60%' }}>
-      <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', height: '80%', marginBottom: '1%', marginTop: '5%', paddingTop: '3%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
+      <div style={{ height: '80%', marginBottom: '1%', marginTop: '2%', paddingTop: '2%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
         <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
           <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
-            <Card style={{ maxHeight: "80vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
-              <Typography variant="overline" style={{ width: '100%', marginBottom: '2%' }}> React Js Tutorial  </Typography>
-              <Typography variant="subtitle1" style={{ width: '100%', marginBottom: '1%' }}>  Βήμα 2ο </Typography>
-              <Typography variant="subtitle1" style={{ width: '100%', marginBottom: '1%' }}> Στο δεύτερο  στάδιο σας ζητειται να συμπληρώσετε στο αρχείο App.js
-                έτσι ώστε να να κάνετε import ένα το react component που βρισκεται στο button.js φάκελο  </Typography>
-              <Typography variant="subtitle1" style={{ width: '100%' }}>
-                Όπως είδαμε και στο πρώτο στάδιο το React χρησιμοποιεί τα λεγόμενα component για να έχει επαναχρησιμότηττα στον κώδικα ο χρήστης. Ένα react component είναι ένα κομμάτι κώδικα που μπορείς να αρχικοποιήσεις και μετά να το καλέις παντού στον πρότζεκτ σου </Typography>
+            <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
+              <div style={{ marginBottom: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
+              <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}> React js Router Links</Typography>
+              <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
+                Θα ολοκληρώσουμε αυτο το εισαγωγικό σύνολο μαθημάτων της React js κάνοντας μια αναφορά και
+                στα <span style={{ fontWeight: 'bold' }}> Links </span> ωστε να συμπληρώσουμε τις γνώσεις σας για το React Router!
+              </Typography>
+
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Ο τρόπος για να χρησιμοποιήσουμε τα route  paths που φτιάξατε στο προηγούμενο μάθημα είναι μέσω των
+                <span style={{ backgroundColor: '#f4f4f4' }}> {`<Links></Links>`}</span>. Στα
+                <span style={{ backgroundColor: '#f4f4f4' }}> {`<Links></links>`}</span> tags μπορούμε να χρησιμοποιήσουμε την ιδιότητα
+                <span style={{ backgroundColor: '#f4f4f4' }}> to </span> για να υποδείξουμε σε ποιο path θα θέλαμε να μεταβούμε.
+                Ας δούμε ένα παράδειγμα.
+              </Typography>
+
+              <div>
+                <CopyBlock
+                  text={`<Link to="/about">About</Link> `}
+                  language="html"
+                  showLineNumbers={false}
+                  theme={dracula}
+                  codeBlock
+                />
+              </div>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Στο παράδειγμα  αυτό αν κάποιος πατήσει στο σύνδεσμο, θα πλοηγηθεί στην σελίδα που έχει συνδεθεί με το url /about
+              </Typography>
+
+              <div style={{ marginTop: '4%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+
+                Έχουμε αρχικοποιήσει ένα απλό πρότζεκτ. Πάρτε όσο χρόνο χρειάζεστε για να μελετήσετε τις δομές των αρχείων.
+              </Typography>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Σε αυτό το μάθημα πρέπει να προσθέσετε τα κατάλληλα <span style={{ fontWeight: 'bold' }}> Links </span> έτσι ώστε :
+              </Typography>
+              <ul>
+                <li>
+                  <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                    Στο News.vue θα πρέπει να προσθεθούν τα links ώστε κάθε
+                    φορά που πατάει κάποιος τον σύνδεσμο να μεταφέρεται στο target property που περιέχει ο πίνακας articles.
+                  </Typography>
+                </li>
+                <li>
+                  <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                    Στo  First.vue να προστεθεί link που σε μεταφέρει στην αρχικη σελίδα (path = '/')
+                  </Typography>
+                </li>
+                <li>
+                  <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                    Στo  Second.vue να προστεθεί link που σε μεταφέρει στην αρχικη σελίδα (path = '/')
+                  </Typography>
+                </li>
+                <li>
+                  <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                    ΣTo Third.vue να προστεθεί link που σε μεταφέρει στην αρχικη σελίδα (path = '/')
+                  </Typography>
+                </li>
+              </ul>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                <span style={{ fontWeight: 'bold' }}> Σημείωση: </span> πρέπει να τροποιήσετε τα αρχεία News.js, First.js,  Second.js και Third.js.
+              </Typography>
 
             </Card>
           </Grid>
@@ -355,9 +420,8 @@ export default function Eight() {
               cancelText={'Οχι'}
 
             >
-
-              <Button variant="contained" color="secondary" style={{ marginTop: '4%', marginBottom: '5%' }}>
-                Show solution
+              <Button variant="contained" color="secondary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+                λυση
               </Button>
             </Popconfirm>
             <Modal
@@ -375,8 +439,8 @@ export default function Eight() {
 
                     <div style={{ width: '100%' }}>
 
-                      <div style={{ width: '100%',display: 'flex', justifyContent:'center' }}>
-                        <Typography  variant="p" style={{ width:'100%', marginTop: '2%', marginBottom: '5%' }} align="center" id="keep-mounted-modal-description" >
+                      <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                        <Typography variant="p" style={{ width: '100%', marginTop: '2%', marginBottom: '5%' }} align="center" id="keep-mounted-modal-description" >
                           Τα αρχεία First.js, Second.js και Third.js πρέπει να έχουν την παρακάτω μορφή:
                         </Typography>
                       </div>

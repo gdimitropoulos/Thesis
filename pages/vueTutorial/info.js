@@ -63,7 +63,7 @@ const style = {
     p: 4,
 };
 
-export default function Start() {
+export default function VueInfo() {
     const router = useRouter();
     const [openSuccess, setOpenSuccess] = useState(false);
 

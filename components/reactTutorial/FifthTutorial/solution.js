@@ -6,7 +6,7 @@ export default  function Home({msg}){
   const [message, setMessage] = React.useState(msg);
 
   React.useEffect(()=>{
-      setMessage('Νεα Πανεπηστημίου πατρών ')
+      setMessage('Νέα Πανεπιστημίου Πατρών')
   },[]);
 
 
