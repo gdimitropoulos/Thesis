@@ -22,19 +22,15 @@ import {
   import { HomeComponent } from "./components/home/home.component";
   import { SecondComponent } from "./components/second/second.component";
   import { ThirdComponent } from "./components/third/third.component";
-  
+  import { routes } from "./app.module";
+
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   let h1;
   let router;
   let location;
   
-  const routes: Routes = [
-    { path: "", component: HomeComponent },
-    { path: "first", component: FirstComponent },
-    { path: "second", component: SecondComponent },
-    { path: "third", component: ThirdComponent }
-  ];
+
   
   beforeEach(() => {
     TestBed.resetTestEnvironment();

@@ -9,10 +9,6 @@ import { SecondComponent } from './components/second/second.component';
 import { ThirdComponent } from './components/third/third.component';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent },
-  {path: 'first', component: FirstComponent },
-  {path: 'second', component: SecondComponent },
-  {path: 'third', component: ThirdComponent },
 ];
 
 @NgModule({

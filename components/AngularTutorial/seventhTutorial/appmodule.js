@@ -8,7 +8,7 @@ import { FirstComponent } from './components/first/first.component';
 import { SecondComponent } from './components/second/second.component';
 import { ThirdComponent } from './components/third/third.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   {path: '', component: HomeComponent },
   {path: 'first', component: FirstComponent },
   {path: 'second', component: SecondComponent },
