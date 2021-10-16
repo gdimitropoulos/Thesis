@@ -1,3 +1,4 @@
+/*eslint-disable react/no-unescaped-entities */
 import React, {
   useState, useEffect, useContext, useMemo,
 } from 'react';
@@ -5,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as moment from 'moment'
+import { red } from '@mui/material/colors';
 import { Popconfirm } from 'antd';
 import {
   Button,
@@ -18,15 +20,15 @@ import {
 import { CopyBlock, dracula } from "react-code-blocks";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import { red } from '@mui/material/colors';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import BlockSharpIcon from '@mui/icons-material/BlockSharp';
-import testAppCode from "!!raw-loader!../../Components/reactTutorial/ThirdReactTutorial/tutorialAppTest";
-import Appcode from "!!raw-loader!../../Components/reactTutorial/ThirdReactTutorial/tutorialApp";
-import indexFile from "!!raw-loader!../../Components/reactTutorial/ThirdReactTutorial/tutorialIndex";
-import componentCode from "!!raw-loader!../../Components/reactTutorial/ThirdReactTutorial/tutorialComponent";
-import appcss from "!!raw-loader!../../Components/reactTutorial/ThirdReactTutorial/App.css";
-import solutionCode from "!!raw-loader!../../Components/reactTutorial/ThirdReactTutorial/solution";
+import testAppCode from "!!raw-loader!../../Components/reactTutorial/FourthReactTutorial/tutorialAppTest";
+import testAppCode1 from "!!raw-loader!../../Components/reactTutorial/FourthReactTutorial/tutorialAppTest1";
+import Appcode from "!!raw-loader!../../Components/reactTutorial/FourthReactTutorial/tutorialApp";
+import indexFile from "!!raw-loader!../../Components/reactTutorial/FourthReactTutorial/tutorialIndex";
+import componentCode from "!!raw-loader!../../Components/reactTutorial/FourthReactTutorial/tutorialComponent";
+import appcss from "!!raw-loader!../../Components/reactTutorial/FourthReactTutorial/App.css";
+import solutionCode from "!!raw-loader!../../Components/reactTutorial/FourthReactTutorial/solution";
 import Cookies from 'js-cookie';
 import { useActiveCode } from "@codesandbox/sandpack-react";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
@@ -48,7 +50,15 @@ import { getAppCookies } from '../../Lib/utils'
 import { Backspace } from '@mui/icons-material';
 import { display } from '@mui/system';
 
+
 let backspaces = 0;
+let totalCharsWritten=0;
+let writeFlag=0;
+let totalTries=0;
+const timeStartingWriting=[]
+const timeFinishingTest=[];
+const backspacesPerTry=[];
+const totaltCharsPerTry=[];
 const time = moment();
 
 const style = {
@@ -84,16 +94,39 @@ export default function Start() {
     statuses = [];
   }
 
+  
+  const eventHandler = (event)=>{
+      
+    if (event.path[0].className == 'cm-content') {
+      if( (event.which > 46 && event.which<91) || ( event.which>95 && event.which<112) || (event.which>183 && event.which<230) || (event.which>151 && event.which<165 )){
+        totalCharsWritten++;
+        if(writeFlag == 0){
+          writeFlag=1;
+          timeStartingWriting.push(moment());
+        }
+      }
+      if (event.key == 'Backspace') {
+        backspaces++;
+      }
+    }
+
+}
   const handlecloseSolution = async () => {
     setshowSolution(false)
   }
   const handleCloseSuccess = async () => {
     console.log(moment().diff(time, 'seconds'));
     const bodyData = {
-      time: moment().diff(time, 'seconds').toString(),
+      time,
       backspaces: backspaces,
-      tutorialName: 'thirdreact',
-      answer: answerShown
+      lessonName: 'r3',
+      tutorailName:'react',
+      answer: answerShown,
+      totalTries,
+      totaltCharsPerTry,
+      backspacesPerTry,
+      timeFinishingTest,
+      timeStartingWriting,
     }
     const res = await fetch('/api/finishTutorial', {
       method: 'POST',
@@ -133,18 +166,16 @@ export default function Start() {
     const { code, updateCode } = useActiveCode();
 
 
+    
     useEffect(() => {
+      window.addEventListener('keydown',eventHandler);
+      return () =>  window.removeEventListener('keydown',eventHandler);
 
-      window.addEventListener('keydown', (event) => {
-        if (event.path[0].className == 'cm-content') {
-          console.log(event);
-          if (event.key == 'Backspace') {
-            backspaces++;
-          }
-        }
+    },[]);
 
-      });
+    useEffect(() => {
       window.addEventListener('message', (event) => {
+        console.log(event)
         if (event.data.event == 'test_end') {
           if (event.data.test.status == 'fail') {
             dispatch({ type: 'refresh' });
@@ -157,10 +188,16 @@ export default function Start() {
         }
 
       });
-    }, []);
+    }, [listen,dispatch,setActiveFile]);
 
-    const runTests = () => { dispatch({ type: 'run-all-tests' }); };
-
+    const runTests = () => { 
+      writeFlag=0
+      backspacesPerTry.push(backspaces);
+      totaltCharsPerTry.push(totalCharsWritten);
+      totalTries++;
+      timeFinishingTest.push(moment());
+      dispatch({ type: 'run-all-tests' }); };
+      
     const codee = files[activePath].code;
 
     return (
@@ -181,129 +218,127 @@ export default function Start() {
       <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
         <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
               <div style={{ marginBottom: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
-              <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}> To πρώτο σας custom Functional Component </Typography>
+              <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}> Lifecycle Methods and Class Component </Typography>
               <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
-                Σε αυτό το μάθημα  θα πρέπει να κάνετε import to πρώτο σας <span style={{ fontWeight: 'bold' }}> component </span>!
-              </Typography>
-              <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
-                <span style={{ fontWeight: 'bold' }}>Σημείωση:</span> Θυμηθείτε πως με τον
-                όρο <span style={{ fontWeight: 'bold' }}> component </span> εννοoύμε ένα επαναχρησιμοποιήσιμο κομμάτι
-                κώδικα το οποίο μπορούμε να κάνουμε import όπου χρειάζεται.
+                Σε αυτό το μάθημα  θα πρέπει να κάνετε χρήση βασικών Lifecycle μεθόδων σε ένα  <span style={{ fontWeight: 'bold' }}> class component </span>!
               </Typography>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                Έχουμε αρχικοποιήσει για εσάς το HelloWorld.js  το οποίο είναι το component που θα πρέπει να χρησιμοποιήσετε.
-                Υπάρχουν δύο ειδών component,
-                τα <span style={{fontStyle:'italic'}}>functional</span> και τα <span style={{fontStyle:'italic'}}>class</span> όπου όπως δηλώνει και η ονοματολογία τα πρώτα τα δηλώνουμε ως συναρτήσεις ενώ
-                τα δεύτερα ως κλάσεις.
+                Έχουμε αρχικοποιήσει για εσάς το Home.js  το οποίο είναι το component που θα πρέπει να χρησιμοποιήσετε.
               </Typography>
 
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                Τα δύο αυτά είδη έχουν αρκετές διαφορές στον τρόπο που χρησιμοποιούνται και στα επόμενα μαθήματα θα δούμε ορισμένα παραδείγματα, χωρίς ωστόσο να μπούμε σε πολλές
-                λεπτομέρειες. Αν θέλετε να διαβάσετε περισσότερα μπορείτε 
-                να πλοηγηθείτε  <a
+                Κάθε component έχει μερικές lifecycle μεθόδους που μπορούμε να χρησιμοποιούμε για να τρέχουμε κώδικα σε συγκεκριμένες στιγμές της
+                "ζωής" του component. Μπορείτε να χρησιμοποιήσετε <a
                   className="App-link"
                   href="https://reactjs.org/docs/components-and-props.html"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  εδώ
-                </a> .
+                  αυτό
+                </a> το διάγραμμα ως βοήθημα για να καταλάβετε πως λειτουργούν οι lifecycle μέθοδοι καθώς και την πορεία της ζωής ενός
+                component. Aς δούμε μερικά από τα βασικότερα χαρακτηριστικά των component της React!
               </Typography>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
-                Σε κάθε <span style={{ fontWeight: 'bold' }}> functional component</span> θα υπάρχει το export default "ComponentName"  :
+                Αρχικά να μιλήσουμε για τον <span style={{ fontWeight: 'bold' }}> constructor()</span> o οποίος λειτουργεί όπως σε όλες τις αντικειμενοστρεφείς
+                γλώσσες προγραμματισμού :
                 <CopyBlock
                   text=
                   {` 
-function MyComponent() {
-    return (
-       <h1>              
-        Learn React
-       </h1>                
-       );
-  }
-                  
- export default MyComponent;
-                  `}
+ constructor(props) {
+      super(props);
+      
+                  }
+             `}
                   language="actionscript"
                   showLineNumbers={true}
                   theme={dracula}
                   codeBlock
                 />
-                Σε αυτό τον κώδικα ουσιαστικά δηλώνουμε το component μας και έπειτα το κάνουμε export  ώστε να είναι
-                διαθέσιμο για το υπόλοιπο πρότζεκτ.
-                Μπορούμε να κάνουμε import το component μας με τον εξής τρόπο :
-                <CopyBlock
-                  text={` import MyComponent from '../components/MyComponent'`}
-                  language="javascript"
-                  showLineNumbers={true}
-                  theme={dracula}
-                  codeBlock
-                />
-                Όλα τα imported components μπορούμε πλέον να τα χρησιμοποιούμε :
-                <CopyBlock
-                  text={`
-<div>              
-  <HelloWorld />
-</div>                
-                      `}
-                  language="html"
-                  showLineNumbers={true}
-                  theme={dracula}
-                  codeBlock
-                />
-
-
-                Μια πολύ σημαντική έννοια είναι τα <span style={{ fontWeight: 'bold' }}>props</span>. Τα props είναι ουσιαστικά, δεδομένα που μπορούμε να περνάμε δυναμικά μέσα στο component
-                όταν το κάλουμε σε κάποιo άλλο αρχείο και τα δηλώνουμε με τον εξής τρόπο :
-                <CopyBlock
-                  text=
-                  {`
-function MyComponent({myprop}) {
-     return (
-       <h1>      
-        hello World        
-       </h1>                
-    );
-  }
-                                  
- export default MyComponent;`} language="actionscript"
-                  showLineNumbers={true}
-                  theme={dracula}
-                  codeBlock
-                />
-                Στο παραπάνω παράδειγμα δηλώνουμε  ως prop την μεταβλήτη myprop που δέχεται ως είσοδο το component.
+                Είναι σημαντικό να καλούμε πάντα το super (props) για να σιγουρευτούμε ότι τα props δεν θα είναι undefined.
               </Typography>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
+                Ένα από τα πιο σημαντικά κομμάτια της React είναι το <span style={{ fontWeight: 'bold' }}> state</span>. To state είναι ο τρόπος
+                που κρατάμε πληροφορίες για την τωρινή κατάσταση του component και γίνεται updated κάθε φορά που υπάρχει κάποια αλλαγή σε αυτό.
+                Η αρχικοποιήση της γίνεται με τον εξής τρόπο:
+              </Typography>
+              <CopyBlock
+                text=
+                {` 
+ constructor(props) {
+      super(props);
+      this.state={counter: 0}
+      
+                  }
+             `}
+                language="actionscript"
+                showLineNumbers={true}
+                theme={dracula}
+                codeBlock
+              />
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
+                Πρέπει να σημειώσουμε ότι το state πρέπει να είναι πάντα αντικείμενο και δεν μπορούμε να κάνουμε απευθείας ανάθεση σε αυτό
+                σε σημείο εκτός απο τον constructor/αρχικοποιητή του. Αν κάποια στιγμή θέλουμε να αλλάξουμε πρέπει να χρησιμοποιήσουμε το api setState().
+              </Typography>
+
+              <CopyBlock
+                text=
+                {` 
+ function setCounter(value) {
+      this.setState={counter: value}
+                  }
+             `}
+                language="actionscript"
+                showLineNumbers={true}
+                theme={dracula}
+                codeBlock
+              />
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
+                Στο παραπάνω παράδειγμα η συνάρητηση setCounter θέτει τον counter του state σε μια τιμή value!
+              </Typography>
+
               <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
-                Για να χρησιμοποιήσουμε τώρα αυτήν την μεταβλητή στο <span style={{ backgroundColor: '#f4f4f4' }}>{`<template>`}</span> tag μπορούμε να ακολουθήσουμε το παρακάτω παράδειγμα :
+                H επόμενη και ίσως πιο συχνά χρησιμοποιούμενη lifecycle μέθοδος που θα δούμε είναι το
+                <span style={{ fontWeight: 'bold' }}> ComponentDidMount()</span> που εκτελείται όταν το
+                component έχει αρχικοποιηθεί και έχει γίνει rendered στην οθόνη.
                 <CopyBlock
                   text=
-                  {`
- function MyComponent({myprop}) {
-      return (
-        <h1>    
-        {myprop}          
-       </h1>                
-     );
-   }
-                                   
-  export default MyComponent;`} language="actionscript"
+                  {`  componentDidMount() {
+    setCounter(10);
+  }`} language="actionscript"
                   showLineNumbers={true}
                   theme={dracula}
                   codeBlock
                 />
               </Typography>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%',textAlign: 'justify', width: '100%' }}>
+                Στον παραπάνω κώδικα καλείται η συνάρτηση που ορίσαμε προηγουμένως
+                όταν αρχικοποιηθεί το component μας.
+              </Typography>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%',textAlign: 'justify', width: '100%' }}>
+                Επειδή στα πλάισια του μαθημάτος δεν προλαβαίνουμε να καλύψουμε τα περισσότερα κομμάτια της React που αφορούν τα class components και
+                τις lifecycle μεθόδους αν θέλετε περισσότερες πληροφορίες μπορείτε να τις βρείτε <a
+                  className="App-link"
+                  href="https://reactjs.org/docs/state-and-lifecycle.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  εδώ
+                </a>
+              </Typography>
+
 
 
               <div style={{ marginTop: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
 
-                Όπως αναφέραμε προηγουμένως έχουμε αρχικοποιήσει για έσας ένα απλό πρότζεκτ που περιέχει το component HelloWorld και την βασική δομή ενός React πρότζεκτ.
-                Πάρτε τον χρόνο σας να μελετήσετε τα αρχεία ώστε να καταλάβετε τι περιέχεται στο καθένα!
+                Όπως αναφέραμε προηγουμένως έχουμε αρχικοποιήσει για έσας ένα απλό πρότζεκτ που περιέχει το component Home και την βασική δομή ενός React πρότζεκτ.
+                Πάρτε όσο χρόνο χρειάζεστε για να μελετήσετε τα αρχεία ώστε να καταλάβετε τι περιέχεται στο καθένα!
               </Typography>
 
               <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
-                Τροποποιήστε το αρχείο App.js στην γραμμή 7, έτσι ώστε να περνάτε ως prop στο component HelloWorld
-                το κείμενο <span style={{fontStyle:'italic'}}>Hello World</span>.
+                Τροποποιήστε το αρχείο Home.js στην γραμμή 12, έτσι ώστε να θέσετε το message
+                του state σε <span style={{ fontStyle: 'italic' }}> Νέα Πανεπιστημίου Πατρών </span>.
+
               </Typography>
 
             </Card>
@@ -325,13 +360,17 @@ function MyComponent({myprop}) {
                     code: testAppCode,
                     hidden: true
                   },
+                  "/second.test.js": {
+                    code: testAppCode1,
+                    hidden: true
+                  },
                   "/public/App.css": { code: appcss, hidden: true },
                   "index.js": indexFile,
                   "SetupTest.js": {
                     code: code,
                     hidden: true
                   },
-                  "/HelloWorld.js": componentCode
+                  "/Home.js": { code: componentCode, active: true }
                 },
                 dependencies: {
                   "react-markdown": "latest",
@@ -382,6 +421,7 @@ function MyComponent({myprop}) {
               </Modal>
 
 
+
               <Modal
                 keepMounted
                 open={openFail}
@@ -420,7 +460,8 @@ function MyComponent({myprop}) {
 
             >
 
-<Button variant="contained" color="secondary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+
+              <Button variant="contained" color="secondary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
                 λυση
               </Button>
             </Popconfirm>
@@ -438,7 +479,7 @@ function MyComponent({myprop}) {
                   <Box >
                     <div style={{ width: '100%' }}>
                       <Typography style={{ marginTop: '2%', marginBottom: '5%' }} align="center" id="keep-mounted-modal-description" >
-                        Τό αρχείο App.js πρέπει να έχει την εξής μορφή :
+                        Τό αρχείο Home.js πρέπει να έχει την εξής μορφή :
                       </Typography>
                     </div>
                     <div style={{ width: '100%' }}>

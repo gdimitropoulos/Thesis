@@ -22,13 +22,13 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import BlockSharpIcon from '@mui/icons-material/BlockSharp';
-import testAppCode from "!!raw-loader!../../Components/reactTutorial/FourthReactTutorial/tutorialAppTest";
-import testAppCode1 from "!!raw-loader!../../Components/reactTutorial/FourthReactTutorial/tutorialAppTest1";
-import Appcode from "!!raw-loader!../../Components/reactTutorial/FourthReactTutorial/tutorialApp";
-import indexFile from "!!raw-loader!../../Components/reactTutorial/FourthReactTutorial/tutorialIndex";
-import componentCode from "!!raw-loader!../../Components/reactTutorial/FourthReactTutorial/tutorialComponent";
-import appcss from "!!raw-loader!../../Components/reactTutorial/FourthReactTutorial/App.css";
-import solutionCode from "!!raw-loader!../../Components/reactTutorial/FourthReactTutorial/solution";
+import testAppCode from "!!raw-loader!../../Components/reactTutorial/FifthTutorial/tutorialAppTest";
+import testAppCode1 from "!!raw-loader!../../Components/reactTutorial/FifthTutorial/tutorialAppTest1";
+import Appcode from "!!raw-loader!../../Components/reactTutorial/FifthTutorial/tutorialApp";
+import indexFile from "!!raw-loader!../../Components/reactTutorial/FifthTutorial/tutorialIndex";
+import componentCode from "!!raw-loader!../../Components/reactTutorial/FifthTutorial/tutorialComponent";
+import appcss from "!!raw-loader!../../Components/reactTutorial/FifthTutorial/App.css";
+import solutionCode from "!!raw-loader!../../Components/reactTutorial/FifthTutorial/solution";
 import Cookies from 'js-cookie';
 import { useActiveCode } from "@codesandbox/sandpack-react";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
@@ -51,7 +51,15 @@ import { Backspace } from '@mui/icons-material';
 import { display } from '@mui/system';
 
 let backspaces = 0;
+let totalCharsWritten=0;
+let writeFlag=0;
+let totalTries=0;
+const timeStartingWriting=[]
+const timeFinishingTest=[];
+const backspacesPerTry=[];
+const totaltCharsPerTry=[];
 const time = moment();
+
 
 const style = {
   position: 'absolute',
@@ -86,16 +94,39 @@ export default function Start() {
     statuses = [];
   }
 
+  
+  const eventHandler = (event)=>{
+      
+    if (event.path[0].className == 'cm-content') {
+      if( (event.which > 46 && event.which<91) || ( event.which>95 && event.which<112) || (event.which>183 && event.which<230) || (event.which>151 && event.which<165 )){
+        totalCharsWritten++;
+        console.log('im here');
+        if(writeFlag == 0){
+          writeFlag=1;
+          timeStartingWriting.push(moment());
+        }
+      }
+      if (event.key == 'Backspace') {
+        backspaces++;
+      }
+    }
+
+}
   const handlecloseSolution = async () => {
     setshowSolution(false)
   }
   const handleCloseSuccess = async () => {
-    console.log(moment().diff(time, 'seconds'));
     const bodyData = {
-      time: moment().diff(time, 'seconds').toString(),
+      time,
       backspaces: backspaces,
-      tutorialName: 'fourthreact',
-      answer: answerShown
+      lessonName: 'r4',
+      tutorailName:'react',
+      answer: answerShown,
+      totalTries,
+      totaltCharsPerTry,
+      backspacesPerTry,
+      timeFinishingTest,
+      timeStartingWriting,
     }
     const res = await fetch('/api/finishTutorial', {
       method: 'POST',
@@ -136,16 +167,12 @@ export default function Start() {
 
 
     useEffect(() => {
+      window.addEventListener('keydown',eventHandler);
+      return () =>  window.removeEventListener('keydown',eventHandler);
 
-      window.addEventListener('keydown', (event) => {
-        if (event.path[0].className == 'cm-content') {
-          console.log(event);
-          if (event.key == 'Backspace') {
-            backspaces++;
-          }
-        }
+    },[]);
 
-      });
+    useEffect(() => {
       window.addEventListener('message', (event) => {
         console.log(event)
         if (event.data.event == 'test_end') {
@@ -160,10 +187,15 @@ export default function Start() {
         }
 
       });
-    }, []);
+    }, [listen,dispatch,setActiveFile]);
 
-    const runTests = () => { dispatch({ type: 'run-all-tests' }); };
-
+    const runTests = () => { 
+      writeFlag=0
+      backspacesPerTry.push(backspaces);
+      totaltCharsPerTry.push(totalCharsWritten);
+      totalTries++;
+      timeFinishingTest.push(moment());
+      dispatch({ type: 'run-all-tests' }); };
     const codee = files[activePath].code;
 
     return (
@@ -179,53 +211,95 @@ export default function Start() {
   return (
 
     <div style={{ height: '60%' }}>
-    <div style={{ height: '80%', marginBottom: '1%', marginTop: '2%', paddingTop: '2%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
-    <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
-      <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
-        <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
+      <div style={{ height: '80%', marginBottom: '1%', marginTop: '2%', paddingTop: '2%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
+        <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
+          <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
+            <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
               <div style={{ marginBottom: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
-              <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}> Lifecycle Methods and Class Component </Typography>
+              <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}> Hooks and Functional Component </Typography>
               <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
-                Σε αυτό το μάθημα  θα πρέπει να κάνετε χρήση βασικών Lifecycle μεθόδων σε ένα  <span style={{ fontWeight: 'bold' }}> class component </span>!
+                Σε αυτό το μάθημα  θα μετατρέψουμε το class component του προηγούμενου μαθήματος σε <span style={{ fontWeight: 'bold' }}>functional </span>!
               </Typography>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
                 Έχουμε αρχικοποιήσει για εσάς το Home.js  το οποίο είναι το component που θα πρέπει να χρησιμοποιήσετε.
               </Typography>
 
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                Κάθε component έχει μερικές lifecycle μεθόδους που μπορούμε να χρησιμοποιούμε για να τρέχουμε κώδικα σε συγκεκριμένες στιγμές της
-                "ζωής" του component. Μπορείτε να χρησιμοποιήσετε <a
-                  className="App-link"
-                  href="https://reactjs.org/docs/components-and-props.html"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  αυτό
-                </a> το διάγραμμα ως βοήθημα για να καταλάβετε πως λειτουργούν οι lifecycle μέθοδοι καθώς και την πορεία της ζωής ενός
-                component. Aς δούμε μερικά από τα βασικότερα χαρακτηριστικά των component της React!
+                Αρχικά ας μιλήσουμε για τα states και πως μπορούμε να τα αρχικοποιήσουμε. Το γεγονός πως δεν έχουμε κλάση συνεπάγεται ότι δεν έχουμε constructor ().
+                Αυτό σημαίνει ότι δεν μπορούμε να κάνουμε απευθείας ανάθεση σε state. Για να προσομοιώσουμε τη λειτουργεία του state που είχαμε θα χρησιμοποποιήσουμε
+                κάποια api που μας δίνει η React και ονομάζονται <span style={{ fontWeight: 'bold' }}> Hooks </span>.
               </Typography>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                To πρώτο  <span style={{ fontWeight: 'bold' }}> Hook </span> για το οποίο θα μιλήσουμε είναι το  <span style={{ fontWeight: 'bold' }}> useState </span>.
+                Ας το δούμε με ένα παράδειγμα.
+              </Typography>
+              <CopyBlock
+                text=
+                {` 
+import React, { useState } from 'react';
+
+ function Example() {
+    // Declare a new state variable, which we'll call "count"
+    const [count, setCount] = useState(0);
+                  
+     return (
+        <div>
+          <p>You clicked {count} times</p>
+              <button onClick={() => setCount(count + 1)}>
+                  Click me
+              </button>
+        </div>
+         );
+      }
+           `}
+                language="actionscript"
+                showLineNumbers={true}
+                theme={dracula}
+                codeBlock
+              />
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Ας το πάρουμε βήμα-βήμα! Αρχικά βλέπουμε στον κώδικα την εξής εντολή :
+              </Typography>
+              <CopyBlock
+                text=
+                {` const [count, setCount] = useState(0); `}
+                language="actionscript"
+                showLineNumbers={true}
+                theme={dracula}
+                codeBlock
+              />
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Αυτό που κάνει αυτή η εντολή είναι να αρχικοποιεί μια μεταβλητή count όπου θα είναι το αντίστοιχο του state η οποία παίρνει
+                την αρχική τιμή 0 λόγω του ορίσματος που βάλαμε στο useState. Αυτό που παρατηρούμε είναι ότι αρχικοποιείται και μια μέθοδος
+                στην συγκεκριμένη περίπτωση την ονομάζουμε setCount η οποία θα λειτουργεί όπως η setState που μάθαμε προηγουμένως αλλά μόνο για την
+                μεταβλητή count.
+              </Typography>
+              <CopyBlock
+                text=
+                {` const [count, setCount] = useState(0); `}
+                language="actionscript"
+                showLineNumbers={true}
+                theme={dracula}
+                codeBlock
+              />
+
               <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
                 Αρχικά να μιλήσουμε για τον <span style={{ fontWeight: 'bold' }}> constructor()</span> o οποίος λειτουργεί όπως σε όλες τις αντικειμενοστρεφείς
                 γλώσσες προγραμματισμού :
                 <CopyBlock
                   text=
-                  {` 
- constructor(props) {
-      super(props);
-      
-                  }
-             `}
+                  {` <button onClick={() => setCount(count + 1)}> `}
                   language="actionscript"
                   showLineNumbers={true}
                   theme={dracula}
                   codeBlock
                 />
-                Είναι σημαντικό να καλούμε πάντα το super (props) για να σιγουρευτούμε ότι τα props δεν θα είναι undefined.
+                Στην παραπάνω εντολή βλέπουμε πως χρησιμοποιείται η setCount για να αυξήσει κατά 1 την μεταβλητή count κάθε φορά που πατάμε το κουμπί.
               </Typography>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
-                Ένα από τα πιο σημαντικά κομμάτια της React είναι το <span style={{ fontWeight: 'bold' }}> state</span>. To state είναι ο τρόπος
-                που κρατάμε πληροφορίες για την τωρινή κατάσταση του component και γίνεται updated κάθε φορά που υπάρχει κάποια αλλαγή σε αυτό.
-                Η αρχικοποιήση της γίνεται με τον εξής τρόπο:
+                Στο προηγούμενο μάθημα μελετήσαμε τις lifecycle μεθόδους. Στα functional component δεν μπορούμε να τις χρησιμοποιήσουμε. Γι' αυτό η React δημιούργησε
+                την useEffect η οποία είναι ένα hook. Αυτό το hook σου επιτρέπει να ορίσεις ενα μπλοκ κώδικα και πότε θέλεις αυτό να εκτελείται.
+                Με αυτόν τον τρόπο μπορούμε να προσομοιώσουμε κάποιες απο τις lifecycle μεθόδους. Ας δούμε ένα παράδειγμα :
               </Typography>
               <CopyBlock
                 text=
@@ -249,8 +323,25 @@ export default function Start() {
               <CopyBlock
                 text=
                 {` 
- function setCounter(value) {
-      this.setState={counter: value}
+ fimport React, { useState } from 'react';
+
+ function Example() {
+    // Declare a new state variable, which we'll call "count"
+    const [count, setCount] = useState([]);
+
+    useEffect(() => {
+      setCount(0)
+    },[]);
+                  
+     return (
+        <div>
+          <p>You clicked {count} times</p>
+              <button onClick={() => setCount(count + 1)}>
+                  Click me
+              </button>
+        </div>
+         );
+      }
                   }
              `}
                 language="actionscript"
@@ -259,32 +350,19 @@ export default function Start() {
                 codeBlock
               />
               <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
-                Στο παραπάνω παράδειγμα η συνάρητηση setCounter θέτει τον counter του state σε μια τιμή value!
+                Στο παραπάνω παράδειγμα φαίνεται η useEffect η οποία προσομοιώνει κατα κάποιο τρόπο
+                την componentDidMount. Το πότε θα εκτελεστεί η useEffect προκύπτει απο το δεύτερο όρισμα που της περνάμε. Η React έχει ορίσει ότι
+                η useEffect θα εκτελείται όταν κάποιο από τα dependencies, δηλαδή το δεύτερο όρισμα, αλλάξει. Εμείς στο συγκεκριμένο παράδειγμα
+                δεν έχουμε βάλει κάποιο dependency το οποίο η React το μεταφράζει στο ότι η useEffect
+                θα εκτελεστεί μόνο όταν το component γίνει render και όταν
+                καταστραφεί.
               </Typography>
 
-              <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
-                H επόμενη και ίσως πιο συχνά χρησιμοποιούμενη lifecycle μέθοδος που θα δούμε είναι το
-                <span style={{ fontWeight: 'bold' }}> ComponentDidMount()</span> που εκτελείται όταν το
-                component έχει αρχικοποιηθεί και έχει γίνει rendered στην οθόνη.
-                <CopyBlock
-                  text=
-                  {`  componentDidMount() {
-    setCounter(10);
-  }`} language="actionscript"
-                  showLineNumbers={true}
-                  theme={dracula}
-                  codeBlock
-                />
-              </Typography>
-              <Typography variant="subtitle1" style={{ marginBottom: '2%',textAlign: 'justify', width: '100%' }}>
-                Στον παραπάνω κώδικα καλείται η συνάρτηση που ορίσαμε προηγουμένως
-                όταν αρχικοποιηθεί το component μας.
-              </Typography>
-              <Typography variant="subtitle1" style={{ marginBottom: '2%',textAlign: 'justify', width: '100%' }}>
-                Επειδή στα πλάισια του μαθημάτος δεν προλαβαίνουμε να καλύψουμε τα περισσότερα κομμάτια της React που αφορούν τα class components και
-                τις lifecycle μεθόδους αν θέλετε περισσότερες πληροφορίες μπορείτε να τις βρείτε <a
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Επειδή δεν προλαβαίνουμε να αναλύσουμε όλες τις λεπτομέρειες και όλα τα hook σε αυτό το tutorial, μπορείτε να βρείτε περισσότερες
+                πληροφορίες <a
                   className="App-link"
-                  href="https://reactjs.org/docs/state-and-lifecycle.html"
+                  href="https://reactjs.org/docs/hooks-intro.html"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -302,8 +380,8 @@ export default function Start() {
               </Typography>
 
               <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
-                Τροποποιήστε το αρχείο Home.js στην γραμμή 12, έτσι ώστε να θέσετε το message
-                του state σε <span style={{ fontStyle: 'italic' }}> Νέα Πανεπιστημίου Πατρών </span>.
+                Τροποποιήστε το αρχείο Home.js στην γραμμή 10, έτσι ώστε να θέσετε το message
+                σε <span style={{ fontStyle: 'italic' }}> Νέα Πανεπιστημίου Πατρών </span> χρησιμοποιώντας το  setMessage().
 
               </Typography>
 
@@ -425,7 +503,6 @@ export default function Start() {
               cancelText={'Οχι'}
 
             >
-
 
               <Button variant="contained" color="secondary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
                 λυση

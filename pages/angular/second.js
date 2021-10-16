@@ -19,6 +19,7 @@ import React, {
     Card,
     Box,
   } from "@material-ui/core";
+  import { CopyBlock, dracula } from "react-code-blocks";
   import appcomponenthtml from "!!raw-loader!../../Components/AngularTutorial/secondTutorial/appcomponent.html";
   import appmodule from "!!raw-loader!../../Components/AngularTutorial/secondTutorial/appmodule.js";
   import appcomponentjs from "!!raw-loader!../../Components/AngularTutorial/secondTutorial/appcomponent.js";
@@ -46,7 +47,15 @@ import React, {
   import showNotification from '../../Lib/notification'
   import { getAppCookies } from '../../Lib/utils'
   
+
   let backspaces = 0;
+  let totalCharsWritten=0;
+  let writeFlag=0;
+  let totalTries=0;
+  const timeStartingWriting=[]
+  const timeFinishingTest=[];
+  const backspacesPerTry=[];
+  const totaltCharsPerTry=[];
   const time = moment();
   
   const style = {
@@ -82,16 +91,40 @@ import React, {
       statuses = [];
     }
   
+    
+  const eventHandler = (event)=>{
+      
+    if (event.path[0].className == 'cm-content') {
+      if( (event.which > 46 && event.which<91) || ( event.which>95 && event.which<112) || (event.which>183 && event.which<230) || (event.which>151 && event.which<165 )){
+        totalCharsWritten++;
+        console.log('im here');
+        if(writeFlag == 0){
+          writeFlag=1;
+          timeStartingWriting.push(moment());
+        }
+      }
+      if (event.key == 'Backspace') {
+        backspaces++;
+      }
+    }
+
+}
+
     const handlecloseSolution = async () => {
       setshowSolution(false)
     }
     const handleCloseSuccess = async () => {
-      console.log(moment().diff(time, 'seconds'));
       const bodyData = {
-        time: moment().diff(time, 'seconds').toString(),
+        time,
         backspaces: backspaces,
-        tutorialName: 'secondangular',
-        answer: answerShown
+        lessonName: 'a2',
+        tutorailName:'react',
+        answer: answerShown,
+        totalTries,
+        totaltCharsPerTry,
+        backspacesPerTry,
+        timeFinishingTest,
+        timeStartingWriting,
       }
       const res = await fetch('/api/finishTutorial', {
         method: 'POST',
@@ -147,30 +180,26 @@ import React, {
   
         console.log("im listening")
         return unsubscribe;
-      }, [listen]);
-  
-  
+      }, [listen,dispatch,setActiveFile]);
+
+   
+
       useEffect(() => {
+        window.addEventListener('keydown',eventHandler);
+        return () =>  window.removeEventListener('keydown',eventHandler);
   
-        window.addEventListener('keydown', (event) => {
-          if (event.path[0].className == 'cm-content') {
-            console.log(event);
-            if (event.key == 'Backspace') {
-              backspaces++;
-            }
-          }
+      },[]);
   
-        });
+
   
-  
-  
-  
-  
-  
-      }, []);
-  
-      const runTests = () => { dispatch({ type: 'run-all-tests' }); };
-  
+      const runTests = () => { 
+        writeFlag=0
+        backspacesPerTry.push(backspaces);
+        totaltCharsPerTry.push(totalCharsWritten);
+        totalTries++;
+        timeFinishingTest.push(moment());
+        dispatch({ type: 'run-all-tests' }); };
+    
   
       return (
         <div style={{ width: '100%', height: '40px' }}>
@@ -185,32 +214,121 @@ import React, {
     return (
   
       <div style={{ height: '60%' }}>
-        <div style={{ height: '80%', marginBottom: '1%', marginTop: '2%', paddingTop: '2%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
-          <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
-            <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
-              <Card style={{ maxHeight: '80vh', overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
-                <div style={{ marginBottom: '2%' , height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
-                <Typography variant="h6" style={{ marginBottom: '2%' ,width: '100%', marginBottom: '1%' }}> To πρώτο σας Hello World </Typography>
-                <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
-                  Ήρθε η ώρα να γνωρίσετε την Vue js στην πράξη!
-                </Typography>
-                <Typography variant="subtitle1" style={{ marginBottom: '2%' , textAlign: 'justify', width: '100%' }}>
-                   Για αρχή θα εκτυπώσουμε στην οθόνη ένα απλό μήνυμα "Hello World" με βάση όσα γνωρίζετε απο την απλή Html.
-                </Typography>
-                <Typography variant="subtitle1" style={{ marginBottom: '2%' , textAlign: 'justify', width: '100%' }}>
-                   Έχουμε αρχικοποιήσει για έσας ένα απλό πρότζεκτ ακολουθώντας όσα αναφέραμε προηγουμένως. Από τα αρχεία στα οποία αναφερθήκαμε συνοπτικά
-                   στα προηγούμενα μαθήματα, εμφανίζονται μόνο όσα  απαιτούν τροποποιήσεις από εσάς ή κρίνονται απαραίτητα  ώστε να γνωρίσετε την Vue js σε ένα εισαγωγικό επίπεδο.
-                </Typography>
-                <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%',marginTop: '1%' }}>
-                   Στα δεξιά βλέπετε το αρχείο App.vue του οποίου η δομή {`<template>`} είναι αρχικοποιημένη με απλή Html. Όσα γνωρίζετε από την Html
-                   μπορούν να χρησιμοποιηθούν και στην Vue! 
-                </Typography>
-  
-  
-                <div style={{ marginTop: '2%' , height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
-                <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
-                  Τροποποιήστε  τον κώδικα στη γραμμή 4 ώστε να εκτυπώνεται το κείμενο Hello World  και πατήστε Run Tests.
-                </Typography>
+      <div style={{ height: '80%', marginBottom: '1%', marginTop: '2%', paddingTop: '2%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
+        <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
+          <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
+            <Card style={{ maxHeight: "80vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
+              <div style={{ marginBottom: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
+              <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}> To πρώτο σας custom Component </Typography>
+              <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
+                Σε αυτό το μάθημα θα πρέπει να κάνετε import to πρώτο σας <span style={{ fontWeight: 'bold' }}> component</span>!
+              </Typography>
+              <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
+                <span style={{ fontWeight: 'bold' }}>Σημείωση:</span> Θυμηθείτε πως με τον
+                όρο <span style={{ fontWeight: 'bold' }}> component </span> εννοoύμε ένα επαναχρησιμοποιήσιμο κομμάτι
+                κώδικα το οποίο μπορούμε να κάνουμε import όπου χρειάζεται.
+              </Typography>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Έχουμε αρχικοποιήσει για εσάς το hello-world το οποίο είναι το component που θα πρέπει να χρησιμοποιήσετε. Τώρα είναι λοιπόν η ώρα
+                να εξηγήσουμε εκτενέστερα την δομή του.
+              </Typography>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%',textAlign: 'justify', width: '100%' }}>
+                Σε κάθε δομή <span style={{ backgroundColor: '#f4f4f4' }}>{`<script>`}</span> θα υπάρχει o κώδικας :
+                <CopyBlock
+                  text=
+                  {` @Component({
+    selector: 'app-myComponent',
+     templateUrl: './myComponent.component.html',
+    styleUrls: ['./myComponent.component.css']
+ })`}
+                  language="javascript"
+                  showLineNumbers={true}
+                  theme={dracula}
+                  codeBlock
+                />
+                Σε αυτό τον κώδικα ουσιαστικά δηλώνουμε το component μας ώστε να είναι διαθέσιμο για το υπόλοιπο πρότζεκτ μέσω του selector.
+                Μέσα απο το   <span style={{ backgroundColor: '#f4f4f4' }}>templateUrl</span>   γίνεται και το import της Ηtml ενώ μέσα από
+                το  <span style={{ backgroundColor: '#f4f4f4' }}>styleUrls</span> γίνεται import η css του component. Έτσι φρονίζει η angular να έχει 
+                οργανωμένα όλα τα αρχεία της. Κάθε component που αρχικοποιούμε πρέπει να δηλωθεί στο app.module και πλέον μπορούμε να το χρησιμοποιούμε
+                απευθείας στην Ηtml ενός άλλου component με τον εξής τρόπο:
+                <CopyBlock
+                  text={`<appmyComponent> </appmyComponent>`}
+                  language="html"
+                  showLineNumbers={true}
+                  theme={dracula}
+                  codeBlock
+                />
+                  Η Angular μέσω του cli έχει φροντίσει να αυτοματοποιήσει τις διαδικασίες αρχικοποίησης των component και για αυτό αντί να γράφουμε 
+                  όλα αυτα τα αρχεία κάθε φορά απο την αρχή, μπορούμε να τρέχουμε την εντολή <span style={{ backgroundColor: '#f4f4f4'}}> ng generate component myComponent</span>
+                  και η Angular θα τα ετοιμάσει όλα για εμάς!
+               
+
+                Μια πολύ σημαντική έννοια είναι τα <span style={{ fontWeight: 'bold' }}>props</span> που είναι
+                 ουσιαστικά, δεδομένα που μπορούμε να περνάμε δυναμικά μέσα στο component
+                όταν το κάλουμε σε κάποιo άλλο αρχείο και δηλώνονται με τον εξής τρόπο:
+                <CopyBlock
+                  text=
+                  {`import { Component, OnInit, Input } from '@angular/core';
+
+                  @Component({
+                    selector: 'app-myComponent',
+                     templateUrl: './myComponent.component.html',
+                    styleUrls: ['./myComponent.component.css']
+                 })
+                  })
+                  export class myComponent implements OnInit {
+                    @Input() myprop : string; 
+                  
+                    constructor() { }
+                  
+                    ngOnInit(): void {
+                    }
+                  
+                  }`} language="javascript"
+                  showLineNumbers={true}
+                  theme={dracula}
+                  codeBlock
+                />
+                Στο παραπάνω παράδειγμα δηλώνουμε  ως prop την μεταβλήτη myprop η οποία  πρέπει να  είναι τύπου string.
+              </Typography>
+              <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
+                Για να χρησιμοποιήσουμε τώρα αυτήν την μεταβλητή στην <span style={{ backgroundColor: '#f4f4f4' }}> Ηtml</span>  μπορούμε να ακολουθήσουμε το παρακάτω παράδειγμα :
+                <CopyBlock
+                  text=
+                  {`<div>
+    <h1 > {{ myprop }} </h1>
+</div>
+                `} language="html"
+                  showLineNumbers={true}
+                  theme={dracula}
+                  codeBlock
+                />
+              </Typography>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
+                  Για να περάσουμε μια τιμή στο prop όταν καλούμε το component, κάνουμε το εξής:
+              </Typography>
+              <CopyBlock
+                  text=
+                  {`<app-myComponent myprop="I am passing prop to myComponent"> </app-myComponent>
+                `} language="html"
+                  showLineNumbers={true}
+                  theme={dracula}
+                  codeBlock
+                />
+
+
+              <div style={{ marginTop: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+
+                Όπως αναφέραμε προηγουμένως έχουμε αρχικοποιήσει για έσας ένα απλό πρότζεκτ που περιέχει το component hello world και την βασική δομή ενός Angular js πρότζεκτ.
+                Πάρτε τον χρόνο σας να μελετήσετε τα αρχεία ώστε να καταλάβετε τι περιέχεται στο καθένα!
+              </Typography>
+
+              <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
+                Τροποποιήστε το <span style={{ fontWeight: 'bold'}}> app.component.html </span> έτσι ώστε να περνάτε ως prop στο Component hello-world
+                το κείμενο Hello World.
+              </Typography>
+
               </Card>
             </Grid>
   
@@ -221,7 +339,7 @@ import React, {
                    files: {
                     "/src/app/components/hello-world/hello-world.component.ts": {code:  Helloworldjs, hidden : false},
                     "/src/app/components/hello-world/hello-world.component.html": {code:  helloworldhtml, hidden : false},
-                    "/src/app/components/hello-world/hello-world.component.css": {code:  '', hidden : false},
+                    "/src/app/components/hello-world/hello-world.component.css": {code:  '', hidden : true},
 
                     "/src/app/app.component.css": {code:  appcss, hidden : true},
                     "/src/app/app.component.spec.ts": {
@@ -332,7 +450,7 @@ import React, {
                     <Box >
                       <div style={{ width: '100%' }}>
                         <Typography style={{ marginTop: '2%', marginBottom: '5%' }} align="center"  >
-                          Τό template του  App.vue  πρέπει να έχει την εξής μορφή :
+                          Τό template του  app.component.html  πρέπει να έχει την εξής μορφή :
                         </Typography>
                       </div>
                       <div style={{ width: '100%' }}>

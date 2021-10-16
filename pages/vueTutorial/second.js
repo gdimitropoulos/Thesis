@@ -39,8 +39,14 @@ import showNotification from '../../Lib/notification'
 import { getAppCookies } from '../../Lib/utils'
 
 let backspaces = 0;
+let totalCharsWritten=0;
+let writeFlag=0;
+let totalTries=0;
+const timeStartingWriting=[]
+const timeFinishingTest=[];
+const backspacesPerTry=[];
+const totaltCharsPerTry=[];
 const time = moment();
-
 const style = {
   position: 'absolute',
   display: 'flex',
@@ -73,17 +79,40 @@ export default function Start() {
     }
     statuses = [];
   }
+  
+  const eventHandler = (event)=>{
+      
+    if (event.path[0].className == 'cm-content') {
+      if( (event.which > 46 && event.which<91) || ( event.which>95 && event.which<112) || (event.which>183 && event.which<230) || (event.which>151 && event.which<165 )){
+        totalCharsWritten++;
+        console.log('im here');
+        if(writeFlag == 0){
+          writeFlag=1;
+          timeStartingWriting.push(moment());
+        }
+      }
+      if (event.key == 'Backspace') {
+        backspaces++;
+      }
+    }
+
+}
 
   const handlecloseSolution = async () => {
     setshowSolution(false)
   }
   const handleCloseSuccess = async () => {
-    console.log(moment().diff(time, 'seconds'));
     const bodyData = {
-      time: moment().diff(time, 'seconds').toString(),
+      time,
       backspaces: backspaces,
-      tutorialName: 'secondvue',
-      answer: answerShown
+      lessonName: 'a2',
+      tutorailName:'vue',
+      answer: answerShown,
+      totalTries,
+      totaltCharsPerTry,
+      backspacesPerTry,
+      timeFinishingTest,
+      timeStartingWriting,
     }
     const res = await fetch('/api/finishTutorial', {
       method: 'POST',
@@ -136,29 +165,23 @@ export default function Start() {
 
       console.log("im listening")
       return unsubscribe;
-    }, [listen]);
+    }, [listen,dispatch,setActiveFile]);
 
+   
 
     useEffect(() => {
+      window.addEventListener('keydown',eventHandler);
+      return () =>  window.removeEventListener('keydown',eventHandler);
 
-      window.addEventListener('keydown', (event) => {
-        if (event.path[0].className == 'cm-content') {
-          console.log(event);
-          if (event.key == 'Backspace') {
-            backspaces++;
-          }
-        }
+    },[]);
 
-      });
-
-
-
-
-
-
-    }, []);
-
-    const runTests = () => { dispatch({ type: 'run-all-tests' }); };
+    const runTests = () => { 
+      writeFlag=0
+      backspacesPerTry.push(backspaces);
+      totaltCharsPerTry.push(totalCharsWritten);
+      totalTries++;
+      timeFinishingTest.push(moment());
+      dispatch({ type: 'run-all-tests' }); };
 
 
     return (

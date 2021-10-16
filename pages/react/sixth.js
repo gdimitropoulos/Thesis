@@ -1,4 +1,4 @@
-/*eslint-disable react/no-unescaped-entities */
+/* eslint-disable  react/no-unescaped-entities*/
 import React, {
   useState, useEffect, useContext, useMemo,
 } from 'react';
@@ -18,17 +18,27 @@ import {
   Box,
 } from "@material-ui/core";
 import { CopyBlock, dracula } from "react-code-blocks";
+import Image from 'next/image'
+import treePic from '../../public/routertree.png'
+import mainfile from '!!raw-loader!../../components/VueTutorial/main'
+import appfile from '!!raw-loader!../../components/VueTutorial/app'
+import routerfile from '!!raw-loader!../../components/reactTutorial/router'
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import BlockSharpIcon from '@mui/icons-material/BlockSharp';
-import testAppCode from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/tutorialAppTest";
-import Appcode from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/tutorialApp";
-import indexFile from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/tutorialIndex";
-import componentCode from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/tutorialComponent";
-import appcss from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/App.css";
-import news from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/News";
-import solutionCode from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/solution";
+import testAppCode from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/tutorialAppTest";
+import testAppCode1 from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/tutorialAppTest1";
+import testAppCode2 from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/tutorialAppTest2";
+import Appcode from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/tutorialApp";
+import indexFile from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/tutorialIndex";
+import componentCode from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/tutorialComponent";
+import appcss from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/App.css";
+import news from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/News";
+import first from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/First";
+import second from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/Second";
+import third from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/Third";
+import solutionCode from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/solution";
 import Cookies from 'js-cookie';
 import { useActiveCode } from "@codesandbox/sandpack-react";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
@@ -50,7 +60,15 @@ import { getAppCookies } from '../../Lib/utils'
 import { Backspace } from '@mui/icons-material';
 import { display } from '@mui/system';
 
+
 let backspaces = 0;
+let totalCharsWritten=0;
+let writeFlag=0;
+let totalTries=0;
+const timeStartingWriting=[]
+const timeFinishingTest=[];
+const backspacesPerTry=[];
+const totaltCharsPerTry=[];
 const time = moment();
 
 const style = {
@@ -86,16 +104,40 @@ export default function Start() {
     statuses = [];
   }
 
+  
+  const eventHandler = (event)=>{
+      
+    if (event.path[0].className == 'cm-content') {
+      if( (event.which > 46 && event.which<91) || ( event.which>95 && event.which<112) || (event.which>183 && event.which<230) || (event.which>151 && event.which<165 )){
+        totalCharsWritten++;
+        console.log('im here');
+        if(writeFlag == 0){
+          writeFlag=1;
+          timeStartingWriting.push(moment());
+        }
+      }
+      if (event.key == 'Backspace') {
+        backspaces++;
+      }
+    }
+
+}
+
   const handlecloseSolution = async () => {
     setshowSolution(false)
   }
   const handleCloseSuccess = async () => {
-    console.log(moment().diff(time, 'seconds'));
     const bodyData = {
-      time: moment().diff(time, 'seconds').toString(),
+      time,
       backspaces: backspaces,
-      tutorialName: 'sixthreact',
-      answer: answerShown
+      lessonName: 'r6',
+      tutorailName:'react',
+      answer: answerShown,
+      totalTries,
+      totaltCharsPerTry,
+      backspacesPerTry,
+      timeFinishingTest,
+      timeStartingWriting,
     }
     const res = await fetch('/api/finishTutorial', {
       method: 'POST',
@@ -111,7 +153,7 @@ export default function Start() {
         'Επιτυχής καταγραφή ',
         'Επιτυχής καταγραφή της προσπάθειας'
       );
-      await router.push('/react/seventh')
+      await router.push('/react/seven')
     } else {
       showNotification(
         'error',
@@ -136,16 +178,6 @@ export default function Start() {
 
 
     useEffect(() => {
-
-      window.addEventListener('keydown', (event) => {
-        if (event.path[0].className == 'cm-content') {
-          console.log(event);
-          if (event.key == 'Backspace') {
-            backspaces++;
-          }
-        }
-
-      });
       window.addEventListener('message', (event) => {
         console.log(event)
         if (event.data.event == 'test_end') {
@@ -160,10 +192,24 @@ export default function Start() {
         }
 
       });
-    }, []);
+    }, [listen,dispatch,setActiveFile]);
 
-    const runTests = () => { dispatch({ type: 'run-all-tests' }); };
 
+    
+    useEffect(() => {
+      window.addEventListener('keydown',eventHandler);
+      return () =>  window.removeEventListener('keydown',eventHandler);
+
+    },[]);
+
+
+    const runTests = () => { 
+      writeFlag=0
+      backspacesPerTry.push(backspaces);
+      totaltCharsPerTry.push(totalCharsWritten);
+      totalTries++;
+      timeFinishingTest.push(moment());
+      dispatch({ type: 'run-all-tests' }); };
     const codee = files[activePath].code;
 
     return (
@@ -178,48 +224,98 @@ export default function Start() {
 
   return (
 
-
     <div style={{ height: '60%' }}>
       <div style={{ height: '80%', marginBottom: '1%', marginTop: '2%', paddingTop: '2%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
         <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
           <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
             <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
               <div style={{ marginBottom: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
-              <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}>Ένα πιο πολύπλοκο παράδειγμα </Typography>
+              <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}> React js Router</Typography>
               <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
-                Σε αυτό το μάθημα  θα χρησιμοποιήσουμε  ότι μάθαμε για να φτιάξουμε ένα πιο πολύπλοκο πρόγραμμα!
-              </Typography>
-              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                Έχουμε αρχικοποιήσει για εσάς το Home.js και το News.js .
+                Aυτό το μάθημα  αποτελεί μια εισαγωγή στο React js Router, το εργαλείο που κάνει τη React να είναι ένα Single Page Application Framework!
               </Typography>
 
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                Για να καταλάβετε τι πρέπει να συμπληρώσετε στο παράδειγμα θα χρειαστεί να χρησιμοποιήσετε την
-                <span style={{ fontWeight: 'bold' }}> map () </span> μέσα στην jsx ώστε να κάνετε iteration στον πίνακα news.  Περισσότερες πληροφορίες
-                για την map() μπορείτε να βρείτε <a
-                  className="App-link"
-                  href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  εδώ
-                </a>
+                Ένα από τα πιο ισχυρά χαρακτηριστικά των σύγχρονων εφαρμογών ιστού μιας σελίδας (SPA) είναι η δρομολόγηση. Οι
+                σύγχρονες εφαρμογές μιας σελίδας, όπως μια εφαρμογή React, μπορούν να μεταβούν από σελίδα σε σελίδα από την
+                πλευρά του πελάτη (χωρίς να ζητηθεί ο διακομιστής). Το React Router είναι η επίσημη βιβλιοθήκη για την πλοήγηση
+                σελίδων στις εφαρμογές React.
+
+              </Typography>
+
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Για να προσθέσουμε το router, αφού μεταβούμε στο directory του πρότζεκτ, θα τρέξουμε στο terminal την εντολή
+                <span style={{ backgroundColor: '#f4f4f4' }}> npm install npm install react-router-dom </span>.
+
               </Typography>
 
 
-              <div style={{ marginTop: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Ας ξεκινήσουμε με ένα παράδειγμα :
+              </Typography>
+              <div>
+                <CopyBlock
+                  text={routerfile}
+                  language="javascript"
+                  showLineNumbers={false}
+                  theme={dracula}
+                  codeBlock
+                />
+              </div>
+              <Typography variant="subtitle1" style={{ marginBottom: '4%', marginTop: '4%', textAlign: 'justify', width: '100%' }}>
+
+                Για να δηλώσουμε τα router paths χρησιμοποιούμε το <span style={{ backgroundColor: '#f4f4f4' }}>{`<switch> </switch>`} </span> μέσα στο οποίο δηλωνουμε τα path με τον εξής τρόπο.
+
+              </Typography>
+              <div>
+                <CopyBlock
+                  text={`<Route path="/abοut">
+   <About />
+</Route>`}
+                  language="javascript"
+                  showLineNumbers={false}
+                  theme={dracula}
+                  codeBlock
+                />
+              </div>
+              <Typography variant="subtitle1" style={{ marginBottom: '4%', textAlign: 'justify', width: '100%' }}>
+              </Typography>
+
+              <Typography variant="subtitle1" style={{ marginBottom: '4%', textAlign: 'justify', width: '100%' }}>
+                Για την ώρα μην ασχολειθείτε με τα  <span style={{ backgroundColor: '#f4f4f4' }}> {`<Link>`} </span>. Δεν πειράζει αν δεν καταλαβαίνετε τα πάντα,
+                θα τα δούμε στο επόμενο μάθημα !
+              </Typography>
+              <div style={{ marginTop: '4%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
 
-                Όπως αναφέραμε προηγουμένως έχουμε αρχικοποιήσει για έσας ένα απλό πρότζεκτ που περιέχει το component Home και News  καθώς και την βασική δομή ενός React πρότζεκτ.
-                Πάρτε όσο χρόνο χρειάζεστε για να μελετήσετε τα αρχεία ώστε να καταλάβετε τι περιέχεται στο καθένα!
+                Έχουμε αρχικοποιήσει ένα απλό πρότζεκτ. Πάρτε όσο χρόνο χρειάζεστε για να μελετήσετε τις δομές των αρχείων.
               </Typography>
-
-              <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
-                Τροποποιήστε το αρχείο Νews.js στην γραμμή 9 και 10 , έτσι ώστε να θέσετε το τιτλο του news
-                 στο <span style={{ backgroundColor: '#f4f4f4' }}>{`<h3> </h3>`}</span> ενώ τον text από τον πίνακα news 
-                 στο <span style={{ backgroundColor: '#f4f4f4' }}>{`<p> </p>`}</span>
-                </Typography>
-
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Σε αυτό το μάθημα πρέπει να αρχικοποιήσετε τα paths του route συμφωνα με τα components που σας έχουμε ήδη κάνει import. Θα χρειαστεί να
+                τροποποιήσετε μόνο τον φάκελο App.js και τα paths θα πρέπει να έχουν την εξής μορφή:
+              </Typography>
+              <ul>
+                <li>
+                  <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                    To path  "/" να περιέχει το component Home
+                  </Typography>
+                </li>
+                <li>
+                  <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                    To path  "/first" να περιέχει το component First
+                  </Typography>
+                </li>
+                <li>
+                  <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                    To path  "/second" να περιέχει το component Second
+                  </Typography>
+                </li>
+                <li>
+                  <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                    To path  "/third" να περιέχει το component Third
+                  </Typography>
+                </li>
+              </ul>
             </Card>
           </Grid>
 
@@ -234,9 +330,17 @@ export default function Start() {
                   //"/QuickSort.js": quicksortCode,
                   //"/BubbleSort.js": bubblesortCode,
                   //"/index.html": `<div id="root"></div>`
-                  "/App.js": Appcode,
+                  "/App.js": { code: Appcode, active: true },
                   "/App.test.js": {
                     code: testAppCode,
+                    hidden: true
+                  },
+                  "/Second.test.js": {
+                    code: testAppCode1,
+                    hidden: true
+                  },
+                  "/Third.test.js": {
+                    code: testAppCode2,
                     hidden: true
                   },
                   "/public/App.css": { code: appcss, hidden: true },
@@ -246,17 +350,22 @@ export default function Start() {
                     code: code,
                     hidden: true
                   },
-                  "/Home.js": { code: componentCode, active: true }
+                  "/Home.js": { code: componentCode, active: false },
+                  "/First.js": { code: first },
+                  "/Second.js": { code: second },
+                  "/Third.js": { code: third },
                 },
                 dependencies: {
                   "react-markdown": "latest",
                   "jest-matchers": "latest",
+                  "history": "latest",
                   "react-dom": "latest",
                   "react-test-renderer": "latest",
                   "react-router-dom": "latest",
                   "babel-runtime": "latest",
-                  "@testing-library/react": "latest",
-                  "@testing-library/jest-dom": "latest"
+                  "@testing-library/jest-dom": "^5.14.1",
+                  "@testing-library/react": "^11.2.7",
+                  "@testing-library/user-event": "^12.8.3",
                 },
                 entry: '/intex.html'
 
@@ -266,7 +375,7 @@ export default function Start() {
                 <SandpackThemeProvider  >
                   <SandpackLayout theme="codesandbox-dark">
                     <SimpleCodeViewer />
-                    <SandpackCodeEditor showLineNumbers="true" showTabs="true" customStyle={{ marginTop: '10px', height: '500px', width: '400px' }}    > </SandpackCodeEditor>
+                    <SandpackCodeEditor showTabs="true" customStyle={{ marginTop: '10px', height: '500px', width: '400px' }}    > </SandpackCodeEditor>
                     <SandpackPreview viewportSize={{ width: 500, height: 500 }} />
                   </SandpackLayout>
                 </SandpackThemeProvider>
@@ -336,6 +445,7 @@ export default function Start() {
 
             >
 
+
               <Button variant="contained" color="secondary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
                 λυση
               </Button>
@@ -354,7 +464,7 @@ export default function Start() {
                   <Box >
                     <div style={{ width: '100%' }}>
                       <Typography style={{ marginTop: '2%', marginBottom: '5%' }} align="center" id="keep-mounted-modal-description" >
-                        Τό αρχείο News.js πρέπει να έχει την εξής μορφή :
+                        Τό αρχείο App.js πρέπει να έχει την εξής μορφή :
                       </Typography>
                     </div>
                     <div style={{ width: '100%' }}>

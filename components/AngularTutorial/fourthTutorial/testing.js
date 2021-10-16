@@ -27,10 +27,9 @@ it("should create", () => {
   fixture = TestBed.createComponent(AppComponent);
   fixture.detectChanges();
   component = fixture.componentInstance;
-  component.prop = "MY GUY";
   fixture.detectChanges();
   h1 = fixture.nativeElement.querySelector("#myh1");
-  expect(h1.textContent).toContain("MY GUY");
+  expect(h1.textContent).toContain("Hello World");
 
   expect(component).toBeDefined();
 });

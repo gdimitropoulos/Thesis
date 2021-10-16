@@ -1,3 +1,4 @@
+/* eslint-disable  react/no-unescaped-entities*/
 import React, {
   useState, useEffect, useContext, useMemo,
 } from 'react';
@@ -18,14 +19,15 @@ import {
 import { CopyBlock, dracula } from "react-code-blocks";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { red } from '@mui/material/colors';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import BlockSharpIcon from '@mui/icons-material/BlockSharp';
-import testAppCode from "!!raw-loader!../../Components/reactTutorial/SecondReactTutorial/tutorialApptest";
-import Appcode from "!!raw-loader!../../Components/reactTutorial/SecondReactTutorial/tutorialApp";
-import indexFile from "!!raw-loader!../../Components/reactTutorial/SecondReactTutorial/tutorialIndex";
-import componentCode from "!!raw-loader!../../Components/reactTutorial/SecondReactTutorial/tutorialComponent";
-import solutionCode from "!!raw-loader!../../Components/reactTutorial/SecondReactTutorial/solution";
+import testAppCode from "!!raw-loader!../../Components/reactTutorial/ThirdReactTutorial/tutorialAppTest";
+import Appcode from "!!raw-loader!../../Components/reactTutorial/ThirdReactTutorial/tutorialApp";
+import indexFile from "!!raw-loader!../../Components/reactTutorial/ThirdReactTutorial/tutorialIndex";
+import componentCode from "!!raw-loader!../../Components/reactTutorial/ThirdReactTutorial/tutorialComponent";
+import appcss from "!!raw-loader!../../Components/reactTutorial/ThirdReactTutorial/App.css";
+import solutionCode from "!!raw-loader!../../Components/reactTutorial/ThirdReactTutorial/solution";
 import Cookies from 'js-cookie';
 import { useActiveCode } from "@codesandbox/sandpack-react";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
@@ -48,6 +50,13 @@ import { Backspace } from '@mui/icons-material';
 import { display } from '@mui/system';
 
 let backspaces = 0;
+let totalCharsWritten = 0;
+let writeFlag = 0;
+let totalTries = 0;
+const timeStartingWriting = []
+const timeFinishingTest = [];
+const backspacesPerTry = [];
+const totaltCharsPerTry = [];
 const time = moment();
 
 const style = {
@@ -86,13 +95,37 @@ export default function Start() {
   const handlecloseSolution = async () => {
     setshowSolution(false)
   }
+  const eventHandler = (event) => {
+
+    if (event.path[0].className == 'cm-content') {
+      if ((event.which > 46 && event.which < 91) || (event.which > 95 && event.which < 112) || (event.which > 183 && event.which < 230) || (event.which > 151 && event.which < 165)) {
+        totalCharsWritten++;
+        console.log('im here');
+        if (writeFlag == 0) {
+          writeFlag = 1;
+          timeStartingWriting.push(moment());
+        }
+      }
+      if (event.key == 'Backspace') {
+        backspaces++;
+      }
+    }
+
+  }
+
   const handleCloseSuccess = async () => {
     console.log(moment().diff(time, 'seconds'));
     const bodyData = {
-      time: moment().diff(time, 'seconds').toString(),
+      time,
       backspaces: backspaces,
-      tutorialName: 'secondreact',
-      answer: answerShown
+      lessonName: 'r2',
+      tutorailName: 'react',
+      answer: answerShown,
+      totalTries,
+      totaltCharsPerTry,
+      backspacesPerTry,
+      timeFinishingTest,
+      timeStartingWriting,
     }
     const res = await fetch('/api/finishTutorial', {
       method: 'POST',
@@ -109,7 +142,7 @@ export default function Start() {
         'Επιτυχής καταγραφή της προσπάθειας'
       );
       await router.push('/react/third')
-    }else{
+    } else {
       showNotification(
         'error',
         'Σφάλμα ',
@@ -130,38 +163,39 @@ export default function Start() {
     const { files, activePath, setActiveFile, openFile } = sandpack;
     const { refresh } = useSandpackNavigation();
     const { code, updateCode } = useActiveCode();
+
+
     useEffect(() => {
-      const unsubscribe = listen((msg) => {
-        if (msg.event == 'test_end') {
-          if (msg.test.status == 'fail') {
+      window.addEventListener('keydown', eventHandler);
+      return () => window.removeEventListener('keydown', eventHandler);
+
+    }, []);
+
+    useEffect(() => {
+
+      window.addEventListener('message', (event) => {
+        if (event.data.event == 'test_end') {
+          if (event.data.test.status == 'fail') {
             dispatch({ type: 'refresh' });
             setActiveFile('/App.js')
           }
           statuses.push(event.data.test.status);
         }
-        if (msg.event == 'total_test_end') {
+        if (event.data.event == 'total_test_end') {
           handleOpen();
         }
 
-
       });
-      return unsubscribe;
-    }, [listen]);
+    }, [listen, dispatch, setActiveFile]);
 
-    useEffect(() => {
-
-      window.addEventListener('keydown', (event) => {
-        if (event.path[0].className == 'cm-content') {
-          console.log(event);
-          if (event.key == 'Backspace') {
-            backspaces++;
-          }
-        }
-
-      });
-    }, []);
-
-    const runTests = () => { dispatch({ type: 'run-all-tests' }); };
+    const runTests = () => {
+      writeFlag = 0;
+      backspacesPerTry.push(backspaces);
+      totaltCharsPerTry.push(totalCharsWritten);
+      totalTries++;
+      timeFinishingTest.push(moment());
+      dispatch({ type: 'run-all-tests' });
+    };
 
     const codee = files[activePath].code;
 
@@ -178,13 +212,12 @@ export default function Start() {
   return (
 
     <div style={{ height: '60%' }}>
-    <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', height: '80%', marginBottom: '1%', marginTop: '5%', paddingTop: '3%', paddingBottom: '3%',paddingLeft: '2%', paddingRight: '2%' }}>
-      <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
-        <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4}  key="geo">
-          <Card style={{ maxHeight: "80vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
-          <div style={{ marginBottom: '2%' , height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
-          <div style={{ marginBottom: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
-              <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}> To πρώτο σας custom Component </Typography>
+      <div style={{ height: '80%', marginBottom: '1%', marginTop: '2%', paddingTop: '2%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
+        <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
+          <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
+            <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
+              <div style={{ marginBottom: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
+              <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}> To πρώτο σας custom Functional Component </Typography>
               <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
                 Σε αυτό το μάθημα  θα πρέπει να κάνετε import to πρώτο σας <span style={{ fontWeight: 'bold' }}> component </span>!
               </Typography>
@@ -194,25 +227,47 @@ export default function Start() {
                 κώδικα το οποίο μπορούμε να κάνουμε import όπου χρειάζεται.
               </Typography>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                Έχουμε αρχικοποιήσει για εσάς το HelloWorld.vue  το οποίο είναι το component που θα πρέπει να χρησιμοποιήσετε. Τώρα είναι λοιπόν η ώρα
-                να εξηγήσουμε εκτενέστερα την δομή <span style={{ backgroundColor: '#f4f4f4' }}>{`<script>`}</span>
+                Έχουμε αρχικοποιήσει για εσάς το HelloWorld.js  το οποίο είναι το component που θα πρέπει να χρησιμοποιήσετε.
+                Υπάρχουν δύο ειδών component,
+                τα <span style={{ fontStyle: 'italic' }}>functional</span> και τα <span style={{ fontStyle: 'italic' }}>class</span> όπου όπως δηλώνει και η ονοματολογία τα πρώτα τα δηλώνουμε ως συναρτήσεις ενώ
+                τα δεύτερα ως κλάσεις.
+              </Typography>
+
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Τα δύο αυτά είδη έχουν αρκετές διαφορές στον τρόπο που χρησιμοποιούνται και στα επόμενα μαθήματα θα δούμε ορισμένα παραδείγματα, χωρίς ωστόσο να μπούμε σε πολλές
+                λεπτομέρειες. Αν θέλετε να διαβάσετε περισσότερα μπορείτε
+                να πλοηγηθείτε  <a
+                  className="App-link"
+                  href="https://reactjs.org/docs/components-and-props.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  εδώ
+                </a> .
               </Typography>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
-                Σε κάθε δομή <span style={{ backgroundColor: '#f4f4f4' }}>{`<script>`}</span> θα υπάρχει o κώδικας :
+                Σε κάθε <span style={{ fontWeight: 'bold' }}> functional component</span> θα υπάρχει το export default "ComponentName"  :
                 <CopyBlock
                   text=
-                  {` export default {
-      name: 'Name of the Component',
-      props: {  }
-       }`}
-                  language="javascript"
+                  {` 
+function MyComponent() {
+    return (
+       <h1>              
+        Learn React
+       </h1>                
+       );
+  }
+                  
+ export default MyComponent;
+                  `}
+                  language="actionscript"
                   showLineNumbers={true}
                   theme={dracula}
                   codeBlock
                 />
-                Σε αυτό τον κώδικα ουσιαστικά δηλώνουμε το component μας ώστε να είναι διαθέσιμο για το υπόλοιπο πρότζεκτ.
-                Μέσα στο  <span style={{ backgroundColor: '#f4f4f4' }}>{`<script>`}</span>  tag γίνεται και το import των διαφόρων component με τον εξής
-                τρόπο :
+                Σε αυτό τον κώδικα ουσιαστικά δηλώνουμε το component μας και έπειτα το κάνουμε export  ώστε να είναι
+                διαθέσιμο για το υπόλοιπο πρότζεκτ.
+                Μπορούμε να κάνουμε import το component μας με τον εξής τρόπο :
                 <CopyBlock
                   text={` import MyComponent from '../components/MyComponent'`}
                   language="javascript"
@@ -220,11 +275,13 @@ export default function Start() {
                   theme={dracula}
                   codeBlock
                 />
-                Όλα τα imported components μπορούμε πλέον να τα χρησιμποιούμε μέσα στο  <span style={{ backgroundColor: '#f4f4f4' }}>{`<template>`} </span> tag :
+                Όλα τα imported components μπορούμε πλέον να τα χρησιμοποιούμε :
                 <CopyBlock
-                  text={`<template>
-  <MyComponent  />
-</template>`}
+                  text={`
+<div>              
+  <HelloWorld />
+</div>                
+                      `}
                   language="html"
                   showLineNumbers={true}
                   theme={dracula}
@@ -236,26 +293,36 @@ export default function Start() {
                 όταν το κάλουμε σε κάποιo άλλο αρχείο και τα δηλώνουμε με τον εξής τρόπο :
                 <CopyBlock
                   text=
-                  {`export default {
-  name: 'Name of the Component',
-  props: { message: String }
-}`} language="javascript"
+                  {`
+function MyComponent({myprop}) {
+     return (
+       <h1>      
+        hello World        
+       </h1>                
+    );
+  }
+                                  
+ export default MyComponent;`} language="actionscript"
                   showLineNumbers={true}
                   theme={dracula}
                   codeBlock
                 />
-                Στο παραπάνω παράδειγμα δηλώνουμε  ως prop την μεταβλήτη message που πρέπει να  είναι τύπου string .
+                Στο παραπάνω παράδειγμα δηλώνουμε  ως prop την μεταβλήτη myprop που δέχεται ως είσοδο το component.
               </Typography>
               <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
-                Για να χρησιμοποιήοσυμε τώρα αυτήν την μεταβλητή στο <span style={{ backgroundColor: '#f4f4f4' }}>{`<template>`} </span> tag μπορούμε να ακολουθήσουμε το παρακάτω παράδειγμα :
+                Για να χρησιμοποιήσουμε τώρα αυτήν την μεταβλητή στο <span style={{ backgroundColor: '#f4f4f4' }}>{`<template>`}</span> tag μπορούμε να ακολουθήσουμε το παρακάτω παράδειγμα :
                 <CopyBlock
                   text=
-                  {`<template>
-    <div>
-     <p> {{ message }} </p> 
-    </div>
- </template>
-                `} language="html"
+                  {`
+ function MyComponent({myprop}) {
+      return (
+        <h1>    
+        {myprop}          
+       </h1>                
+     );
+   }
+                                   
+  export default MyComponent;`} language="actionscript"
                   showLineNumbers={true}
                   theme={dracula}
                   codeBlock
@@ -266,20 +333,20 @@ export default function Start() {
               <div style={{ marginTop: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
 
-                Όπως αναφέραμε προηγουμένως έχουμε αρχικοποιήσει για έσας ένα απλό πρότζεκτ που περιέχει το component HelloWorld και την βασική δομή ενός Vue js πρότζεκτ.
+                Όπως αναφέραμε προηγουμένως έχουμε αρχικοποιήσει για έσας ένα απλό πρότζεκτ που περιέχει το component HelloWorld και την βασική δομή ενός React πρότζεκτ.
                 Πάρτε τον χρόνο σας να μελετήσετε τα αρχεία ώστε να καταλάβετε τι περιέχεται στο καθένα!
               </Typography>
 
               <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
-                Τροποποιήστε το   <span style={{ backgroundColor: '#f4f4f4' }}>{`<template>`} </span> του App.vue έτσι ώστε να περνάτε ως prop στο Component HelloWorld
-                το κείμενο Hello World .
+                Τροποποιήστε το αρχείο App.js στην γραμμή 7, έτσι ώστε να περνάτε ως prop στο component HelloWorld
+                το κείμενο <span style={{ fontStyle: 'italic' }}>Hello World</span>.
               </Typography>
 
             </Card>
           </Grid>
-         
+
           <Grid item md={12} lg={8}>
-            <Card style={{ padding: "1%",height: '75vh' , width: '100%' }}>
+            <Card style={{ padding: "1%", height: '75vh', width: '100%' }}>
               <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   React Tutorial  </Typography>
 
               <SandpackProvider template="react" customSetup={{
@@ -294,12 +361,13 @@ export default function Start() {
                     code: testAppCode,
                     hidden: true
                   },
+                  "/public/App.css": { code: appcss, hidden: true },
                   "index.js": indexFile,
                   "SetupTest.js": {
                     code: code,
                     hidden: true
                   },
-                  "/Button.js": componentCode
+                  "/HelloWorld.js": componentCode
                 },
                 dependencies: {
                   "react-markdown": "latest",
@@ -319,61 +387,62 @@ export default function Start() {
                 <SandpackThemeProvider  >
                   <SandpackLayout theme="codesandbox-dark">
                     <SimpleCodeViewer />
-                    <SandpackCodeEditor showTabs="true" customStyle={{ marginTop: '10px', height: '500px', width: '400px' }}    > </SandpackCodeEditor>
+                    <SandpackCodeEditor showLineNumbers="true" showTabs="true" customStyle={{ marginTop: '10px', height: '500px', width: '400px' }}    > </SandpackCodeEditor>
                     <SandpackPreview viewportSize={{ width: 500, height: 500 }} />
                   </SandpackLayout>
                 </SandpackThemeProvider>
               </SandpackProvider>
 
               <Modal
-                  keepMounted
-                  open={openSuccess}
-                  onClose={handleCloseFail}
-                  aria-labelledby="keep-mounted-modal-title"
-                  aria-describedby="keep-mounted-modal-description"
-                >
-                  <Card styles={{ padding: '1%' }}>
-  
-                    <Box sx={style} >
-                    <div style={{ width: '100%' , display: 'flex', justifyContent: 'center'}}>
+                keepMounted
+                open={openSuccess}
+                onClose={handleCloseFail}
+                aria-labelledby="keep-mounted-modal-title"
+                aria-describedby="keep-mounted-modal-description"
+              >
+                <Card styles={{ padding: '1%' }}>
+
+                  <Box sx={style} >
+                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                       <CheckCircleIcon color="success" styles={{ marginBottom: '20px' }} id="keep-mounted-modal-title" sx={{ fontSize: 80 }} />
-                      </div>
-                      <Box style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'column' }}>
-                        <Typography style={{ marginTop: '2%' }} align="center" id="keep-mounted-modal-description" >
-                          H απάντηση που δώσατε ήταν σωστή
-                        </Typography>
-                        <Button style={{ marginTop: '10%' }} variant="contained" color="primary" onClick={handleCloseSuccess}> Παμε στο επομενο</Button>
-                      </Box>
+                    </div>
+                    <Box style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'column' }}>
+                      <Typography style={{ marginTop: '2%' }} align="center" id="keep-mounted-modal-description" >
+                        H απάντηση που δώσατε ήταν σωστή
+                      </Typography>
+                      <Button style={{ marginTop: '10%' }} variant="contained" color="primary" onClick={handleCloseSuccess}> Παμε στο επομενο</Button>
                     </Box>
-                  </Card>
-  
-                </Modal>
-  
-  
-  
-                <Modal
-                  keepMounted
-                  open={openFail}
-                  onClose={handleCloseFail}
-                  aria-labelledby="keep-mounted-modal-title"
-                  aria-describedby="keep-mounted-modal-description"
-                >
-                  <Card styles={{ padding: '1%' }}>
-  
-                    <Box sx={style} >
-                    <div style={{ width: '100%' , display: 'flex', justifyContent: 'center'}}>
-                      <BlockSharpIcon  styles={{ marginBottom: '20px' }} id="keep-mounted-modal-title"   sx={{ color: red[500] , fontSize: 80  }}  />
-                      </div>
-                      <Box style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'column' }}>
-                        <Typography style={{ marginTop: '2%' }} align="center" id="keep-mounted-modal-description" >
-                          H απάντηση που δώσατε ήταν λανθασμένη
-                        </Typography>
-                        <Button style={{ marginTop: '10%' }} variant="contained" color="secondary" onClick={handleCloseFail}> Προσπαθηστε ξανα</Button>
-                      </Box>
+                  </Box>
+                </Card>
+
+              </Modal>
+
+
+              <Modal
+                keepMounted
+                open={openFail}
+                onClose={handleCloseFail}
+                aria-labelledby="keep-mounted-modal-title"
+                aria-describedby="keep-mounted-modal-description"
+              >
+                <Card styles={{ padding: '1%' }}>
+
+                  <Box sx={style} >
+                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                      <BlockSharpIcon styles={{ marginBottom: '20px' }} id="keep-mounted-modal-title" sx={{ color: red[500], fontSize: 80 }} />
+                    </div>
+                    <Box style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'column' }}>
+                      <Typography style={{ marginTop: '2%' }} align="center" id="keep-mounted-modal-description" >
+                        H απάντηση που δώσατε ήταν λανθασμένη
+                      </Typography>
+                      <Button style={{ marginTop: '10%' }} variant="contained" color="secondary" onClick={handleCloseFail}> Προσπαθηστε ξανα</Button>
                     </Box>
-                  </Card>
-  
-                </Modal>
+                  </Box>
+                </Card>
+
+              </Modal>
+
+
 
             </Card>
           </Grid>
@@ -387,8 +456,8 @@ export default function Start() {
 
             >
 
-              <Button variant="contained" color="secondary" style={{ marginTop: '4%' , marginBottom: '5%' }}>
-                Show solution
+              <Button variant="contained" color="secondary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+                λυση
               </Button>
             </Popconfirm>
             <Modal

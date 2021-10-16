@@ -1,0 +1,1 @@
+<app-hello-world [message]="prop"></app-hello-world>

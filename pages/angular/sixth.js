@@ -19,7 +19,7 @@ import React, {
     Card,
     Box,
   } from "@material-ui/core";
-
+  import { CopyBlock, dracula } from "react-code-blocks";
   import indexhtml from '!!raw-loader!../../Components/AngularTutorial/sixthTutotorial/indexhtml'
   import appcomponenthtml from "!!raw-loader!../../Components/AngularTutorial/sixthTutotorial/appcomponenthtml";
   import appmodule from "!!raw-loader!../../Components/AngularTutorial/sixthTutotorial/appmodule";
@@ -57,9 +57,17 @@ import React, {
   import showNotification from '../../Lib/notification'
   import { getAppCookies } from '../../Lib/utils'
   
+
   let backspaces = 0;
+  let totalCharsWritten=0;
+  let writeFlag=0;
+  let totalTries=0;
+  const timeStartingWriting=[]
+  const timeFinishingTest=[];
+  const backspacesPerTry=[];
+  const totaltCharsPerTry=[];
   const time = moment();
-  
+
   const style = {
     position: 'absolute',
     display: 'flex',
@@ -93,16 +101,39 @@ import React, {
       statuses = [];
     }
   
+  const eventHandler = (event)=>{
+      
+    if (event.path[0].className == 'cm-content') {
+      if( (event.which > 46 && event.which<91) || ( event.which>95 && event.which<112) || (event.which>183 && event.which<230) || (event.which>151 && event.which<165 )){
+        totalCharsWritten++;
+        console.log('im here');
+        if(writeFlag == 0){
+          writeFlag=1;
+          timeStartingWriting.push(moment());
+        }
+      }
+      if (event.key == 'Backspace') {
+        backspaces++;
+      }
+    }
+
+}
+
     const handlecloseSolution = async () => {
       setshowSolution(false)
     }
     const handleCloseSuccess = async () => {
-      console.log(moment().diff(time, 'seconds'));
       const bodyData = {
-        time: moment().diff(time, 'seconds').toString(),
+        time,
         backspaces: backspaces,
-        tutorialName: 'thirdangular',
-        answer: answerShown
+        lessonName: 'a6',
+        tutorailName:'react',
+        answer: answerShown,
+        totalTries,
+        totaltCharsPerTry,
+        backspacesPerTry,
+        timeFinishingTest,
+        timeStartingWriting,
       }
       const res = await fetch('/api/finishTutorial', {
         method: 'POST',
@@ -158,29 +189,24 @@ import React, {
   
         console.log("im listening")
         return unsubscribe;
-      }, [listen]);
-  
-  
+      }, [listen,dispatch,setActiveFile]);
+
+   
+
       useEffect(() => {
+        window.addEventListener('keydown',eventHandler);
+        return () =>  window.removeEventListener('keydown',eventHandler);
   
-        window.addEventListener('keydown', (event) => {
-          if (event.path[0].className == 'cm-content') {
-            console.log(event);
-            if (event.key == 'Backspace') {
-              backspaces++;
-            }
-          }
+      },[]);
   
-        });
+      const runTests = () => { 
+        writeFlag=0
+        backspacesPerTry.push(backspaces);
+        totaltCharsPerTry.push(totalCharsWritten);
+        totalTries++;
+        timeFinishingTest.push(moment());
+        dispatch({ type: 'run-all-tests' }); };
   
-  
-  
-  
-  
-  
-      }, []);
-  
-      const runTests = () => { dispatch({ type: 'run-all-tests' }); };
   
   
       return (
@@ -195,34 +221,166 @@ import React, {
   
     return (
   
-     
-    <div style={{ height: '60%' }}>
-    <div style={{ height: '80%', marginBottom: '1%', marginTop: '2%', paddingTop: '2%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
-      <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
-        <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
-          <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
-                <div style={{ marginBottom: '2%' , height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
-                <Typography variant="h6" style={{ marginBottom: '2%' ,width: '100%', marginBottom: '1%' }}> To πρώτο σας Hello World </Typography>
-                <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
-                  Ήρθε η ώρα να γνωρίσετε την Vue js στην πράξη!
-                </Typography>
-                <Typography variant="subtitle1" style={{ marginBottom: '2%' , textAlign: 'justify', width: '100%' }}>
-                   Για αρχή θα εκτυπώσουμε στην οθόνη ένα απλό μήνυμα "Hello World" με βάση όσα γνωρίζετε απο την απλή Html.
-                </Typography>
-                <Typography variant="subtitle1" style={{ marginBottom: '2%' , textAlign: 'justify', width: '100%' }}>
-                   Έχουμε αρχικοποιήσει για έσας ένα απλό πρότζεκτ ακολουθώντας όσα αναφέραμε προηγουμένως. Από τα αρχεία στα οποία αναφερθήκαμε συνοπτικά
-                   στα προηγούμενα μαθήματα, εμφανίζονται μόνο όσα  απαιτούν τροποποιήσεις από εσάς ή κρίνονται απαραίτητα  ώστε να γνωρίσετε την Vue js σε ένα εισαγωγικό επίπεδο.
-                </Typography>
-                <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%',marginTop: '1%' }}>
-                   Στα δεξιά βλέπετε το αρχείο App.vue του οποίου η δομή {`<template>`} είναι αρχικοποιημένη με απλή Html. Όσα γνωρίζετε από την Html
-                   μπορούν να χρησιμοποιηθούν και στην Vue! 
-                </Typography>
-  
-  
-                <div style={{ marginTop: '2%' , height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
-                <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
-                  Τροποποιήστε  τον κώδικα στη γραμμή 4 ώστε να εκτυπώνεται το κείμενο Hello World  και πατήστε Run Tests.
-                </Typography>
+      <div style={{ height: '60%' }}>
+      <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', height: '80%', marginBottom: '1%', marginTop: '5%', paddingTop: '3%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
+        <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
+          <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
+            <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
+              <div style={{ marginBottom: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
+              <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}> Angular js Router</Typography>
+              <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
+                Aυτό το μάθημα  αποτελεί μια εισαγωγή στο Angular js <span style={{ fontWeight: 'bold' }}> Router</span>, το εργαλείο που κάνει τη Angular να είναι 
+                ένα Single Page Application Framework!
+              </Typography>
+
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Ένα από τα πιο ισχυρά χαρακτηριστικά των σύγχρονων εφαρμογών ιστού μιας σελίδας (SPA) είναι η δρομολόγηση. Οι
+                σύγχρονες εφαρμογές μιας σελίδας, όπως μια εφαρμογή Angular, μπορούν να μεταβούν από σελίδα σε σελίδα από την 
+                πλευρά του πελάτη (χωρίς να ζητηθεί ο διακομιστής).
+
+              </Typography>
+
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                H αρχικοποίηση του router στην Angular είναι αρκετά απλή. Αρχικοποιούμε το app.module.ts με τον εξής τρόπο:
+
+              </Typography>
+              <div>
+                <CopyBlock
+                  text={`import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule, Routes } from '@angular/router';
+import { AppComponent } from './app.component';;
+import { AboutComponent } from './about.component';
+import { HomeComponent } from './home.component';
+
+const routes: Routes = [
+  {path: '', component: HomeComponent },
+  {path: 'about', component: AboutComponent },
+ ];
+                  
+  @NgModule({
+    declarations: [
+    AppComponent,
+    AboutComponent,
+    HomeComponent,
+   ],
+ imports: [
+  BrowserModule,
+  RouterModule.forRoot(routes)
+   ],
+  providers: [],
+  bootstrap: [AppComponent]
+  })
+  export class AppModule { }
+                  `}
+                  language="typescript"
+                  showLineNumbers={false}
+                  theme={dracula}
+                  codeBlock
+                />
+              </div>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                   Ας το δούμε βήμα-βήμα. Πρώτα αρχικοποιούμε τα routes μας στην μεταβλητή <span style={{ fontStyle: 'italic' }}> routes</span>:
+              </Typography>
+              <div>
+                <CopyBlock
+                  text={`i
+const routes: Routes = [
+  {path: '', component: HomeComponent },
+  {path: 'about', component: AboutComponent },
+ ];
+          `}
+                  language="typescript"
+                  showLineNumbers={false}
+                  theme={dracula}
+                  codeBlock
+                />
+              </div>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                      Σε αυτήν την μεταβλητή δηλώνουμε τα paths και σε ποιό component αντιστοιχεί σε κάθε path. Το default component βρίσκεται 
+                      στο " " path.
+              </Typography>
+              <div>
+                <CopyBlock
+                  text={`
+  imports: [
+      BrowserModule,
+      RouterModule.forRoot(routes)
+    ],
+          `}
+                  language="typescript"
+                  showLineNumbers={false}
+                  theme={dracula}
+                  codeBlock
+                />
+              </div>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                      Έπειτα για να προσθέσουμε αυτά τα routes στο πρότζεκτ μας χρησιμοποιούμε το  <span style={{ fontStyle: 'italic' }}>RouterModule</span> με τον τρόπο του παραπάνω 
+                      παραδείγματος. Πλέον είμαστε σχεδόν έτοιμοι! To μόνο που μένει είναι να πάμε στο app.component.html και να το αρχικοποιήσουμε με τον εξής τρόπο:
+
+              </Typography>
+              <div>
+                <CopyBlock
+                  text={`<router-outlet> </router-outlet>`}
+                  language="html"
+                  showLineNumbers={false}
+                  theme={dracula}
+                  codeBlock
+                />
+              </div>
+
+              <Typography variant="subtitle1" style={{ marginBottom: '4%', marginTop: '4%', textAlign: 'justify', width: '100%' }}>
+                Ο τρόπος για να πλοηγηθούμε απο σελίδα σε σελίδα είναι μέσω των 
+              </Typography>
+              <div>
+                <CopyBlock
+                  text={` <a routerLink = "/"></a>  `}
+                  language="html"
+                  showLineNumbers={false}
+                  theme={dracula}
+                  codeBlock
+                />
+              </div>
+              <Typography variant="subtitle1" style={{ marginBottom: '4%', marginTop: '4%', textAlign: 'justify', width: '100%' }}>
+                  
+                  </Typography>
+              <Typography variant="subtitle1" style={{ marginBottom: '4%', textAlign: 'justify', width: '100%' }}>
+                Για την ώρα μην ασχολειθείτε με τα  <span style={{ backgroundColor: '#f4f4f4' }}> {`routerLink`} </span>. Δεν πειράζει αν δεν καταλαβαίνετε τα πάντα,
+                θα τα δούμε στο επόμενο μάθημα!
+        
+              </Typography>
+              <div style={{ marginTop: '4%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+
+                Έχουμε αρχικοποιήσει ένα απλό πρότζεκτ. Πάρτε όσο χρόνο χρειάζεστε για να μελετήσετε τις δομές των αρχείων.
+              </Typography>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Σε αυτό το μάθημα πρέπει να αρχικοποιήσετε τα paths του route συμφωνα με τα components που σας έχουμε ήδη κάνει import. Θα χρειαστεί να
+                τροποποιήσετε μόνο το αρχείο app.module.ts και τα paths θα πρέπει να έχουν την εξής μορφή:
+              </Typography>
+              <ul>
+                <li>
+                  <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                    To path  "/" να περιέχει το component HomeComponent
+                  </Typography>
+                </li>
+                <li>
+                  <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                    To path  "/first" να περιέχει το component FirstComponent
+                  </Typography>
+                </li>
+                <li>
+                  <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                    To path  "/second" να περιέχει το component SecondComponent
+                  </Typography>
+                </li>
+                <li>
+                  <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                    To path  "/third" να περιέχει το component ThirdComponent.
+                  </Typography>
+                </li>
+              </ul>
+
               </Card>
             </Grid>
   

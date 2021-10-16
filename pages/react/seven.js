@@ -13,6 +13,8 @@ import {
   Grid,
   Modal,
   Container,
+  Tab,
+  Tabs,
   Typography,
   Card,
   Box,
@@ -27,18 +29,20 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import BlockSharpIcon from '@mui/icons-material/BlockSharp';
-import testAppCode from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/tutorialAppTest";
-import testAppCode1 from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/tutorialAppTest1";
-import testAppCode2 from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/tutorialAppTest2";
-import Appcode from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/tutorialApp";
-import indexFile from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/tutorialIndex";
-import componentCode from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/tutorialComponent";
-import appcss from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/App.css";
-import news from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/News";
-import first from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/First";
-import second from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/Second";
-import third from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/Third";
-import solutionCode from "!!raw-loader!../../Components/reactTutorial/seventhTutorial/solution";
+import testAppCode from "!!raw-loader!../../Components/reactTutorial/eightTutorial/tutorialAppTest";
+import testAppCode1 from "!!raw-loader!../../Components/reactTutorial/eightTutorial/tutorialAppTest1";
+import testAppCode2 from "!!raw-loader!../../Components/reactTutorial/eightTutorial/tutorialAppTest2";
+import Appcode from "!!raw-loader!../../Components/reactTutorial/eightTutorial/tutorialApp";
+import indexFile from "!!raw-loader!../../Components/reactTutorial/eightTutorial/tutorialIndex";
+import componentCode from "!!raw-loader!../../Components/reactTutorial/eightTutorial/tutorialComponent";
+import appcss from "!!raw-loader!../../Components/reactTutorial/eightTutorial/App.css";
+import news from "!!raw-loader!../../Components/reactTutorial/eightTutorial/News";
+import first from "!!raw-loader!../../Components/reactTutorial/eightTutorial/First";
+import second from "!!raw-loader!../../Components/reactTutorial/eightTutorial/Second";
+import third from "!!raw-loader!../../Components/reactTutorial/eightTutorial/Third";
+import solutionCode from "!!raw-loader!../../Components/reactTutorial/eightTutorial/solution";
+import solutionCode1 from "!!raw-loader!../../Components/reactTutorial/eightTutorial/solution1";
+import solutionCode2 from "!!raw-loader!../../Components/reactTutorial/eightTutorial/solution2";
 import Cookies from 'js-cookie';
 import { useActiveCode } from "@codesandbox/sandpack-react";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
@@ -60,7 +64,15 @@ import { getAppCookies } from '../../Lib/utils'
 import { Backspace } from '@mui/icons-material';
 import { display } from '@mui/system';
 
+
 let backspaces = 0;
+let totalCharsWritten=0;
+let writeFlag=0;
+let totalTries=0;
+const timeStartingWriting=[]
+const timeFinishingTest=[];
+const backspacesPerTry=[];
+const totaltCharsPerTry=[];
 const time = moment();
 
 const style = {
@@ -71,16 +83,48 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '50vw',
-  height: '70vh',
+  width: '60vw',
+  height: '80vh',
   bgcolor: 'background.paper',
   borderRadius: '10%',
   boxShadow: 24,
   p: 4,
 };
 
-export default function Start() {
+function a11yProps(index) {
+  return {
+    id: `vertical-tab-${index}`,
+    'aria-controls': `vertical-tabpanel-${index}`,
+  };
+}
+
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+export default function Eight() {
   const router = useRouter();
+  const [value, setValue] = useState(0);
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
+  };
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openFail, setOpenFail] = useState(false);
   const [answerShown, setAnswerShown] = useState(false);
@@ -96,16 +140,39 @@ export default function Start() {
     statuses = [];
   }
 
+  const eventHandler = (event)=>{
+      
+    if (event.path[0].className == 'cm-content') {
+      if( (event.which > 46 && event.which<91) || ( event.which>95 && event.which<112) || (event.which>183 && event.which<230) || (event.which>151 && event.which<165 )){
+        totalCharsWritten++;
+        console.log('im here');
+        if(writeFlag == 0){
+          writeFlag=1;
+          timeStartingWriting.push(moment());
+        }
+      }
+      if (event.key == 'Backspace') {
+        backspaces++;
+      }
+    }
+
+}
+
   const handlecloseSolution = async () => {
     setshowSolution(false)
   }
   const handleCloseSuccess = async () => {
-    console.log(moment().diff(time, 'seconds'));
     const bodyData = {
-      time: moment().diff(time, 'seconds').toString(),
+      time,
       backspaces: backspaces,
-      tutorialName: 'sixthreact',
-      answer: answerShown
+      lessonName: 'r7',
+      tutorailName:'react',
+      answer: answerShown,
+      totalTries,
+      totaltCharsPerTry,
+      backspacesPerTry,
+      timeFinishingTest,
+      timeStartingWriting,
     }
     const res = await fetch('/api/finishTutorial', {
       method: 'POST',
@@ -121,7 +188,7 @@ export default function Start() {
         'Επιτυχής καταγραφή ',
         'Επιτυχής καταγραφή της προσπάθειας'
       );
-      await router.push('/react/eight')
+      await router.push('/user/dashboard')
     } else {
       showNotification(
         'error',
@@ -146,16 +213,6 @@ export default function Start() {
 
 
     useEffect(() => {
-
-      window.addEventListener('keydown', (event) => {
-        if (event.path[0].className == 'cm-content') {
-          console.log(event);
-          if (event.key == 'Backspace') {
-            backspaces++;
-          }
-        }
-
-      });
       window.addEventListener('message', (event) => {
         console.log(event)
         if (event.data.event == 'test_end') {
@@ -170,9 +227,23 @@ export default function Start() {
         }
 
       });
-    }, []);
+    }, [listen,dispatch,setActiveFile]);
 
-    const runTests = () => { dispatch({ type: 'run-all-tests' }); };
+
+    useEffect(() => {
+      window.addEventListener('keydown',eventHandler);
+      return () =>  window.removeEventListener('keydown',eventHandler);
+
+    },[]);
+
+
+    const runTests = () => { 
+      writeFlag=0
+      backspacesPerTry.push(backspaces);
+      totaltCharsPerTry.push(totalCharsWritten);
+      totalTries++;
+      timeFinishingTest.push(moment());
+      dispatch({ type: 'run-all-tests' }); };
 
     const codee = files[activePath].code;
 
@@ -194,92 +265,68 @@ export default function Start() {
           <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
             <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
               <div style={{ marginBottom: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
-              <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}> React js Router</Typography>
+              <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}> React js Router Links</Typography>
               <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
-                Aυτό το μάθημα  αποτελεί μια εισαγωγή στο React js Router, το εργαλείο που κάνει τη React να είναι ένα Single Page Application Framework!
+                Θα ολοκληρώσουμε αυτο το εισαγωγικό σύνολο μαθημάτων της React js κάνοντας μια αναφορά και
+                στα <span style={{ fontWeight: 'bold' }}> Links </span> ωστε να συμπληρώσουμε τις γνώσεις σας για το React Router!
               </Typography>
 
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                Ένα από τα πιο ισχυρά χαρακτηριστικά των σύγχρονων εφαρμογών ιστού μιας σελίδας (SPA) είναι η δρομολόγηση. Οι
-                σύγχρονες εφαρμογές μιας σελίδας, όπως μια εφαρμογή React, μπορούν να μεταβούν από σελίδα σε σελίδα από την
-                πλευρά του πελάτη (χωρίς να ζητηθεί ο διακομιστής). Το React Router είναι η επίσημη βιβλιοθήκη για την πλοήγηση
-                σελίδων στις εφαρμογές React.
-
+                Ο τρόπος για να χρησιμοποιήσουμε τα route  paths που φτιάξατε στο προηγούμενο μάθημα είναι μέσω των
+                <span style={{ backgroundColor: '#f4f4f4' }}> {`<Links></Links>`}</span>. Στα
+                <span style={{ backgroundColor: '#f4f4f4' }}> {`<Links></links>`}</span> tags μπορούμε να χρησιμοποιήσουμε την ιδιότητα
+                <span style={{ backgroundColor: '#f4f4f4' }}> to </span> για να υποδείξουμε σε ποιο path θα θέλαμε να μεταβούμε.
+                Ας δούμε ένα παράδειγμα.
               </Typography>
 
-              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                Για να προσθέσουμε το router, αφού μεταβούμε στο directory του πρότζεκτ, θα τρέξουμε στο terminal την εντολή
-                <span style={{ backgroundColor: '#f4f4f4' }}> npm install npm install react-router-dom </span>.
-
-              </Typography>
-
-
-              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                Ας ξεκινήσουμε με ένα παράδειγμα :
-              </Typography>
               <div>
                 <CopyBlock
-                  text={routerfile}
-                  language="javascript"
+                  text={`<Link to="/about">About</Link> `}
+                  language="html"
                   showLineNumbers={false}
                   theme={dracula}
                   codeBlock
                 />
               </div>
-              <Typography variant="subtitle1" style={{ marginBottom: '4%', marginTop: '4%', textAlign: 'justify', width: '100%' }}>
-
-                Για να δηλώσουμε τα router paths χρησιμοποιούμε το <span style={{ backgroundColor: '#f4f4f4' }}>{`<switch> </switch>`} </span> μέσα στο οποίο δηλωνουμε τα path με τον εξής τρόπο.
-
-              </Typography>
-              <div>
-                <CopyBlock
-                  text={`<Route path="/abοut">
-   <About />
-</Route>`}
-                  language="javascript"
-                  showLineNumbers={false}
-                  theme={dracula}
-                  codeBlock
-                />
-              </div>
-              <Typography variant="subtitle1" style={{ marginBottom: '4%', textAlign: 'justify', width: '100%' }}>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Στο παράδειγμα  αυτό αν κάποιος πατήσει στο σύνδεσμο, θα πλοηγηθεί στην σελίδα που έχει συνδεθεί με το url /about
               </Typography>
 
-              <Typography variant="subtitle1" style={{ marginBottom: '4%', textAlign: 'justify', width: '100%' }}>
-                Για την ώρα μην ασχολειθείτε με τα  <span style={{ backgroundColor: '#f4f4f4' }}> {`<Link>`} </span>. Δεν πειράζει αν δεν καταλαβαίνετε τα πάντα,
-                θα τα δούμε στο επόμενο μάθημα !
-              </Typography>
               <div style={{ marginTop: '4%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
 
                 Έχουμε αρχικοποιήσει ένα απλό πρότζεκτ. Πάρτε όσο χρόνο χρειάζεστε για να μελετήσετε τις δομές των αρχείων.
               </Typography>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                Σε αυτό το μάθημα πρέπει να αρχικοποιήσετε τα paths του route συμφωνα με τα components που σας έχουμε ήδη κάνει import. Θα χρειαστεί να
-                τροποποιήσετε μόνο τον φάκελο App.js και τα paths θα πρέπει να έχουν την εξής μορφή:
+                Σε αυτό το μάθημα πρέπει να προσθέσετε τα κατάλληλα <span style={{ fontWeight: 'bold' }}> Links </span> έτσι ώστε :
               </Typography>
               <ul>
                 <li>
                   <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                    To path  "/" να περιέχει το component Home
+                    Στο News.vue θα πρέπει να προσθεθούν τα links ώστε κάθε
+                    φορά που πατάει κάποιος τον σύνδεσμο να μεταφέρεται στο target property που περιέχει ο πίνακας articles.
                   </Typography>
                 </li>
                 <li>
                   <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                    To path  "/first" να περιέχει το component First
+                    Στo  First.vue να προστεθεί link που σε μεταφέρει στην αρχικη σελίδα (path = '/')
                   </Typography>
                 </li>
                 <li>
                   <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                    To path  "/second" να περιέχει το component Second
+                    Στo  Second.vue να προστεθεί link που σε μεταφέρει στην αρχικη σελίδα (path = '/')
                   </Typography>
                 </li>
                 <li>
                   <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                    To path  "/third" να περιέχει το component Third
+                    ΣTo Third.vue να προστεθεί link που σε μεταφέρει στην αρχικη σελίδα (path = '/')
                   </Typography>
                 </li>
               </ul>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                <span style={{ fontWeight: 'bold' }}> Σημείωση: </span> πρέπει να τροποιήσετε τα αρχεία News.js, First.js,  Second.js και Third.js.
+              </Typography>
+
             </Card>
           </Grid>
 
@@ -408,8 +455,6 @@ export default function Start() {
               cancelText={'Οχι'}
 
             >
-
-
               <Button variant="contained" color="secondary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
                 λυση
               </Button>
@@ -426,16 +471,43 @@ export default function Start() {
                 <Box sx={style} >
 
                   <Box >
+
                     <div style={{ width: '100%' }}>
-                      <Typography style={{ marginTop: '2%', marginBottom: '5%' }} align="center" id="keep-mounted-modal-description" >
-                        Τό αρχείο App.js πρέπει να έχει την εξής μορφή :
-                      </Typography>
-                    </div>
-                    <div style={{ width: '100%' }}>
-                      <SyntaxHighlighter code={solutionCode} language="javascript" showLineNumbers={true} />
+
+                      <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                        <Typography variant="p" style={{ width: '100%', marginTop: '2%', marginBottom: '5%' }} align="center" id="keep-mounted-modal-description" >
+                          Τα αρχεία First.js, Second.js και Third.js πρέπει να έχουν την παρακάτω μορφή:
+                        </Typography>
+                      </div>
+
+                      <div>
+                        <Box sx={{ width: '100%', marginTop: '4%' }}>
+                          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                            <Tabs value={value} onChange={handleTabChange} aria-label="basic tabs example" indicatorColor="primary"
+                              textColor="primary">
+                              <Tab label="First.js" {...a11yProps(0)} />
+                              <Tab label="Second.js" {...a11yProps(1)} />
+                              <Tab label="Third.js" {...a11yProps(2)} />
+                            </Tabs>
+                          </Box>
+                          <TabPanel value={value} index={0}>
+                            <SyntaxHighlighter code={solutionCode} language="javascript" showLineNumbers={true} />
+                          </TabPanel>
+                          <TabPanel value={value} index={1}>
+                            <SyntaxHighlighter code={solutionCode1} language="javascript" showLineNumbers={true} />
+                          </TabPanel>
+                          <TabPanel value={value} index={2}>
+                            <SyntaxHighlighter code={solutionCode2} language="javascript" showLineNumbers={true} />
+                          </TabPanel>
+                        </Box>
+                      </div>
+
+
+
+
                     </div>
                     <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                      <Button size="large" style={{ borderRadius: '50%', width: '40%', marginBottom: '1%', marginTop: '10%' }} variant="contained" color="primary" onClick={handlecloseSolution}>CLOSE</Button>
+                      <Button size="large" style={{ borderRadius: '50%', width: '40%', marginBottom: '1%', marginTop: '5%' }} variant="contained" color="primary" onClick={handlecloseSolution}>CLOSE</Button>
                     </div>
                   </Box>
                 </Box>
@@ -446,7 +518,7 @@ export default function Start() {
           </Grid>
         </Grid>
       </div>
-    </div>
+    </div >
   )
 }
 

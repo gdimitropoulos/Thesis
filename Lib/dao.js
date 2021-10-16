@@ -3,7 +3,7 @@ import moment from 'moment';
 
 
 
-export async function inserTutorialTaken(tutorialName,userId,time,answerShown,backspaces) {
+export async function insertLessonTaken(lessonName,userId,time,timeWriting,answerShown,backspaces,total_chars) {
 	let client;
 	let rows = [];
 
@@ -11,20 +11,61 @@ export async function inserTutorialTaken(tutorialName,userId,time,answerShown,ba
 		client = await pool.connect();
 		let result = await client.query(
 			`
-            insert into tutorial_taken(
-                tutorial_name,
+            insert into lesson_taken(
+                lesson_name,
                 user_id,
                 time,
+				time_writing,
                 anwser_shown,
-                backspaces)
+                backspaces,
+				total_chars)
             values ($1,
                     $2,
                     $3,
                     $4,
-                    $5)
+                    $5,
+					$6,
+					$7)
             returning *
             `,
-			[tutorialName,userId,time,answerShown,backspaces]
+			[lessonName,userId,time,timeWriting,answerShown,backspaces,total_chars]
+		);
+		
+		rows = result.rows;
+	}
+	catch (e) {
+		console.trace(e);
+	}
+	finally {
+		if (client) {
+			client.release();
+		}
+	}
+	return rows;
+}
+
+
+
+export async function insertLessonTry(lessonID,time,backspaces,total_chars) {
+	let client;
+	let rows = [];
+
+	try {
+		client = await pool.connect();
+		let result = await client.query(
+			`
+            insert into tries(
+                lesson_taken_id,
+                time,
+                backspaces,
+				total_chars)
+            values ($1,
+                    $2,
+                    $3,
+                    $4)
+            returning *
+            `,
+			[lessonID,time,backspaces,total_chars]
 		);
 		
 		rows = result.rows;

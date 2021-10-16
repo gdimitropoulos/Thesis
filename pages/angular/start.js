@@ -1,3 +1,5 @@
+/* eslint-disable  react/no-unescaped-entities*/
+
 import React, {
     useState, useEffect, useContext, useMemo,
   } from 'react';
@@ -21,11 +23,10 @@ import React, {
   import appcomponenthtml from "!!raw-loader!../../Components/AngularTutorial/firstTutorial/appcomponent.html";
   import appmodule from "!!raw-loader!../../Components/AngularTutorial/firstTutorial/appmodule.js";
   import appcomponentjs from "!!raw-loader!../../Components/AngularTutorial/firstTutorial/appcomponent.js";
-  import indexhtml from "!!raw-loader!../../Components/AngularTutorial/firstTutorial/index.html";
+  import solution from "!!raw-loader!../../Components/AngularTutorial/firstTutorial/solution";
   import testing from "!!raw-loader!../../Components/AngularTutorial/firstTutorial/testing";
   import appcss from "!!raw-loader!../../Components/AngularTutorial/firstTutorial/app.css";
   import mainjs from "!!raw-loader!../../Components/AngularTutorial/firstTutorial/main.js";
-  import solutionfile from "!!raw-loader!../../Components/AngularTutorial/firstTutorial/main.js";
   import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
   import MenuBookIcon from '@mui/icons-material/MenuBook';
   import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -44,10 +45,17 @@ import React, {
   import "@codesandbox/sandpack-react/dist/index.css";
   import showNotification from '../../Lib/notification'
   import { getAppCookies } from '../../Lib/utils'
-  
-  let backspaces = 0;
-  const time = moment();
-  
+ 
+let backspaces = 0;
+let totalCharsWritten=0;
+let writeFlag=0;
+let totalTries=0;
+const timeStartingWriting=[]
+const timeFinishingTest=[];
+const backspacesPerTry=[];
+const totaltCharsPerTry=[];
+const time = moment();
+
   const style = {
     position: 'absolute',
     display: 'flex',
@@ -80,17 +88,41 @@ import React, {
       }
       statuses = [];
     }
+
+    
+  const eventHandler = (event)=>{
+      
+    if (event.path[0].className == 'cm-content') {
+      if( (event.which > 46 && event.which<91) || ( event.which>95 && event.which<112) || (event.which>183 && event.which<230) || (event.which>151 && event.which<165 )){
+        totalCharsWritten++;
+        console.log('im here');
+        if(writeFlag == 0){
+          writeFlag=1;
+          timeStartingWriting.push(moment());
+        }
+      }
+      if (event.key == 'Backspace') {
+        backspaces++;
+      }
+    }
+
+}
   
     const handlecloseSolution = async () => {
       setshowSolution(false)
     }
     const handleCloseSuccess = async () => {
-      console.log(moment().diff(time, 'seconds'));
       const bodyData = {
-        time: moment().diff(time, 'seconds').toString(),
+        time,
         backspaces: backspaces,
-        tutorialName: 'firstangular',
-        answer: answerShown
+        lessonName: 'a1',
+        tutorailName:'react',
+        answer: answerShown,
+        totalTries,
+        totaltCharsPerTry,
+        backspacesPerTry,
+        timeFinishingTest,
+        timeStartingWriting,
       }
       const res = await fetch('/api/finishTutorial', {
         method: 'POST',
@@ -146,30 +178,24 @@ import React, {
   
         console.log("im listening")
         return unsubscribe;
-      }, [listen]);
-  
-  
+      }, [listen,dispatch,setActiveFile]);
+
+   
+
       useEffect(() => {
+        window.addEventListener('keydown',eventHandler);
+        return () =>  window.removeEventListener('keydown',eventHandler);
   
-        window.addEventListener('keydown', (event) => {
-          if (event.path[0].className == 'cm-content') {
-            console.log(event);
-            if (event.key == 'Backspace') {
-              backspaces++;
-            }
-          }
+      },[]);
   
-        });
-  
-  
-  
-  
-  
-  
-      }, []);
-  
-      const runTests = () => { dispatch({ type: 'run-all-tests' }); };
-  
+
+      const runTests = () => { 
+        writeFlag=0
+        backspacesPerTry.push(backspaces);
+        totaltCharsPerTry.push(totalCharsWritten);
+        totalTries++;
+        timeFinishingTest.push(moment());
+        dispatch({ type: 'run-all-tests' }); };  
   
       return (
         <div style={{ width: '100%', height: '40px' }}>
@@ -191,31 +217,31 @@ import React, {
                 <div style={{ marginBottom: '2%' , height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
                 <Typography variant="h6" style={{ marginBottom: '2%' ,width: '100%', marginBottom: '1%' }}> To πρώτο σας Hello World </Typography>
                 <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
-                  Ήρθε η ώρα να γνωρίσετε την Vue js στην πράξη!
+                  Ήρθε η ώρα να γνωρίσετε την Angular js στην πράξη!
                 </Typography>
                 <Typography variant="subtitle1" style={{ marginBottom: '2%' , textAlign: 'justify', width: '100%' }}>
                    Για αρχή θα εκτυπώσουμε στην οθόνη ένα απλό μήνυμα "Hello World" με βάση όσα γνωρίζετε απο την απλή Html.
                 </Typography>
                 <Typography variant="subtitle1" style={{ marginBottom: '2%' , textAlign: 'justify', width: '100%' }}>
                    Έχουμε αρχικοποιήσει για έσας ένα απλό πρότζεκτ ακολουθώντας όσα αναφέραμε προηγουμένως. Από τα αρχεία στα οποία αναφερθήκαμε συνοπτικά
-                   στα προηγούμενα μαθήματα, εμφανίζονται μόνο όσα  απαιτούν τροποποιήσεις από εσάς ή κρίνονται απαραίτητα  ώστε να γνωρίσετε την Vue js σε ένα εισαγωγικό επίπεδο.
+                   στα προηγούμενα μαθήματα, εμφανίζονται μόνο όσα  απαιτούν τροποποιήσεις από εσάς ή κρίνονται απαραίτητα  ώστε να γνωρίσετε την Angular js σε ένα εισαγωγικό επίπεδο.
                 </Typography>
                 <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%',marginTop: '1%' }}>
-                   Στα δεξιά βλέπετε το αρχείο App.vue του οποίου η δομή {`<template>`} είναι αρχικοποιημένη με απλή Html. Όσα γνωρίζετε από την Html
-                   μπορούν να χρησιμοποιηθούν και στην Vue! 
+                   Στα δεξιά βλέπετε το αρχείο App.component.html που είναι αρχικοποιημένο με απλή Html. Όσα γνωρίζετε από την Html
+                   μπορούν να χρησιμοποιηθούν και στην Angular! 
                 </Typography>
   
   
                 <div style={{ marginTop: '2%' , height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
                 <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
-                  Τροποποιήστε  τον κώδικα στη γραμμή 4 ώστε να εκτυπώνεται το κείμενο Hello World  και πατήστε Run Tests.
+                  Τροποποιήστε  τα περιεχόμενα του <span style={{backgroundColor:'#f4f4f4'}}> {`<h1> </h1>`} </span> στη γραμμή 4 ώστε να εκτυπώνεται το κείμενο Hello World  και πατήστε <span style={{ fontStyle: 'italic' }}>RUN TESTS</span>.
                 </Typography>
               </Card>
             </Grid>
   
             <Grid item md={12} lg={8}>
               <Card style={{ padding: "1%", width: '100%' }}>
-                <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Vue js Tutorial  </Typography>
+                <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Angular js Tutorial  </Typography>
 
                 <SandpackProvider template="angular" customSetup={{
                    files: {
@@ -232,7 +258,7 @@ import React, {
                       "/src/app/app.component.ts": {code: appcomponentjs, hidden: false},
 
                     "/src/app/app.module.ts": {code: appmodule, hidden: false},
-                    "main.ts": mainjs,
+                    "main.ts": {code: mainjs, hidden: true},
                                      },
                   dependencies: {
                     "babel-runtime": "latest"
@@ -329,11 +355,11 @@ import React, {
                     <Box >
                       <div style={{ width: '100%' }}>
                         <Typography style={{ marginTop: '2%', marginBottom: '5%' }} align="center"  >
-                          Τό template του  App.vue  πρέπει να έχει την εξής μορφή :
+                          Τό   app.component.html  πρέπει να έχει την εξής μορφή :
                         </Typography>
                       </div>
                       <div style={{ width: '100%' }}>
-                        <SyntaxHighlighter code={solutionfile} language="html" showLineNumbers={true} />
+                        <SyntaxHighlighter code={solution} language="html" showLineNumbers={true} />
                       </div>
                       <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                         <Button size="large" style={{ borderRadius: '50%', width: '40%', marginBottom: '1%', marginTop: '10%' }} variant="contained" color="primary" onClick={handlecloseSolution}>CLOSE</Button>

@@ -1,4 +1,5 @@
 /*eslint-disable react/no-unescaped-entities */
+
 import React, {
   useState, useEffect, useContext, useMemo,
 } from 'react';
@@ -22,13 +23,13 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import BlockSharpIcon from '@mui/icons-material/BlockSharp';
-import testAppCode from "!!raw-loader!../../Components/reactTutorial/FifthTutorial/tutorialAppTest";
-import testAppCode1 from "!!raw-loader!../../Components/reactTutorial/FifthTutorial/tutorialAppTest1";
-import Appcode from "!!raw-loader!../../Components/reactTutorial/FifthTutorial/tutorialApp";
-import indexFile from "!!raw-loader!../../Components/reactTutorial/FifthTutorial/tutorialIndex";
-import componentCode from "!!raw-loader!../../Components/reactTutorial/FifthTutorial/tutorialComponent";
-import appcss from "!!raw-loader!../../Components/reactTutorial/FifthTutorial/App.css";
-import solutionCode from "!!raw-loader!../../Components/reactTutorial/FifthTutorial/solution";
+import testAppCode from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/tutorialAppTest";
+import Appcode from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/tutorialApp";
+import indexFile from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/tutorialIndex";
+import componentCode from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/tutorialComponent";
+import appcss from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/App.css";
+import news from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/News";
+import solutionCode from "!!raw-loader!../../Components/reactTutorial/sixthTutorial/solution";
 import Cookies from 'js-cookie';
 import { useActiveCode } from "@codesandbox/sandpack-react";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
@@ -51,6 +52,13 @@ import { Backspace } from '@mui/icons-material';
 import { display } from '@mui/system';
 
 let backspaces = 0;
+let totalCharsWritten=0;
+let writeFlag=0;
+let totalTries=0;
+const timeStartingWriting=[]
+const timeFinishingTest=[];
+const backspacesPerTry=[];
+const totaltCharsPerTry=[];
 const time = moment();
 
 const style = {
@@ -86,16 +94,38 @@ export default function Start() {
     statuses = [];
   }
 
+  const eventHandler = (event)=>{
+      
+    if (event.path[0].className == 'cm-content') {
+      if( (event.which > 46 && event.which<91) || ( event.which>95 && event.which<112) || (event.which>183 && event.which<230) || (event.which>151 && event.which<165 )){
+        totalCharsWritten++;
+        console.log('im here');
+        if(writeFlag == 0){
+          writeFlag=1;
+          timeStartingWriting.push(moment());
+        }
+      }
+      if (event.key == 'Backspace') {
+        backspaces++;
+      }
+    }
+
+}
   const handlecloseSolution = async () => {
     setshowSolution(false)
   }
   const handleCloseSuccess = async () => {
-    console.log(moment().diff(time, 'seconds'));
     const bodyData = {
-      time: moment().diff(time, 'seconds').toString(),
+      time,
       backspaces: backspaces,
-      tutorialName: 'fifthreact',
-      answer: answerShown
+      lessonName: 'r5',
+      tutorailName:'react',
+      answer: answerShown,
+      totalTries,
+      totaltCharsPerTry,
+      backspacesPerTry,
+      timeFinishingTest,
+      timeStartingWriting,
     }
     const res = await fetch('/api/finishTutorial', {
       method: 'POST',
@@ -136,16 +166,6 @@ export default function Start() {
 
 
     useEffect(() => {
-
-      window.addEventListener('keydown', (event) => {
-        if (event.path[0].className == 'cm-content') {
-          console.log(event);
-          if (event.key == 'Backspace') {
-            backspaces++;
-          }
-        }
-
-      });
       window.addEventListener('message', (event) => {
         console.log(event)
         if (event.data.event == 'test_end') {
@@ -160,9 +180,21 @@ export default function Start() {
         }
 
       });
-    }, []);
+    }, [listen,dispatch,setActiveFile]);
 
-    const runTests = () => { dispatch({ type: 'run-all-tests' }); };
+    useEffect(() => {
+      window.addEventListener('keydown',eventHandler);
+      return () =>  window.removeEventListener('keydown',eventHandler);
+
+    },[]);
+
+    const runTests = () => { 
+      writeFlag=0
+      backspacesPerTry.push(backspaces);
+      totaltCharsPerTry.push(totalCharsWritten);
+      totalTries++;
+      timeFinishingTest.push(moment());
+      dispatch({ type: 'run-all-tests' }); };
 
     const codee = files[activePath].code;
 
@@ -178,159 +210,27 @@ export default function Start() {
 
   return (
 
+
     <div style={{ height: '60%' }}>
       <div style={{ height: '80%', marginBottom: '1%', marginTop: '2%', paddingTop: '2%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
         <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
           <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
             <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
               <div style={{ marginBottom: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
-              <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}> Hooks and Functional Component </Typography>
+              <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}>Ένα πιο πολύπλοκο παράδειγμα </Typography>
               <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
-                Σε αυτό το μάθημα  θα μετατρέψουμε το class component του προηγούμενου μαθήματος σε <span style={{ fontWeight: 'bold' }}>functional </span>!
+                Σε αυτό το μάθημα  θα χρησιμοποιήσουμε  ότι μάθαμε για να φτιάξουμε ένα πιο πολύπλοκο πρόγραμμα!
               </Typography>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                Έχουμε αρχικοποιήσει για εσάς το Home.js  το οποίο είναι το component που θα πρέπει να χρησιμοποιήσετε.
-              </Typography>
-
-              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                Αρχικά ας μιλήσουμε για τα states και πως μπορούμε να τα αρχικοποιήσουμε. Το γεγονός πως δεν έχουμε κλάση συνεπάγεται ότι δεν έχουμε constructor ().
-                Αυτό σημαίνει ότι δεν μπορούμε να κάνουμε απευθείας ανάθεση σε state. Για να προσομοιώσουμε τη λειτουργεία του state που είχαμε θα χρησιμοποποιήσουμε
-                κάποια api που μας δίνει η React και ονομάζονται <span style={{ fontWeight: 'bold' }}> Hooks </span>.
-              </Typography>
-              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                To πρώτο  <span style={{ fontWeight: 'bold' }}> Hook </span> για το οποίο θα μιλήσουμε είναι το  <span style={{ fontWeight: 'bold' }}> useState </span>.
-                Ας το δούμε με ένα παράδειγμα.
-              </Typography>
-              <CopyBlock
-                text=
-                {` 
-import React, { useState } from 'react';
-
- function Example() {
-    // Declare a new state variable, which we'll call "count"
-    const [count, setCount] = useState(0);
-                  
-     return (
-        <div>
-          <p>You clicked {count} times</p>
-              <button onClick={() => setCount(count + 1)}>
-                  Click me
-              </button>
-        </div>
-         );
-      }
-           `}
-                language="actionscript"
-                showLineNumbers={true}
-                theme={dracula}
-                codeBlock
-              />
-              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                Ας το πάρουμε βήμα-βήμα! Αρχικά βλέπουμε στον κώδικα την εξής εντολή :
-              </Typography>
-              <CopyBlock
-                text=
-                {` const [count, setCount] = useState(0); `}
-                language="actionscript"
-                showLineNumbers={true}
-                theme={dracula}
-                codeBlock
-              />
-              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                Αυτό που κάνει αυτή η εντολή είναι να αρχικοποιεί μια μεταβλητή count όπου θα είναι το αντίστοιχο του state η οποία παίρνει
-                την αρχική τιμή 0 λόγω του ορίσματος που βάλαμε στο useState. Αυτό που παρατηρούμε είναι ότι αρχικοποιείται και μια μέθοδος
-                στην συγκεκριμένη περίπτωση την ονομάζουμε setCount η οποία θα λειτουργεί όπως η setState που μάθαμε προηγουμένως αλλά μόνο για την
-                μεταβλητή count.
-              </Typography>
-              <CopyBlock
-                text=
-                {` const [count, setCount] = useState(0); `}
-                language="actionscript"
-                showLineNumbers={true}
-                theme={dracula}
-                codeBlock
-              />
-
-              <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
-                Αρχικά να μιλήσουμε για τον <span style={{ fontWeight: 'bold' }}> constructor()</span> o οποίος λειτουργεί όπως σε όλες τις αντικειμενοστρεφείς
-                γλώσσες προγραμματισμού :
-                <CopyBlock
-                  text=
-                  {` <button onClick={() => setCount(count + 1)}> `}
-                  language="actionscript"
-                  showLineNumbers={true}
-                  theme={dracula}
-                  codeBlock
-                />
-                Στην παραπάνω εντολή βλέπουμε πως χρησιμοποιείται η setCount για να αυξήσει κατά 1 την μεταβλητή count κάθε φορά που πατάμε το κουμπί.
-              </Typography>
-              <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
-                Στο προηγούμενο μάθημα μελετήσαμε τις lifecycle μεθόδους. Στα functional component δεν μπορούμε να τις χρησιμοποιήσουμε. Γι' αυτό η React δημιούργησε
-                την useEffect η οποία είναι ένα hook. Αυτό το hook σου επιτρέπει να ορίσεις ενα μπλοκ κώδικα και πότε θέλεις αυτό να εκτελείται.
-                Με αυτόν τον τρόπο μπορούμε να προσομοιώσουμε κάποιες απο τις lifecycle μεθόδους. Ας δούμε ένα παράδειγμα :
-              </Typography>
-              <CopyBlock
-                text=
-                {` 
- constructor(props) {
-      super(props);
-      this.state={counter: 0}
-      
-                  }
-             `}
-                language="actionscript"
-                showLineNumbers={true}
-                theme={dracula}
-                codeBlock
-              />
-              <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
-                Πρέπει να σημειώσουμε ότι το state πρέπει να είναι πάντα αντικείμενο και δεν μπορούμε να κάνουμε απευθείας ανάθεση σε αυτό
-                σε σημείο εκτός απο τον constructor/αρχικοποιητή του. Αν κάποια στιγμή θέλουμε να αλλάξουμε πρέπει να χρησιμοποιήσουμε το api setState().
-              </Typography>
-
-              <CopyBlock
-                text=
-                {` 
- fimport React, { useState } from 'react';
-
- function Example() {
-    // Declare a new state variable, which we'll call "count"
-    const [count, setCount] = useState([]);
-
-    useEffect(() => {
-      setCount(0)
-    },[]);
-                  
-     return (
-        <div>
-          <p>You clicked {count} times</p>
-              <button onClick={() => setCount(count + 1)}>
-                  Click me
-              </button>
-        </div>
-         );
-      }
-                  }
-             `}
-                language="actionscript"
-                showLineNumbers={true}
-                theme={dracula}
-                codeBlock
-              />
-              <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
-                Στο παραπάνω παράδειγμα φαίνεται η useEffect η οποία προσομοιώνει κατα κάποιο τρόπο
-                την componentDidMount. Το πότε θα εκτελεστεί η useEffect προκύπτει απο το δεύτερο όρισμα που της περνάμε. Η React έχει ορίσει ότι
-                η useEffect θα εκτελείται όταν κάποιο από τα dependencies, δηλαδή το δεύτερο όρισμα, αλλάξει. Εμείς στο συγκεκριμένο παράδειγμα
-                δεν έχουμε βάλει κάποιο dependency το οποίο η React το μεταφράζει στο ότι η useEffect
-                θα εκτελεστεί μόνο όταν το component γίνει render και όταν
-                καταστραφεί.
+                Έχουμε αρχικοποιήσει για εσάς το Home.js και το News.js .
               </Typography>
 
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                Επειδή δεν προλαβαίνουμε να αναλύσουμε όλες τις λεπτομέρειες και όλα τα hook σε αυτό το tutorial, μπορείτε να βρείτε περισσότερες
-                πληροφορίες <a
+                Για να καταλάβετε τι πρέπει να συμπληρώσετε στο παράδειγμα θα χρειαστεί να χρησιμοποιήσετε την
+                <span style={{ fontWeight: 'bold' }}> map () </span> μέσα στην jsx ώστε να κάνετε iteration στον πίνακα news.  Περισσότερες πληροφορίες
+                για την map() μπορείτε να βρείτε <a
                   className="App-link"
-                  href="https://reactjs.org/docs/hooks-intro.html"
+                  href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -339,19 +239,18 @@ import React, { useState } from 'react';
               </Typography>
 
 
-
               <div style={{ marginTop: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
 
-                Όπως αναφέραμε προηγουμένως έχουμε αρχικοποιήσει για έσας ένα απλό πρότζεκτ που περιέχει το component Home και την βασική δομή ενός React πρότζεκτ.
+                Όπως αναφέραμε προηγουμένως έχουμε αρχικοποιήσει για έσας ένα απλό πρότζεκτ που περιέχει το component Home και News  καθώς και την βασική δομή ενός React πρότζεκτ.
                 Πάρτε όσο χρόνο χρειάζεστε για να μελετήσετε τα αρχεία ώστε να καταλάβετε τι περιέχεται στο καθένα!
               </Typography>
 
               <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
-                Τροποποιήστε το αρχείο Home.js στην γραμμή 10, έτσι ώστε να θέσετε το message
-                σε <span style={{ fontStyle: 'italic' }}> Νέα Πανεπιστημίου Πατρών </span> χρησιμοποιώντας το  setMessage().
-
-              </Typography>
+                Τροποποιήστε το αρχείο Νews.js στην γραμμή 9 και 10 , έτσι ώστε να θέσετε το τιτλο του news
+                 στο <span style={{ backgroundColor: '#f4f4f4' }}>{`<h3> </h3>`}</span> ενώ τον text από τον πίνακα news 
+                 στο <span style={{ backgroundColor: '#f4f4f4' }}>{`<p> </p>`}</span>
+                </Typography>
 
             </Card>
           </Grid>
@@ -372,12 +271,9 @@ import React, { useState } from 'react';
                     code: testAppCode,
                     hidden: true
                   },
-                  "/second.test.js": {
-                    code: testAppCode1,
-                    hidden: true
-                  },
                   "/public/App.css": { code: appcss, hidden: true },
                   "index.js": indexFile,
+                  "/News.js": { code: news, active: true },
                   "SetupTest.js": {
                     code: code,
                     hidden: true
@@ -490,7 +386,7 @@ import React, { useState } from 'react';
                   <Box >
                     <div style={{ width: '100%' }}>
                       <Typography style={{ marginTop: '2%', marginBottom: '5%' }} align="center" id="keep-mounted-modal-description" >
-                        Τό αρχείο Home.js πρέπει να έχει την εξής μορφή :
+                        Τό αρχείο News.js πρέπει να έχει την εξής μορφή :
                       </Typography>
                     </div>
                     <div style={{ width: '100%' }}>
