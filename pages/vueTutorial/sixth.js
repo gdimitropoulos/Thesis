@@ -44,6 +44,7 @@ import {
   SandpackPreview,
   useSandpack,
 } from "@codesandbox/sandpack-react";
+import { validityCheck } from '../../Lib/dao';
 import "@codesandbox/sandpack-react/dist/index.css";
 import showNotification from '../../Lib/notification'
 import { getAppCookies } from '../../Lib/utils'
@@ -142,7 +143,7 @@ export default function Start() {
         'Επιτυχής καταγραφή ',
         'Επιτυχής καταγραφή της προσπάθειας'
       );
-      await router.push('/VueTutorial/seventh')
+      await router.push('/vueTutorial/seventh')
     } else {
       showNotification(
         'error',
@@ -504,10 +505,19 @@ export async function getServerSideProps(context) {
       token = jwt.verify(token, KEY);
 
 
-      return {
-        props: {},
-      };
-
+      const bool = await validityCheck('v5',token.email);
+      if(bool){
+        return {
+          props: {},
+        };
+      }else{
+        return {
+          redirect: {
+            destination: '/vueTutorial/fifth',
+            permanent: false,
+          },
+        }
+      }
     }
     else {
 

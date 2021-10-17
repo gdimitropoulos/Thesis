@@ -74,7 +74,7 @@ export default function Info1() {
     };
 
     const Move = () => {
-        router.push('/VueTutorial/start')
+        router.push('/vueTutorial/start')
     }
     return (
 

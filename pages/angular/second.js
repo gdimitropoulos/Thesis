@@ -18,6 +18,7 @@ import React, {
     Box,
   } from "@material-ui/core";
   import { CopyBlock, dracula } from "react-code-blocks";
+  import { validityCheck } from '../../Lib/dao';
   import appcomponenthtml from "!!raw-loader!../../components/AngularTutorial/secondTutorial/appcomponent.html";
   import appmodule from "!!raw-loader!../../components/AngularTutorial/secondTutorial/appmodule.js";
   import appcomponentjs from "!!raw-loader!../../components/AngularTutorial/secondTutorial/appcomponent.js";
@@ -477,11 +478,20 @@ import React, {
       if (token) {
         token = token.replace('Bearer ', '');
         token = jwt.verify(token, KEY);
+        const bool = await validityCheck('a1',token.email);
+        if(bool){
+          return {
+            props: {},
+          };
+        }else{
+          return {
+            redirect: {
+              destination: '/angular/info',
+              permanent: false,
+            },
+          }
+        }
   
-  
-        return {
-          props: {},
-        };
   
       }
       else {

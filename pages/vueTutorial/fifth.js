@@ -14,6 +14,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import BlockSharpIcon from '@mui/icons-material/BlockSharp';
 import treePic from '../../public/array.png'
 import { Popconfirm } from 'antd';
+import { validityCheck } from '../../Lib/dao';
 import {
   Button,
   Grid,
@@ -135,7 +136,7 @@ export default function VueFifth() {
         'Επιτυχής καταγραφή ',
         'Επιτυχής καταγραφή της προσπάθειας'
       );
-      await router.push('/VueTutorial/sixth')
+      await router.push('/vueTutorial/sixth')
     } else {
       showNotification(
         'error',
@@ -489,10 +490,19 @@ export async function getServerSideProps(context) {
       token = token.replace('Bearer ', '');
       token = jwt.verify(token, KEY);
 
-
-      return {
-        props: {},
-      };
+      const bool = await validityCheck('v4',token.email);
+      if(bool){
+        return {
+          props: {},
+        };
+      }else{
+        return {
+          redirect: {
+            destination: '/vueTutorial/fourth',
+            permanent: false,
+          },
+        }
+      }
 
     }
     else {

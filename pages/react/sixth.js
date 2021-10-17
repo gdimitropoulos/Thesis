@@ -15,6 +15,7 @@ import {
   Card,
   Box,
 } from "@material-ui/core";
+import { validityCheck } from '../../Lib/dao';
 import { CopyBlock, dracula } from "react-code-blocks";
 import routerfile from '!!raw-loader!../../components/reactTutorial/router'
 import MenuBookIcon from '@mui/icons-material/MenuBook';
@@ -485,11 +486,19 @@ export async function getServerSideProps(context) {
     if (token) {
       token = token.replace('Bearer ', '');
       token = jwt.verify(token, KEY);
-
-
-      return {
-        props: {},
-      };
+      const bool = await validityCheck('r5',token.email);
+      if(bool){
+        return {
+          props: {},
+        };
+      }else{
+        return {
+          redirect: {
+            destination: '/react/fifth',
+            permanent: false,
+          },
+        }
+      }
 
     }
     else {

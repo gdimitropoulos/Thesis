@@ -25,6 +25,7 @@ import helloworld from "!!raw-loader!../../components/VueTutorial/thirdTutorial/
 import testing from "!!raw-loader!../../components/VueTutorial/thirdTutorial/testing";
 import solutionfile from "!!raw-loader!../../components/VueTutorial/thirdTutorial/solution";
 import { CopyBlock, dracula } from "react-code-blocks";
+import { validityCheck } from '../../Lib/dao';
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import {
   SandpackProvider,
@@ -131,7 +132,7 @@ export default function Start() {
         'Επιτυχής καταγραφή ',
         'Επιτυχής καταγραφή της προσπάθειας'
       );
-      await router.push('/VueTutorial/fourth')
+      await router.push('/vueTutorial/fourth')
     } else {
       showNotification(
         'error',
@@ -476,11 +477,19 @@ export async function getServerSideProps(context) {
       token = token.replace('Bearer ', '');
       token = jwt.verify(token, KEY);
 
-
-      return {
-        props: {},
-      };
-
+      const bool = await validityCheck('v2',token.email);
+      if(bool){
+        return {
+          props: {},
+        };
+      }else{
+        return {
+          redirect: {
+            destination: '/vueTutorial/second',
+            permanent: false,
+          },
+        }
+      }
     }
     else {
 

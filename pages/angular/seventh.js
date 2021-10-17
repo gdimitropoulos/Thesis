@@ -21,6 +21,7 @@ import {
   Card,
   Box,
 } from "@material-ui/core";
+import { validityCheck } from '../../Lib/dao';
 import appcomponenthtml from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/appcomponenthtml";
 import appmodule from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/appmodule";
 import appcomponentjs from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/appcomponent";
@@ -183,7 +184,7 @@ export default function Start() {
         'Επιτυχής καταγραφή ',
         'Επιτυχής καταγραφή της προσπάθειας'
       );
-      await router.push('/angular/fourth')
+      await router.push('/user/dashboard')
     } else {
       showNotification(
         'error',
@@ -523,10 +524,19 @@ export async function getServerSideProps(context) {
       token = token.replace('Bearer ', '');
       token = jwt.verify(token, KEY);
 
-
-      return {
-        props: {},
-      };
+      const bool = await validityCheck('a6',token.email);
+      if(bool){
+        return {
+          props: {},
+        };
+      }else{
+        return {
+          redirect: {
+            destination: '/angular/sixth',
+            permanent: false,
+          },
+        }
+      }
 
     }
     else {

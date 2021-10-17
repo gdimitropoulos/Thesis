@@ -18,6 +18,7 @@ import {
   Card,
   Box,
 } from "@material-ui/core";
+import { validityCheck } from '../../Lib/dao';
 import { CopyBlock, dracula } from "react-code-blocks";
 import appcomponenthtml from "!!raw-loader!../../components/AngularTutorial/fourthTutorial/appcomponent.html";
 import appmodule from "!!raw-loader!../../components/AngularTutorial/fourthTutorial/appmodule.js";
@@ -134,7 +135,7 @@ export default function Start() {
         'Επιτυχής καταγραφή ',
         'Επιτυχής καταγραφή της προσπάθειας'
       );
-      await router.push('/angular/fourth')
+      await router.push('/angular/fifth')
     } else {
       showNotification(
         'error',
@@ -465,10 +466,19 @@ export async function getServerSideProps(context) {
       token = token.replace('Bearer ', '');
       token = jwt.verify(token, KEY);
 
-
-      return {
-        props: {},
-      };
+      const bool = await validityCheck('a3',token.email);
+      if(bool){
+        return {
+          props: {},
+        };
+      }else{
+        return {
+          redirect: {
+            destination: '/angular/third',
+            permanent: false,
+          },
+        }
+      }
 
     }
     else {

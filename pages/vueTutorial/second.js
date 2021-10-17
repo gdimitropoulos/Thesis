@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import * as moment from 'moment'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import BlockSharpIcon from '@mui/icons-material/BlockSharp';
+import { validityCheck } from '../../Lib/dao';
 import { CopyBlock, dracula } from "react-code-blocks";
 import { Popconfirm } from 'antd';
 import {
@@ -128,7 +129,7 @@ export default function Start() {
         'Επιτυχής καταγραφή ',
         'Επιτυχής καταγραφή της προσπάθειας'
       );
-      await router.push('/VueTutorial/third')
+      await router.push('/vueTutorial/third')
     } else {
       showNotification(
         'error',
@@ -442,10 +443,19 @@ export async function getServerSideProps(context) {
       token = token.replace('Bearer ', '');
       token = jwt.verify(token, KEY);
 
-
-      return {
-        props: {},
-      };
+      const bool = await validityCheck('v1',token.email);
+      if(bool){
+        return {
+          props: {},
+        };
+      }else{
+        return {
+          redirect: {
+            destination: '/vueTutorial/info',
+            permanent: false,
+          },
+        }
+      }
 
     }
     else {

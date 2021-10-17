@@ -17,6 +17,7 @@ import React, {
     Card,
     Box,
   } from "@material-ui/core";
+  import { validityCheck } from '../../Lib/dao';
   import { CopyBlock, dracula } from "react-code-blocks";
   import appcomponenthtml from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/appcomponenthtml";
   import appmodule from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/appmodule";
@@ -143,7 +144,7 @@ import React, {
           'Επιτυχής καταγραφή ',
           'Επιτυχής καταγραφή της προσπάθειας'
         );
-        await router.push('/angular/fourth')
+        await router.push('/angular/seventh')
       } else {
         showNotification(
           'error',
@@ -546,11 +547,20 @@ const routes: Routes = [
       if (token) {
         token = token.replace('Bearer ', '');
         token = jwt.verify(token, KEY);
-  
-  
-        return {
-          props: {},
-        };
+
+        const bool = await validityCheck('a5',token.email);
+        if(bool){
+          return {
+            props: {},
+          };
+        }else{
+          return {
+            redirect: {
+              destination: '/angular/fifth',
+              permanent: false,
+            },
+          }
+        }
   
       }
       else {

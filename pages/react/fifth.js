@@ -16,6 +16,7 @@ import {
   Card,
   Box,
 } from "@material-ui/core";
+import { validityCheck } from '../../Lib/dao';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -411,11 +412,19 @@ export async function getServerSideProps(context) {
     if (token) {
       token = token.replace('Bearer ', '');
       token = jwt.verify(token, KEY);
-
-
-      return {
-        props: {},
-      };
+      const bool = await validityCheck('r4',token.email);
+      if(bool){
+        return {
+          props: {},
+        };
+      }else{
+        return {
+          redirect: {
+            destination: '/react/fourth',
+            permanent: false,
+          },
+        }
+      }
 
     }
     else {

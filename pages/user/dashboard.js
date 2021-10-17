@@ -10,7 +10,6 @@ import {
     Card,
     Box,
 } from "@material-ui/core";
-import { Layout } from 'antd';
 import { getAppCookies } from '../../Lib/utils'
 export default function Home() {
     const router = useRouter();
@@ -19,7 +18,7 @@ export default function Home() {
         await router.push('/react/info')
     };
     const handleVue = async (event) => {
-        await router.push('/VueTutorial/info')
+        await router.push('/vueTutorial/info')
     };
     const handleAngular = async (event) => {
         await router.push('/angular/start')
@@ -70,7 +69,8 @@ export async function getServerSideProps(context) {
         if (token) {
             token = token.replace('Bearer ', '');
             token = jwt.verify(token, KEY);
-
+            console.log(token);
+            console.log('here')
 
             return {
                 props: {},

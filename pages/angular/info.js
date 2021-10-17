@@ -15,26 +15,11 @@ import {
     Typography,
     Card,
 } from "@material-ui/core";
+import index from "!!raw-loader!../../components/AngularTutorial/info";
+
 import { getAppCookies } from '../../Lib/utils'
 
-let backspaces = 0;
-const time = moment();
 
-const style = {
-    position: 'absolute',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '50vw',
-    height: '70vh',
-    bgcolor: 'background.paper',
-    borderRadius: '10%',
-    boxShadow: 24,
-    p: 4,
-};
 
 export default function Start() {
     const router = useRouter();

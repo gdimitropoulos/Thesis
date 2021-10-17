@@ -20,6 +20,7 @@ import {
   Card,
   Box,
 } from "@material-ui/core";
+import { validityCheck } from '../../Lib/dao';
 import appvue from "!!raw-loader!../../components/VueTutorial/fourthTutorial/appvue";
 import mainjs from "!!raw-loader!../../components/VueTutorial/fourthTutorial/main";
 import helloworld from "!!raw-loader!../../components/VueTutorial/fourthTutorial/home";
@@ -131,7 +132,7 @@ export default function VueFourth() {
         'Επιτυχής καταγραφή ',
         'Επιτυχής καταγραφή της προσπάθειας'
       );
-      await router.push('/VueTutorial/fifth')
+      await router.push('/vueTutorial/fifth')
     } else {
       showNotification(
         'error',
@@ -411,12 +412,19 @@ export async function getServerSideProps(context) {
     if (token) {
       token = token.replace('Bearer ', '');
       token = jwt.verify(token, KEY);
-
-
-      return {
-        props: {},
-      };
-
+      const bool = await validityCheck('v3',token.email);
+      if(bool){
+        return {
+          props: {},
+        };
+      }else{
+        return {
+          redirect: {
+            destination: '/vueTutorial/third',
+            permanent: false,
+          },
+        }
+      }
     }
     else {
 

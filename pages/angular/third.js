@@ -16,6 +16,7 @@ import {
   Card,
   Box,
 } from "@material-ui/core";
+import { validityCheck } from '../../Lib/dao';
 import appcomponenthtml from "!!raw-loader!../../components/AngularTutorial/thirdTutorial/appcomponent.html";
 import appmodule from "!!raw-loader!../../components/AngularTutorial/thirdTutorial/appmodule.js";
 import appcomponentjs from "!!raw-loader!../../components/AngularTutorial/thirdTutorial/appcomponent.js";
@@ -430,11 +431,19 @@ export async function getServerSideProps(context) {
       token = token.replace('Bearer ', '');
       token = jwt.verify(token, KEY);
 
-
-      return {
-        props: {},
-      };
-
+      const bool = await validityCheck('a2',token.email);
+      if(bool){
+        return {
+          props: {},
+        };
+      }else{
+        return {
+          redirect: {
+            destination: '/angular/second',
+            permanent: false,
+          },
+        }
+      }
     }
     else {
 
