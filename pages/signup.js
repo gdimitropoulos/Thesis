@@ -20,7 +20,7 @@ import {
   Box,
   FormControlLabel,
 } from "@material-ui/core";
-import localFile from "!!raw-loader!../Components/AppFooter";
+import localFile from "!!raw-loader!../components/AppFooter";
 import Cookies from 'js-cookie';
 import {
   SandpackProvider,

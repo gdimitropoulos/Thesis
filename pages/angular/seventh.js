@@ -21,26 +21,26 @@ import {
   Card,
   Box,
 } from "@material-ui/core";
-import appcomponenthtml from "!!raw-loader!../../Components/AngularTutorial/seventhTutorial/appcomponenthtml";
-import appmodule from "!!raw-loader!../../Components/AngularTutorial/seventhTutorial/appmodule";
-import appcomponentjs from "!!raw-loader!../../Components/AngularTutorial/seventhTutorial/appcomponent";
-import homecomponent from "!!raw-loader!../../Components/AngularTutorial/seventhTutorial/homecomponent";
-import homecomponenthtml from "!!raw-loader!../../Components/AngularTutorial/seventhTutorial/homecomponenthtml";
-import firstcomponent from "!!raw-loader!../../Components/AngularTutorial/seventhTutorial/firstcomponent";
-import firstcomponenthtml from "!!raw-loader!../../Components/AngularTutorial/seventhTutorial/firstcomponenthtml";
-import secondcomponent from "!!raw-loader!../../Components/AngularTutorial/seventhTutorial/secondcomponent";
-import secondcomponenthtml from "!!raw-loader!../../Components/AngularTutorial/seventhTutorial/secondcomponenthtml";
-import thirdcomponent from "!!raw-loader!../../Components/AngularTutorial/seventhTutorial/thirdcomponent";
-import thirdcomponenthtml from "!!raw-loader!../../Components/AngularTutorial/seventhTutorial/thirdcomponenthtml";
-import testing from "!!raw-loader!../../Components/AngularTutorial/seventhTutorial/testing";
-import testing1 from "!!raw-loader!../../Components/AngularTutorial/seventhTutorial/testing1";
-import testing2 from "!!raw-loader!../../Components/AngularTutorial/seventhTutorial/testing2";
-import appcss from "!!raw-loader!../../Components/AngularTutorial/seventhTutorial/app.css";
-import newservice from "!!raw-loader!../../Components/AngularTutorial/seventhTutorial/newservice";
-import solutionfile from "!!raw-loader!../../Components/AngularTutorial/seventhTutorial/solution";
-import solutionfile1 from "!!raw-loader!../../Components/AngularTutorial/seventhTutorial/solution1";
-import solutionfile2 from "!!raw-loader!../../Components/AngularTutorial/seventhTutorial/solution2";
-import solutionfile3 from "!!raw-loader!../../Components/AngularTutorial/seventhTutorial/solution3";
+import appcomponenthtml from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/appcomponenthtml";
+import appmodule from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/appmodule";
+import appcomponentjs from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/appcomponent";
+import homecomponent from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/homecomponent";
+import homecomponenthtml from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/homecomponenthtml";
+import firstcomponent from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/firstcomponent";
+import firstcomponenthtml from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/firstcomponenthtml";
+import secondcomponent from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/secondcomponent";
+import secondcomponenthtml from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/secondcomponenthtml";
+import thirdcomponent from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/thirdcomponent";
+import thirdcomponenthtml from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/thirdcomponenthtml";
+import testing from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/testing";
+import testing1 from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/testing1";
+import testing2 from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/testing2";
+import appcss from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/app.css";
+import newservice from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/newservice";
+import solutionfile from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/solution";
+import solutionfile1 from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/solution1";
+import solutionfile2 from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/solution2";
+import solutionfile3 from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/solution3";
 import { CopyBlock, dracula } from "react-code-blocks";
 
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';

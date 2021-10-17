@@ -20,13 +20,13 @@ import React, {
     Card,
     Box,
   } from "@material-ui/core";
-  import appcomponenthtml from "!!raw-loader!../../Components/AngularTutorial/firstTutorial/appcomponent.html";
-  import appmodule from "!!raw-loader!../../Components/AngularTutorial/firstTutorial/appmodule.js";
-  import appcomponentjs from "!!raw-loader!../../Components/AngularTutorial/firstTutorial/appcomponent.js";
-  import solution from "!!raw-loader!../../Components/AngularTutorial/firstTutorial/solution";
-  import testing from "!!raw-loader!../../Components/AngularTutorial/firstTutorial/testing";
-  import appcss from "!!raw-loader!../../Components/AngularTutorial/firstTutorial/app.css";
-  import mainjs from "!!raw-loader!../../Components/AngularTutorial/firstTutorial/main.js";
+  import appcomponenthtml from "!!raw-loader!../../components/AngularTutorial/firstTutorial/appcomponent.html";
+  import appmodule from "!!raw-loader!../../components/AngularTutorial/firstTutorial/appmodule.js";
+  import appcomponentjs from "!!raw-loader!../../components/AngularTutorial/firstTutorial/appcomponent.js";
+  import solution from "!!raw-loader!../../components/AngularTutorial/firstTutorial/solution";
+  import testing from "!!raw-loader!../../components/AngularTutorial/firstTutorial/testing";
+  import appcss from "!!raw-loader!../../components/AngularTutorial/firstTutorial/app.css";
+  import mainjs from "!!raw-loader!../../components/AngularTutorial/firstTutorial/main.js";
   import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
   import MenuBookIcon from '@mui/icons-material/MenuBook';
   import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';

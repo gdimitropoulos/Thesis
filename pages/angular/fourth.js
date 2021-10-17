@@ -21,15 +21,15 @@ import {
   Box,
 } from "@material-ui/core";
 import { CopyBlock, dracula } from "react-code-blocks";
-import appcomponenthtml from "!!raw-loader!../../Components/AngularTutorial/fourthTutorial/appcomponent.html";
-import appmodule from "!!raw-loader!../../Components/AngularTutorial/fourthTutorial/appmodule.js";
-import appcomponentjs from "!!raw-loader!../../Components/AngularTutorial/fourthTutorial/appcomponent.js";
-import helloworldhtml from "!!raw-loader!../../Components/AngularTutorial/fourthTutorial/helloworldhtml";
-import testing from "!!raw-loader!../../Components/AngularTutorial/fourthTutorial/testing";
-import appcss from "!!raw-loader!../../Components/AngularTutorial/fourthTutorial/app.css";
-import HelloWorldServicejs from "!!raw-loader!../../Components/AngularTutorial/fourthTutorial/helloworldservice";
-import Helloworldjs from "!!raw-loader!../../Components/AngularTutorial/fourthTutorial/helloworldcomponent";
-import solutionfile from "!!raw-loader!../../Components/AngularTutorial/fourthTutorial/solution";
+import appcomponenthtml from "!!raw-loader!../../components/AngularTutorial/fourthTutorial/appcomponent.html";
+import appmodule from "!!raw-loader!../../components/AngularTutorial/fourthTutorial/appmodule.js";
+import appcomponentjs from "!!raw-loader!../../components/AngularTutorial/fourthTutorial/appcomponent.js";
+import helloworldhtml from "!!raw-loader!../../components/AngularTutorial/fourthTutorial/helloworldhtml";
+import testing from "!!raw-loader!../../components/AngularTutorial/fourthTutorial/testing";
+import appcss from "!!raw-loader!../../components/AngularTutorial/fourthTutorial/app.css";
+import HelloWorldServicejs from "!!raw-loader!../../components/AngularTutorial/fourthTutorial/helloworldservice";
+import Helloworldjs from "!!raw-loader!../../components/AngularTutorial/fourthTutorial/helloworldcomponent";
+import solutionfile from "!!raw-loader!../../components/AngularTutorial/fourthTutorial/solution";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';

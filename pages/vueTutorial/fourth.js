@@ -21,11 +21,11 @@ import {
   Card,
   Box,
 } from "@material-ui/core";
-import appvue from "!!raw-loader!../../Components/vueTutorial/fourthTutorial/appvue";
-import mainjs from "!!raw-loader!../../Components/vueTutorial/fourthTutorial/main";
-import helloworld from "!!raw-loader!../../Components/vueTutorial/fourthTutorial/home";
-import testing from "!!raw-loader!../../Components/vueTutorial/fourthTutorial/testing";
-import solutionfile from "!!raw-loader!../../Components/vueTutorial/fourthTutorial/solution";
+import appvue from "!!raw-loader!../../components/vueTutorial/fourthTutorial/appvue";
+import mainjs from "!!raw-loader!../../components/vueTutorial/fourthTutorial/main";
+import helloworld from "!!raw-loader!../../components/vueTutorial/fourthTutorial/home";
+import testing from "!!raw-loader!../../components/vueTutorial/fourthTutorial/testing";
+import solutionfile from "!!raw-loader!../../components/vueTutorial/fourthTutorial/solution";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import {
   SandpackProvider,

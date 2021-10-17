@@ -20,15 +20,15 @@ import {
   Card,
   Box,
 } from "@material-ui/core";
-import appcomponenthtml from "!!raw-loader!../../Components/AngularTutorial/fifthTutorial/appcomponent.html";
-import appmodule from "!!raw-loader!../../Components/AngularTutorial/fifthTutorial/appmodule.js";
-import appcomponentjs from "!!raw-loader!../../Components/AngularTutorial/fifthTutorial/appcomponent.js";
-import helloworldhtml from "!!raw-loader!../../Components/AngularTutorial/fifthTutorial/helloworldhtml";
-import testing from "!!raw-loader!../../Components/AngularTutorial/fifthTutorial/testing";
-import appcss from "!!raw-loader!../../Components/AngularTutorial/fifthTutorial/app.css";
-import HelloWorldServicejs from "!!raw-loader!../../Components/AngularTutorial/fifthTutorial/helloworldservice";
-import Helloworldjs from "!!raw-loader!../../Components/AngularTutorial/fifthTutorial/helloworldcomponent";
-import solutionfile from "!!raw-loader!../../Components/AngularTutorial/fifthTutorial/solution";
+import appcomponenthtml from "!!raw-loader!../../components/AngularTutorial/fifthTutorial/appcomponent.html";
+import appmodule from "!!raw-loader!../../components/AngularTutorial/fifthTutorial/appmodule.js";
+import appcomponentjs from "!!raw-loader!../../components/AngularTutorial/fifthTutorial/appcomponent.js";
+import helloworldhtml from "!!raw-loader!../../components/AngularTutorial/fifthTutorial/helloworldhtml";
+import testing from "!!raw-loader!../../components/AngularTutorial/fifthTutorial/testing";
+import appcss from "!!raw-loader!../../components/AngularTutorial/fifthTutorial/app.css";
+import HelloWorldServicejs from "!!raw-loader!../../components/AngularTutorial/fifthTutorial/helloworldservice";
+import Helloworldjs from "!!raw-loader!../../components/AngularTutorial/fifthTutorial/helloworldcomponent";
+import solutionfile from "!!raw-loader!../../components/AngularTutorial/fifthTutorial/solution";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';

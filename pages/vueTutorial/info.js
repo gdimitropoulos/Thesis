@@ -27,7 +27,7 @@ import {
 import appvue from "!!raw-loader!../../Components/vueTutorial/firstTutorial/appjs";
 import mainjs from "!!raw-loader!../../Components/vueTutorial/firstTutorial/indexhtml";
 import testing from "!!raw-loader!../../Components/vueTutorial/firstTutorial/testing";
-import index from "!!raw-loader!../../Components/vueTutorial/info";
+import index from "!!raw-loader!../../components/vueTutorial/info";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import {
     SandpackProvider,

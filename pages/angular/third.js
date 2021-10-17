@@ -18,14 +18,14 @@ import {
   Card,
   Box,
 } from "@material-ui/core";
-import appcomponenthtml from "!!raw-loader!../../Components/AngularTutorial/thirdTutorial/appcomponent.html";
-import appmodule from "!!raw-loader!../../Components/AngularTutorial/thirdTutorial/appmodule.js";
-import appcomponentjs from "!!raw-loader!../../Components/AngularTutorial/thirdTutorial/appcomponent.js";
-import helloworldhtml from "!!raw-loader!../../Components/AngularTutorial/thirdTutorial/helloworldhtml";
-import testing from "!!raw-loader!../../Components/AngularTutorial/thirdTutorial/testing";
-import appcss from "!!raw-loader!../../Components/AngularTutorial/thirdTutorial/app.css";
-import Helloworldjs from "!!raw-loader!../../Components/AngularTutorial/thirdTutorial/helloworldcomponent";
-import solutionfile from "!!raw-loader!../../Components/AngularTutorial/thirdTutorial/solution";
+import appcomponenthtml from "!!raw-loader!../../components/AngularTutorial/thirdTutorial/appcomponent.html";
+import appmodule from "!!raw-loader!../../components/AngularTutorial/thirdTutorial/appmodule.js";
+import appcomponentjs from "!!raw-loader!../../components/AngularTutorial/thirdTutorial/appcomponent.js";
+import helloworldhtml from "!!raw-loader!../../components/AngularTutorial/thirdTutorial/helloworldhtml";
+import testing from "!!raw-loader!../../components/AngularTutorial/thirdTutorial/testing";
+import appcss from "!!raw-loader!../../components/AngularTutorial/thirdTutorial/app.css";
+import Helloworldjs from "!!raw-loader!../../components/AngularTutorial/thirdTutorial/helloworldcomponent";
+import solutionfile from "!!raw-loader!../../components/AngularTutorial/thirdTutorial/solution";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import { CopyBlock, dracula } from "react-code-blocks";
 import MenuBookIcon from '@mui/icons-material/MenuBook';

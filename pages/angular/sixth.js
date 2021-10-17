@@ -20,24 +20,24 @@ import React, {
     Box,
   } from "@material-ui/core";
   import { CopyBlock, dracula } from "react-code-blocks";
-  import indexhtml from '!!raw-loader!../../Components/AngularTutorial/sixthTutotorial/indexhtml'
-  import appcomponenthtml from "!!raw-loader!../../Components/AngularTutorial/sixthTutotorial/appcomponenthtml";
-  import appmodule from "!!raw-loader!../../Components/AngularTutorial/sixthTutotorial/appmodule";
-  import appcomponentjs from "!!raw-loader!../../Components/AngularTutorial/sixthTutotorial/appcomponent";
-  import homecomponent from "!!raw-loader!../../Components/AngularTutorial/sixthTutotorial/homecomponent";
-  import homecomponenthtml from "!!raw-loader!../../Components/AngularTutorial/sixthTutotorial/homecomponenthtml";
-  import firstcomponent from "!!raw-loader!../../Components/AngularTutorial/sixthTutotorial/firstcomponent";
-  import firstcomponenthtml from "!!raw-loader!../../Components/AngularTutorial/sixthTutotorial/firstcomponenthtml";
-  import secondcomponent from "!!raw-loader!../../Components/AngularTutorial/sixthTutotorial/secondcomponent";
-  import secondcomponenthtml from "!!raw-loader!../../Components/AngularTutorial/sixthTutotorial/secondcomponenthtml";
-  import thirdcomponent from "!!raw-loader!../../Components/AngularTutorial/sixthTutotorial/thirdcomponent";
-  import thirdcomponenthtml from "!!raw-loader!../../Components/AngularTutorial/sixthTutotorial/thirdcomponenthtml";
-  import testing from "!!raw-loader!../../Components/AngularTutorial/sixthTutotorial/testing";
-  import testing1 from "!!raw-loader!../../Components/AngularTutorial/sixthTutotorial/testing1";
-  import testing2 from "!!raw-loader!../../Components/AngularTutorial/sixthTutotorial/testing2";
-  import appcss from "!!raw-loader!../../Components/AngularTutorial/sixthTutotorial/app.css";
-  import newservice from "!!raw-loader!../../Components/AngularTutorial/sixthTutotorial/newservice";
-  import solutionfile from "!!raw-loader!../../Components/AngularTutorial/sixthTutotorial/solution";
+  import indexhtml from '!!raw-loader!../../components/AngularTutorial/sixthTutotorial/indexhtml'
+  import appcomponenthtml from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/appcomponenthtml";
+  import appmodule from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/appmodule";
+  import appcomponentjs from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/appcomponent";
+  import homecomponent from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/homecomponent";
+  import homecomponenthtml from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/homecomponenthtml";
+  import firstcomponent from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/firstcomponent";
+  import firstcomponenthtml from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/firstcomponenthtml";
+  import secondcomponent from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/secondcomponent";
+  import secondcomponenthtml from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/secondcomponenthtml";
+  import thirdcomponent from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/thirdcomponent";
+  import thirdcomponenthtml from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/thirdcomponenthtml";
+  import testing from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/testing";
+  import testing1 from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/testing1";
+  import testing2 from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/testing2";
+  import appcss from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/app.css";
+  import newservice from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/newservice";
+  import solutionfile from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/solution";
   import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
   import MenuBookIcon from '@mui/icons-material/MenuBook';
   import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';

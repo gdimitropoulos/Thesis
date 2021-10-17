@@ -20,10 +20,10 @@ import {
   Card,
   Box,
 } from "@material-ui/core";
-import appvue from "!!raw-loader!../../Components/vueTutorial/firstTutorial/appjs";
-import mainjs from "!!raw-loader!../../Components/vueTutorial/firstTutorial/indexhtml";
-import testing from "!!raw-loader!../../Components/vueTutorial/firstTutorial/testing";
-import solutionfile from "!!raw-loader!../../Components/vueTutorial/firstTutorial/solution";
+import appvue from "!!raw-loader!../../components/vueTutorial/firstTutorial/appjs";
+import mainjs from "!!raw-loader!../../components/vueTutorial/firstTutorial/indexhtml";
+import testing from "!!raw-loader!../../components/vueTutorial/firstTutorial/testing";
+import solutionfile from "!!raw-loader!../../components/vueTutorial/firstTutorial/solution";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';

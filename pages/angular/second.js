@@ -20,14 +20,14 @@ import React, {
     Box,
   } from "@material-ui/core";
   import { CopyBlock, dracula } from "react-code-blocks";
-  import appcomponenthtml from "!!raw-loader!../../Components/AngularTutorial/secondTutorial/appcomponent.html";
-  import appmodule from "!!raw-loader!../../Components/AngularTutorial/secondTutorial/appmodule.js";
-  import appcomponentjs from "!!raw-loader!../../Components/AngularTutorial/secondTutorial/appcomponent.js";
-  import helloworldhtml from "!!raw-loader!../../Components/AngularTutorial/secondTutorial/helloworldhtml";
-  import testing from "!!raw-loader!../../Components/AngularTutorial/secondTutorial/testing";
-  import appcss from "!!raw-loader!../../Components/AngularTutorial/secondTutorial/app.css";
-  import Helloworldjs from "!!raw-loader!../../Components/AngularTutorial/secondTutorial/helloworldcomponent";
-  import solutionfile from "!!raw-loader!../../Components/AngularTutorial/secondTutorial/solution.js";
+  import appcomponenthtml from "!!raw-loader!../../components/AngularTutorial/secondTutorial/appcomponent.html";
+  import appmodule from "!!raw-loader!../../components/AngularTutorial/secondTutorial/appmodule.js";
+  import appcomponentjs from "!!raw-loader!../../components/AngularTutorial/secondTutorial/appcomponent.js";
+  import helloworldhtml from "!!raw-loader!../../components/AngularTutorial/secondTutorial/helloworldhtml";
+  import testing from "!!raw-loader!../../components/AngularTutorial/secondTutorial/testing";
+  import appcss from "!!raw-loader!../../components/AngularTutorial/secondTutorial/app.css";
+  import Helloworldjs from "!!raw-loader!../../components/AngularTutorial/secondTutorial/helloworldcomponent";
+  import solutionfile from "!!raw-loader!../../components/AngularTutorial/secondTutorial/solution.js";
   import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
   import MenuBookIcon from '@mui/icons-material/MenuBook';
   import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';

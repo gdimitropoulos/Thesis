@@ -21,11 +21,11 @@ import {
 } from "@material-ui/core";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import appvue from "!!raw-loader!../../Components/vueTutorial/thirdTutorial/appvue";
-import mainjs from "!!raw-loader!../../Components/vueTutorial/thirdTutorial/main";
-import helloworld from "!!raw-loader!../../Components/vueTutorial/thirdTutorial/helloworld";
-import testing from "!!raw-loader!../../Components/vueTutorial/thirdTutorial/testing";
-import solutionfile from "!!raw-loader!../../Components/vueTutorial/thirdTutorial/solution";
+import appvue from "!!raw-loader!../../components/vueTutorial/thirdTutorial/appvue";
+import mainjs from "!!raw-loader!../../components/vueTutorial/thirdTutorial/main";
+import helloworld from "!!raw-loader!../../components/vueTutorial/thirdTutorial/helloworld";
+import testing from "!!raw-loader!../../components/vueTutorial/thirdTutorial/testing";
+import solutionfile from "!!raw-loader!../../components/vueTutorial/thirdTutorial/solution";
 import { CopyBlock, dracula } from "react-code-blocks";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import {

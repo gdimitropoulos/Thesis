@@ -26,14 +26,14 @@ import {
     Tab,
     Box,
 } from "@material-ui/core";
-import maints from "!!raw-loader!../../Components/AngularTutorial/maints";
-import appcomponentjs from "!!raw-loader!../../Components/AngularTutorial/appcomponent";
-import appmodule from "!!raw-loader!../../Components/AngularTutorial/appmodule";
-import appvue from "!!raw-loader!../../Components/vueTutorial/firstTutorial/appjs";
-import mainjs from "!!raw-loader!../../Components/vueTutorial/firstTutorial/indexhtml";
-import testing from "!!raw-loader!../../Components/vueTutorial/firstTutorial/testing";
-import index from "!!raw-loader!../../Components/reactTutorial/info1";
-import index1 from "!!raw-loader!../../Components/reactTutorial/info1app";
+import maints from "!!raw-loader!../../components/AngularTutorial/maints";
+import appcomponentjs from "!!raw-loader!../../components/AngularTutorial/appcomponent";
+import appmodule from "!!raw-loader!../../components/AngularTutorial/appmodule";
+import appvue from "!!raw-loader!../../components/vueTutorial/firstTutorial/appjs";
+import mainjs from "!!raw-loader!../../components/vueTutorial/firstTutorial/indexhtml";
+import testing from "!!raw-loader!../../components/vueTutorial/firstTutorial/testing";
+import index from "!!raw-loader!../../components/reactTutorial/info1";
+import index1 from "!!raw-loader!../../components/reactTutorial/info1app";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import {
     SandpackProvider,

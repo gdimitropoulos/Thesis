@@ -23,9 +23,9 @@ import {
   Card,
   Box,
 } from "@material-ui/core";
-import testAppCode from "!!raw-loader!../../Components/reactTutorial/FirstReactTutorial/ApprealTest";
-import Appcode from "!!raw-loader!../../Components/reactTutorial/FirstReactTutorial/Apptest";
-import indexFile from "!!raw-loader!../../Components/reactTutorial/FirstReactTutorial/indexFiles";
+import testAppCode from "!!raw-loader!../../components/reactTutorial/FirstReactTutorial/ApprealTest";
+import Appcode from "!!raw-loader!../../components/reactTutorial/FirstReactTutorial/Apptest";
+import indexFile from "!!raw-loader!../../components/reactTutorial/FirstReactTutorial/indexFiles";
 import Cookies from 'js-cookie';
 import { useActiveCode } from "@codesandbox/sandpack-react";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';

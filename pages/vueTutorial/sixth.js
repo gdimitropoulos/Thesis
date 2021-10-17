@@ -28,16 +28,16 @@ import treePic from '../../public/routertree.png'
 import mainfile from '!!raw-loader!../../components/VueTutorial/main'
 import appfile from '!!raw-loader!../../components/VueTutorial/app'
 import routerfile from '!!raw-loader!../../components/VueTutorial/router'
-import appvue from "!!raw-loader!../../Components/vueTutorial/sixthTutorial/appvue";
-import mainjs from "!!raw-loader!../../Components/vueTutorial/sixthTutorial/main";
-import helloworld from "!!raw-loader!../../Components/vueTutorial/sixthTutorial/news";
-import testing from "!!raw-loader!../../Components/vueTutorial/sixthTutorial/testing";
-import homejs from "!!raw-loader!../../Components/vueTutorial/sixthTutorial/home";
-import routerjs from "!!raw-loader!../../Components/vueTutorial/sixthTutorial/router";
-import first from "!!raw-loader!../../Components/vueTutorial/sixthTutorial/first";
-import second from "!!raw-loader!../../Components/vueTutorial/sixthTutorial/second";
-import third from "!!raw-loader!../../Components/vueTutorial/sixthTutorial/third";
-import solutionfile from "!!raw-loader!../../Components/vueTutorial/sixthTutorial/solution";
+import appvue from "!!raw-loader!../../components/vueTutorial/sixthTutorial/appvue";
+import mainjs from "!!raw-loader!../../components/vueTutorial/sixthTutorial/main";
+import helloworld from "!!raw-loader!../../components/vueTutorial/sixthTutorial/news";
+import testing from "!!raw-loader!../../components/vueTutorial/sixthTutorial/testing";
+import homejs from "!!raw-loader!../../components/vueTutorial/sixthTutorial/home";
+import routerjs from "!!raw-loader!../../components/vueTutorial/sixthTutorial/router";
+import first from "!!raw-loader!../../components/vueTutorial/sixthTutorial/first";
+import second from "!!raw-loader!../../components/vueTutorial/sixthTutorial/second";
+import third from "!!raw-loader!../../components/vueTutorial/sixthTutorial/third";
+import solutionfile from "!!raw-loader!../../components/vueTutorial/sixthTutorial/solution";
 
 
 
