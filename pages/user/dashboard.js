@@ -22,7 +22,7 @@ import {
 } from "@material-ui/core";
 import green from '@material-ui/core/colors/green';
 
-import localFile from "!!raw-loader!../../Components/AppFooter";
+import localFile from "!!raw-loader!../../components/AppFooter";
 import Cookies from 'js-cookie';
 import { Layout } from 'antd';
 import {
