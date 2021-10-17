@@ -49,7 +49,7 @@ export default function Home() {
         await router.push('/react/info')
     };
     const handleVue =  async (event) => {
-        await router.push('/vueTutorial/info')
+        await router.push('/VueTutorial/info')
     };
     const handleAngular=  async (event) => {
         await router.push('/angular/start')

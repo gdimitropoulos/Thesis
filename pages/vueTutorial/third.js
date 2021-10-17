@@ -133,7 +133,7 @@ export default function Start() {
         'Επιτυχής καταγραφή ',
         'Επιτυχής καταγραφή της προσπάθειας'
       );
-      await router.push('/vueTutorial/fourth')
+      await router.push('/VueTutorial/fourth')
     } else {
       showNotification(
         'error',

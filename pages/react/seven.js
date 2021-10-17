@@ -20,10 +20,6 @@ import {
   Box,
 } from "@material-ui/core";
 import { CopyBlock, dracula } from "react-code-blocks";
-import Image from 'next/image'
-import treePic from '../../public/routertree.png'
-import mainfile from '!!raw-loader!../../components/VueTutorial/main'
-import appfile from '!!raw-loader!../../components/VueTutorial/app'
 import routerfile from '!!raw-loader!../../components/reactTutorial/router'
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';

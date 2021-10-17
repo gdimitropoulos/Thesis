@@ -68,7 +68,7 @@ export default function VueInfo() {
     const [openSuccess, setOpenSuccess] = useState(false);
 
     const Move = ()=>{
-        router.push('/vueTutorial/info1')
+        router.push('/VueTutorial/info1')
     }
     return (
 

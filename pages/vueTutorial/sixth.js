@@ -154,7 +154,7 @@ export default function Start() {
         'Επιτυχής καταγραφή ',
         'Επιτυχής καταγραφή της προσπάθειας'
       );
-      await router.push('/vueTutorial/seventh')
+      await router.push('/VueTutorial/seventh')
     } else {
       showNotification(
         'error',
