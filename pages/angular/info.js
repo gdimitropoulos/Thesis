@@ -24,9 +24,9 @@ import {
     Card,
     Box,
 } from "@material-ui/core";
-import appvue from "!!raw-loader!../../components/vueTutorial/firstTutorial/appjs";
-import mainjs from "!!raw-loader!../../components/vueTutorial/firstTutorial/indexhtml";
-import testing from "!!raw-loader!../../components/vueTutorial/firstTutorial/testing";
+import appvue from "!!raw-loader!../../components/VueTutorial/firstTutorial/appjs";
+import mainjs from "!!raw-loader!../../components/VueTutorial/firstTutorial/indexhtml";
+import testing from "!!raw-loader!../../components/VueTutorial/firstTutorial/testing";
 import index from "!!raw-loader!../../components/AngularTutorial/info";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import {

@@ -24,10 +24,10 @@ import {
     Card,
     Box,
 } from "@material-ui/core";
-import appvue from "!!raw-loader!../../Components/vueTutorial/firstTutorial/appjs";
-import mainjs from "!!raw-loader!../../Components/vueTutorial/firstTutorial/indexhtml";
-import testing from "!!raw-loader!../../Components/vueTutorial/firstTutorial/testing";
-import index from "!!raw-loader!../../components/vueTutorial/info";
+import appvue from "!!raw-loader!../../Components/VueTutorial/firstTutorial/appjs";
+import mainjs from "!!raw-loader!../../Components/VueTutorial/firstTutorial/indexhtml";
+import testing from "!!raw-loader!../../Components/VueTutorial/firstTutorial/testing";
+import index from "!!raw-loader!../../components/VueTutorial/info";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import {
     SandpackProvider,

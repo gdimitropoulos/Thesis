@@ -24,11 +24,11 @@ import {
   Card,
   Box,
 } from "@material-ui/core";
-import appvue from "!!raw-loader!../../components/vueTutorial/fifthTutorial/appvue";
-import mainjs from "!!raw-loader!../../components/vueTutorial/fifthTutorial/main";
-import helloworld from "!!raw-loader!../../components/vueTutorial/fifthTutorial/news";
-import testing from "!!raw-loader!../../components/vueTutorial/fifthTutorial/testing";
-import solutionfile from "!!raw-loader!../../components/vueTutorial/fifthTutorial/solution";
+import appvue from "!!raw-loader!../../components/VueTutorial/fifthTutorial/appvue";
+import mainjs from "!!raw-loader!../../components/VueTutorial/fifthTutorial/main";
+import helloworld from "!!raw-loader!../../components/VueTutorial/fifthTutorial/news";
+import testing from "!!raw-loader!../../components/VueTutorial/fifthTutorial/testing";
+import solutionfile from "!!raw-loader!../../components/VueTutorial/fifthTutorial/solution";
 import Cookies from 'js-cookie';
 import { useActiveCode } from "@codesandbox/sandpack-react";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';

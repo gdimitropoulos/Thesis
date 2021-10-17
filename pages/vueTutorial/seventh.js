@@ -24,15 +24,15 @@ import {
   Card,
   Box,
 } from "@material-ui/core";
-import appvue from "!!raw-loader!../../components/vueTutorial/seventhTutorial/appvue";
-import mainjs from "!!raw-loader!../../components/vueTutorial/seventhTutorial/main";
-import helloworld from "!!raw-loader!../../components/vueTutorial/seventhTutorial/news";
-import testing from "!!raw-loader!../../components/vueTutorial/seventhTutorial/testing";
-import homejs from "!!raw-loader!../../components/vueTutorial/seventhTutorial/home";
-import routerjs from "!!raw-loader!../../components/vueTutorial/seventhTutorial/router";
-import first from "!!raw-loader!../../components/vueTutorial/seventhTutorial/first";
-import second from "!!raw-loader!../../components/vueTutorial/seventhTutorial/second";
-import third from "!!raw-loader!../../components/vueTutorial/seventhTutorial/third";
+import appvue from "!!raw-loader!../../components/VueTutorial/seventhTutorial/appvue";
+import mainjs from "!!raw-loader!../../components/VueTutorial/seventhTutorial/main";
+import helloworld from "!!raw-loader!../../components/VueTutorial/seventhTutorial/news";
+import testing from "!!raw-loader!../../components/VueTutorial/seventhTutorial/testing";
+import homejs from "!!raw-loader!../../components/VueTutorial/seventhTutorial/home";
+import routerjs from "!!raw-loader!../../components/VueTutorial/seventhTutorial/router";
+import first from "!!raw-loader!../../components/VueTutorial/seventhTutorial/first";
+import second from "!!raw-loader!../../components/VueTutorial/seventhTutorial/second";
+import third from "!!raw-loader!../../components/VueTutorial/seventhTutorial/third";
 import solutionfile from "!!raw-loader!../../components/vueTutorial/seventhTutorial/solution";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import {

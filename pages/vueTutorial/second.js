@@ -20,11 +20,11 @@ import {
 } from "@material-ui/core";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import solutionfile from "!!raw-loader!../../components/vueTutorial/secondTutorial/solution";
-import appvue from "!!raw-loader!../../components/vueTutorial/secondTutorial/appvue";
-import mainjs from "!!raw-loader!../../components/vueTutorial/secondTutorial/main";
-import helloworld from "!!raw-loader!../../components/vueTutorial/secondTutorial/helloworld";
-import testing from "!!raw-loader!../../components/vueTutorial/secondTutorial/testing";
+import solutionfile from "!!raw-loader!../../components/VueTutorial/secondTutorial/solution";
+import appvue from "!!raw-loader!../../components/VueTutorial/secondTutorial/appvue";
+import mainjs from "!!raw-loader!../../components/VueTutorial/secondTutorial/main";
+import helloworld from "!!raw-loader!../../components/VueTutorial/secondTutorial/helloworld";
+import testing from "!!raw-loader!../../components/VueTutorial/secondTutorial/testing";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import {
   SandpackProvider,
