@@ -1,9 +1,8 @@
 /*eslint-disable react/no-unescaped-entities */
 import React, {
-  useState, useEffect, useContext, useMemo,
+  useState, useEffect,
 } from 'react';
 import jwt from 'jsonwebtoken';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as moment from 'moment'
 import { red } from '@mui/material/colors';
@@ -12,7 +11,6 @@ import {
   Button,
   Grid,
   Modal,
-  Container,
   Typography,
   Card,
   Box,
@@ -29,26 +27,20 @@ import indexFile from "!!raw-loader!../../components/reactTutorial/FourthReactTu
 import componentCode from "!!raw-loader!../../components/reactTutorial/FourthReactTutorial/tutorialComponent";
 import appcss from "!!raw-loader!../../components/reactTutorial/FourthReactTutorial/App.css";
 import solutionCode from "!!raw-loader!../../components/reactTutorial/FourthReactTutorial/solution";
-import Cookies from 'js-cookie';
 import { useActiveCode } from "@codesandbox/sandpack-react";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import {
   SandpackProvider,
   SandpackLayout,
   SandpackCodeEditor,
-  Sandpack,
   SandpackThemeProvider,
   SandpackPreview,
-  FileTabs,
   useSandpack,
   useSandpackNavigation,
 } from "@codesandbox/sandpack-react";
 import "@codesandbox/sandpack-react/dist/index.css";
-import styles from '../../styles/Home.module.css'
 import showNotification from '../../Lib/notification'
 import { getAppCookies } from '../../Lib/utils'
-import { Backspace } from '@mui/icons-material';
-import { display } from '@mui/system';
 
 
 let backspaces = 0;

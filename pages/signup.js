@@ -1,5 +1,5 @@
 import React, {
-  useState, useEffect, useContext, useMemo,
+  useState, 
 } from 'react';
 import jwt from 'jsonwebtoken';
 import Link from 'next/link';
@@ -7,32 +7,11 @@ import { useRouter } from 'next/router';
 import {
   Button,
   TextField,
-  Grid,
-  Paper,
   Container,
-  AppBar,
   Typography,
-  Toolbar,
   Card,
-  CardContent,
-  FormControl,
-  FormGroup,
   Box,
-  FormControlLabel,
 } from "@material-ui/core";
-import localFile from "!!raw-loader!../components/AppFooter";
-import Cookies from 'js-cookie';
-import {
-  SandpackProvider,
-  SandpackLayout,
-  SandpackCodeEditor,
-  SandpackThemeProvider,
-  SandpackPreview,
-  FileTabs,
-  useSandpack,
-} from "@codesandbox/sandpack-react";
-import "@codesandbox/sandpack-react/dist/index.css";
-import styles from '../styles/Home.module.css'
 import showNotification from '../Lib/notification'
 import { getAppCookies } from '../Lib/utils'
 

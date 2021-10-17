@@ -1,10 +1,9 @@
 /*eslint-disable react/no-unescaped-entities */
 
 import React, {
-  useState, useEffect, useContext, useMemo,
+  useState, useEffect,
 } from 'react';
 import jwt from 'jsonwebtoken';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as moment from 'moment'
 import { red } from '@mui/material/colors';
@@ -13,12 +12,10 @@ import {
   Button,
   Grid,
   Modal,
-  Container,
   Typography,
   Card,
   Box,
 } from "@material-ui/core";
-import { CopyBlock, dracula } from "react-code-blocks";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -30,26 +27,21 @@ import componentCode from "!!raw-loader!../../components/reactTutorial/sixthTuto
 import appcss from "!!raw-loader!../../components/reactTutorial/sixthTutorial/App.css";
 import news from "!!raw-loader!../../components/reactTutorial/sixthTutorial/News";
 import solutionCode from "!!raw-loader!../../components/reactTutorial/sixthTutorial/solution";
-import Cookies from 'js-cookie';
 import { useActiveCode } from "@codesandbox/sandpack-react";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import {
   SandpackProvider,
   SandpackLayout,
   SandpackCodeEditor,
-  Sandpack,
   SandpackThemeProvider,
   SandpackPreview,
-  FileTabs,
   useSandpack,
   useSandpackNavigation,
 } from "@codesandbox/sandpack-react";
 import "@codesandbox/sandpack-react/dist/index.css";
-import styles from '../../styles/Home.module.css'
 import showNotification from '../../Lib/notification'
 import { getAppCookies } from '../../Lib/utils'
-import { Backspace } from '@mui/icons-material';
-import { display } from '@mui/system';
+
 
 let backspaces = 0;
 let totalCharsWritten=0;

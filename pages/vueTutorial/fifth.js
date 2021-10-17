@@ -1,11 +1,10 @@
 /* eslint-disable  react/no-unescaped-entities*/
 import React, {
-  useState, useEffect, useContext, useMemo,
+  useState, useEffect,
 } from 'react';
 import Image from 'next/image'
 import jwt from 'jsonwebtoken';
 import { red } from '@mui/material/colors';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as moment from 'moment'
 import MenuBookIcon from '@mui/icons-material/MenuBook';
@@ -19,7 +18,6 @@ import {
   Button,
   Grid,
   Modal,
-  Container,
   Typography,
   Card,
   Box,
@@ -29,20 +27,15 @@ import mainjs from "!!raw-loader!../../components/VueTutorial/fifthTutorial/main
 import helloworld from "!!raw-loader!../../components/VueTutorial/fifthTutorial/news";
 import testing from "!!raw-loader!../../components/VueTutorial/fifthTutorial/testing";
 import solutionfile from "!!raw-loader!../../components/VueTutorial/fifthTutorial/solution";
-import Cookies from 'js-cookie';
-import { useActiveCode } from "@codesandbox/sandpack-react";
+
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import {
   SandpackProvider,
   SandpackLayout,
   SandpackCodeEditor,
-  Sandpack,
-  FileExplorer,
   SandpackThemeProvider,
   SandpackPreview,
-  FileTabs,
   useSandpack,
-  useSandpackNavigation,
 } from "@codesandbox/sandpack-react";
 import "@codesandbox/sandpack-react/dist/index.css";
 import showNotification from '../../Lib/notification'

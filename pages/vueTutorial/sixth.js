@@ -1,10 +1,9 @@
 /* eslint-disable  react/no-unescaped-entities*/
 import React, {
-  useState, useEffect, useContext, useMemo,
+  useState, useEffect,
 } from 'react';
 import jwt from 'jsonwebtoken';
 import { red } from '@mui/material/colors';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as moment from 'moment'
 import Image from 'next/image'
@@ -18,12 +17,10 @@ import {
   Button,
   Grid,
   Modal,
-  Container,
   Typography,
   Card,
   Box,
 } from "@material-ui/core";
-
 import treePic from '../../public/routertree.png'
 import mainfile from '!!raw-loader!../../components/VueTutorial/main'
 import appfile from '!!raw-loader!../../components/VueTutorial/app'
@@ -38,23 +35,14 @@ import first from "!!raw-loader!../../components/VueTutorial/sixthTutorial/first
 import second from "!!raw-loader!../../components/VueTutorial/sixthTutorial/second";
 import third from "!!raw-loader!../../components/VueTutorial/sixthTutorial/third";
 import solutionfile from "!!raw-loader!../../components/VueTutorial/sixthTutorial/solution";
-
-
-
-
-import Cookies from 'js-cookie';
-import { useActiveCode } from "@codesandbox/sandpack-react";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import {
   SandpackProvider,
   SandpackLayout,
   SandpackCodeEditor,
-  Sandpack,
   SandpackThemeProvider,
   SandpackPreview,
-  FileTabs,
   useSandpack,
-  useSandpackNavigation,
 } from "@codesandbox/sandpack-react";
 import "@codesandbox/sandpack-react/dist/index.css";
 import showNotification from '../../Lib/notification'

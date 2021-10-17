@@ -1,11 +1,10 @@
 /* eslint-disable  react/no-unescaped-entities*/
 
 import React, {
-  useState, useEffect, useContext, useMemo,
+  useState, useEffect,
 } from 'react';
 import jwt from 'jsonwebtoken';
 import { red } from '@mui/material/colors';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as moment from 'moment'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -15,7 +14,6 @@ import {
   Button,
   Grid,
   Modal,
-  Container,
   Typography,
   Card,
   Box,
@@ -27,17 +25,13 @@ import solutionfile from "!!raw-loader!../../components/VueTutorial/firstTutoria
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import Image from 'next/image'
 import {
   SandpackProvider,
   SandpackLayout,
   SandpackCodeEditor,
-  Sandpack,
   SandpackThemeProvider,
   SandpackPreview,
-  FileTabs,
   useSandpack,
-  useSandpackNavigation,
 } from "@codesandbox/sandpack-react";
 import "@codesandbox/sandpack-react/dist/index.css";
 import showNotification from '../../Lib/notification'

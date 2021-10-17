@@ -3,23 +3,14 @@ import React, {
 } from 'react';
 import Image from 'next/image'
 import jwt from 'jsonwebtoken';
-import { red } from '@mui/material/colors';
-import Link from 'next/link';
 import treePic from '../../public/angularappmodule.png'
 import { useRouter } from 'next/router';
-import * as moment from 'moment'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import BlockSharpIcon from '@mui/icons-material/BlockSharp';
 import { CopyBlock, dracula } from "react-code-blocks";
-import { Popconfirm } from 'antd';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import {
     Button,
     Grid,
-    Modal,
-    Container,
     Typography,
     Card,
     Tabs,
@@ -29,42 +20,7 @@ import {
 import maints from "!!raw-loader!../../components/AngularTutorial/maints";
 import appcomponentjs from "!!raw-loader!../../components/AngularTutorial/appcomponent";
 import appmodule from "!!raw-loader!../../components/AngularTutorial/appmodule";
-import index from "!!raw-loader!../../components/reactTutorial/info1";
-import index1 from "!!raw-loader!../../components/reactTutorial/info1app";
-import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
-import {
-    SandpackProvider,
-    SandpackLayout,
-    SandpackCodeEditor,
-    Sandpack,
-    SandpackThemeProvider,
-    SandpackPreview,
-    FileTabs,
-    useSandpack,
-    useSandpackNavigation,
-} from "@codesandbox/sandpack-react";
-import "@codesandbox/sandpack-react/dist/index.css";
-import showNotification from '../../Lib/notification'
 import { getAppCookies } from '../../Lib/utils'
-
-let backspaces = 0;
-const time = moment();
-
-const style = {
-    position: 'absolute',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '50vw',
-    height: '70vh',
-    bgcolor: 'background.paper',
-    borderRadius: '10%',
-    boxShadow: 24,
-    p: 4,
-};
 
 function a11yProps(index) {
     return {

@@ -46,17 +46,13 @@ import { CopyBlock, dracula } from "react-code-blocks";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import Image from 'next/image'
 import {
   SandpackProvider,
   SandpackLayout,
   SandpackCodeEditor,
-  Sandpack,
   SandpackThemeProvider,
   SandpackPreview,
-  FileTabs,
   useSandpack,
-  useSandpackNavigation,
 } from "@codesandbox/sandpack-react";
 import "@codesandbox/sandpack-react/dist/index.css";
 import showNotification from '../../Lib/notification'
@@ -123,8 +119,6 @@ export default function Start() {
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
-  const [writeFlag, setWriteFlag] = useState(0);
-  const [totalTries, setTotalTries] = useState(0);
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openFail, setOpenFail] = useState(false);
   const [answerShown, setAnswerShown] = useState(false);

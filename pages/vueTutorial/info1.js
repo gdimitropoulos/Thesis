@@ -1,54 +1,26 @@
 import React, {
-    useState, useEffect, useContext, useMemo,
+    useState, 
 } from 'react';
 import Image from 'next/image'
 import jwt from 'jsonwebtoken';
-import { red } from '@mui/material/colors';
-import Link from 'next/link';
 import treePic from '../../public/treefoldersapp.png'
 import { useRouter } from 'next/router';
-import * as moment from 'moment'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import BlockSharpIcon from '@mui/icons-material/BlockSharp';
 import { CopyBlock, dracula } from "react-code-blocks";
-import { Popconfirm } from 'antd';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import {
     Button,
     Grid,
-    Modal,
-    Container,
     Typography,
     Card,
     Tabs,
     Tab,
     Box,
 } from "@material-ui/core";
-import appvue from "!!raw-loader!../../components/VueTutorial/firstTutorial/appjs";
-import mainjs from "!!raw-loader!../../components/VueTutorial/firstTutorial/indexhtml";
-import testing from "!!raw-loader!../../components/VueTutorial/firstTutorial/testing";
 import index from "!!raw-loader!../../components/VueTutorial/info1";
 import index1 from "!!raw-loader!../../components/VueTutorial/info1app";
-import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
-import {
-    SandpackProvider,
-    SandpackLayout,
-    SandpackCodeEditor,
-    Sandpack,
-    SandpackThemeProvider,
-    SandpackPreview,
-    FileTabs,
-    useSandpack,
-    useSandpackNavigation,
-} from "@codesandbox/sandpack-react";
-import "@codesandbox/sandpack-react/dist/index.css";
-import showNotification from '../../Lib/notification'
 import { getAppCookies } from '../../Lib/utils'
 
-let backspaces = 0;
-const time = moment();
 
 const style = {
     position: 'absolute',
