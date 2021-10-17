@@ -30,7 +30,7 @@ import routerjs from "!!raw-loader!../../components/VueTutorial/seventhTutorial/
 import first from "!!raw-loader!../../components/VueTutorial/seventhTutorial/first";
 import second from "!!raw-loader!../../components/VueTutorial/seventhTutorial/second";
 import third from "!!raw-loader!../../components/VueTutorial/seventhTutorial/third";
-import solutionfile from "!!raw-loader!../../components/vueTutorial/seventhTutorial/solution";
+import solutionfile from "!!raw-loader!../../components/VueTutorial/seventhTutorial/solution";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import {
   SandpackProvider,
