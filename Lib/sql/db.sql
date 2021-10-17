@@ -17,7 +17,9 @@ CREATE TABLE public.users (
                               first_name text NOT NULL,
                               last_name text NOT NULL,
                               email text NOT NULL,
-                              pwd text NOT NULL
+                              pwd text NOT NULL,
+                              intro_form boolean DEFAULT false NOT NULL,
+                              finish_form boolean DEFAULT false NOT NULL
 );
 
 CREATE TABLE public.lesson (
@@ -40,7 +42,7 @@ CREATE TABLE public.lesson_taken (
 	user_id int8 NOT NULL,
 	"time" varchar(100) NOT NULL,
     time_writing varchar(100) NOT NULL,
-	anwser_shown bool NOT NULL,
+	anwser_shown boolean NOT NULL,
 	backspaces int8 NOT NULL,
     total_chars int8 NOT NULL
 

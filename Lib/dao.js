@@ -123,6 +123,52 @@ export async function insertLessonTry(lessonID,time,backspaces,total_chars) {
 }
 
 
+export async function checkTutorialFinished(tutorialName,email) {
+	let client;
+	let rows = [];
+
+	try {
+		client = await pool.connect();
+		let result = await client.query(
+			`
+			select * from users  u where u.email=$1 
+            `,
+			[email]
+		);
+		if(result.rows.length > 0){
+			console.log(result.rows)
+			let secondResult = await client.query(
+				`
+				select  distinct lt.lesson_name from lesson_taken  lt 
+						inner join lesson l  on 
+						lt.lesson_name =l.lesson_name where l.tutorial_name = $1 and lt.user_id = $2
+				`,
+				[tutorialName,result.rows[0].user_id]
+			);
+
+			if(secondResult.rows.length == 7){
+				return true
+			}else{
+				return false 
+			}
+		}else{
+			return false
+		}
+		
+		rows = result.rows;
+	}
+	catch (e) {
+		console.trace(e);
+	}
+	finally {
+		if (client) {
+			client.release();
+		}
+	}
+	return rows;
+}
+
+
 export async function getUserByEmail(email) {
 	let client;
 	let rows = [];
@@ -137,6 +183,121 @@ export async function getUserByEmail(email) {
 		);
 		
 		rows = result.rows;
+	}
+	catch (e) {
+		console.trace(e);
+	}
+	finally {
+		if (client) {
+			client.release();
+		}
+	}
+	return rows;
+}
+
+
+
+export async function checkIntroForm(email) {
+	let client;
+	let rows ;
+
+	try {
+		client = await pool.connect();
+		let result = await client.query(
+			`
+            select e.intro_form from users e where e.email=$1
+            `,
+			[email]
+		);
+		
+		rows = result.rows[0].intro_form;
+	}
+	catch (e) {
+		console.trace(e);
+	}
+	finally {
+		if (client) {
+			client.release();
+		}
+	}
+	return rows;
+}
+
+
+export async function checkFinishForm(email) {
+	let client;
+	let rows ;
+
+	try {
+		client = await pool.connect();
+		let result = await client.query(
+			`
+            select e.finish_form from users e where e.email=$1
+            `,
+			[email]
+		);
+		
+		rows = result.rows[0].finish_form;
+	}
+	catch (e) {
+		console.trace(e);
+	}
+	finally {
+		if (client) {
+			client.release();
+		}
+	}
+	return rows;
+}
+
+
+export async function updateFinishForm(email) {
+	let client;
+	let rows ;
+
+	try {
+		client = await pool.connect();
+		let result = await client.query(
+			`
+			update users
+			set finish_form = true
+			where email = $1
+			returning *
+      	`,
+			[email]
+		);
+		rows = result.rows[0];
+		
+	}
+	catch (e) {
+		console.trace(e);
+	}
+	finally {
+		if (client) {
+			client.release();
+		}
+	}
+	return rows;
+}
+
+
+export async function updateIntroForm(email) {
+	let client;
+	let rows ;
+
+	try {
+		client = await pool.connect();
+		let result = await client.query(
+			`
+			update users
+			set intro_form = true
+			where email = $1
+			returning *
+      	`,
+			[email]
+		);
+		rows = result.rows[0];
+		
 	}
 	catch (e) {
 		console.trace(e);
