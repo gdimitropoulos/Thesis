@@ -42,14 +42,13 @@ export default async function handler(req, res) {
 			});
 		}
 		const userId = await getUserByEmail(token.email)
-		console.log(userId[0].user_id);
 		const rows = await insertLessonTaken(
 			lessonName,
 			userId[0].user_id,
-			moment(timeFinishingTest[timeFinishingTest.length - 1]).diff( time, 'seconds'),
-			moment(timeFinishingTest[timeFinishingTest.length-1]).diff(timeStartingWriting[0], 'seconds'),
+			moment(timeFinishingTest[timeFinishingTest.length - 1]).diff(moment(time), 'seconds'),
+			moment(timeFinishingTest[timeFinishingTest.length - 1]).diff(moment(timeStartingWriting[0]), 'seconds'),
 			answer,
-			 backspaces,
+			backspaces,
 			totaltCharsPerTry[totaltCharsPerTry.length - 1]);
 
 		console.log(rows);

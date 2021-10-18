@@ -21,7 +21,7 @@ import {
   Card,
   Box,
 } from "@material-ui/core";
-import { validityCheck } from '../../Lib/dao';
+import { validityCheck, checkLessonTaken } from '../../Lib/dao';
 import appcomponenthtml from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/appcomponenthtml";
 import appmodule from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/appmodule";
 import appcomponentjs from "!!raw-loader!../../components/AngularTutorial/seventhTutorial/appcomponent";
@@ -60,13 +60,13 @@ import showNotification from '../../Lib/notification'
 import { getAppCookies } from '../../Lib/utils'
 
 let backspaces = 0;
-let totalCharsWritten=0;
-let writeFlag=0;
-let totalTries=0;
-const timeStartingWriting=[]
-const timeFinishingTest=[];
-const backspacesPerTry=[];
-const totaltCharsPerTry=[];
+let totalCharsWritten = 0;
+let writeFlag = 0;
+let totalTries = 0;
+const timeStartingWriting = []
+const timeFinishingTest = [];
+const backspacesPerTry = [];
+const totaltCharsPerTry = [];
 const time = moment();
 
 const style = {
@@ -77,7 +77,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '50vw',
+  width: '55vw',
   height: '70vh',
   bgcolor: 'background.paper',
   borderRadius: '10%',
@@ -85,36 +85,36 @@ const style = {
   p: 4,
 };
 
-  function a11yProps(index) {
-    return {
-      id: `vertical-tab-${index}`,
-      'aria-controls': `vertical-tabpanel-${index}`,
-    };
-  }
-  
-  
-  function TabPanel(props) {
-    const { children, value, index, ...other } = props;
-  
-    return (
-      <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
-      >
-        {value === index && (
-          <Box sx={{ p: 3 }}>
-            <Typography>{children}</Typography>
-          </Box>
-        )}
-      </div>
-    );
-  }
+function a11yProps(index) {
+  return {
+    id: `vertical-tab-${index}`,
+    'aria-controls': `vertical-tabpanel-${index}`,
+  };
+}
 
 
-export default function Start() {
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+
+export default function Start({ completed }) {
   const router = useRouter();
   const [value, setValue] = useState(0);
   const handleTabChange = (event, newValue) => {
@@ -135,14 +135,14 @@ export default function Start() {
     statuses = [];
   }
 
-  const eventHandler = (event)=>{
-      
+  const eventHandler = (event) => {
+
     if (event.path[0].className == 'cm-content') {
-      if( (event.which > 46 && event.which<91) || ( event.which>95 && event.which<112) || (event.which>183 && event.which<230) || (event.which>151 && event.which<165 )){
+      if ((event.which > 46 && event.which < 91) || (event.which > 95 && event.which < 112) || (event.which > 183 && event.which < 230) || (event.which > 151 && event.which < 165)) {
         totalCharsWritten++;
         console.log('im here');
-        if(writeFlag == 0){
-          writeFlag=1;
+        if (writeFlag == 0) {
+          writeFlag = 1;
           timeStartingWriting.push(moment());
         }
       }
@@ -151,17 +151,23 @@ export default function Start() {
       }
     }
 
-}
+  }
 
   const handlecloseSolution = async () => {
     setshowSolution(false)
+  }
+  const goBack = () => {
+    router.push('/angular/sixth')
+  }
+  const goNext = () => {
+    router.push('/user/dashboard')
   }
   const handleCloseSuccess = async () => {
     const bodyData = {
       time,
       backspaces: backspaces,
       lessonName: 'a7',
-      tutorailName:'react',
+      tutorailName: 'react',
       answer: answerShown,
       totalTries,
       totaltCharsPerTry,
@@ -223,29 +229,30 @@ export default function Start() {
 
       console.log("im listening")
       return unsubscribe;
-    }, [listen,dispatch,setActiveFile]);
+    }, [listen, dispatch, setActiveFile]);
 
-   
+
 
     useEffect(() => {
-      window.addEventListener('keydown',eventHandler);
-      return () =>  window.removeEventListener('keydown',eventHandler);
+      window.addEventListener('keydown', eventHandler);
+      return () => window.removeEventListener('keydown', eventHandler);
 
-    },[]);
+    }, []);
 
-    const runTests = () => { 
-      writeFlag=0
+    const runTests = () => {
+      writeFlag = 0
       backspacesPerTry.push(backspaces);
       totaltCharsPerTry.push(totalCharsWritten);
       totalTries++;
       timeFinishingTest.push(moment());
-      dispatch({ type: 'run-all-tests' }); };
+      dispatch({ type: 'run-all-tests' });
+    };
 
 
 
     return (
       <div style={{ width: '100%', height: '40px' }}>
-        <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }} onClick={runTests} > Run Tests  </Button>;
+        <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }} onClick={runTests} > ελεγχος  </Button>;
       </div>
     );
   };
@@ -255,75 +262,75 @@ export default function Start() {
 
   return (
 
-   
+
     <div style={{ height: '60%' }}>
-    <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', height: '80%', marginBottom: '1%', marginTop: '5%', paddingTop: '3%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
-      <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
-        <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
-          <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
-            <div style={{ marginBottom: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
-            <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}> Angular js RouterLinks</Typography>
-            <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
-              Θα ολοκληρώσουμε αυτο το εισαγωγικό σύνολο μαθημάτων στην Angular js κάνοντας μια αναφορά και
-              στα <span style={{ fontWeight: 'bold' }}> routerLinks </span> ώστε να συμπληρώσουμε τις γνώσεις σας για το routing της Angular!
-            </Typography>
+      <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', height: '80%', marginBottom: '1%', marginTop: '5%', paddingTop: '3%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
+        <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
+          <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
+            <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
+              <div style={{ marginBottom: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
+              <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}> Angular js RouterLinks</Typography>
+              <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
+                Θα ολοκληρώσουμε αυτο το εισαγωγικό σύνολο μαθημάτων στην Angular js κάνοντας μια αναφορά και
+                στα <span style={{ fontWeight: 'bold' }}> routerLinks </span> ώστε να συμπληρώσουμε τις γνώσεις σας για το routing της Angular!
+              </Typography>
 
-            <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-              Ο τρόπος για να χρησιμοποιήσουμε τα route  paths που φτιάξατε στο προηγούμενο μάθημα είναι μέσω των
-              <span style={{ backgroundColor: '#f4f4f4' }}> { `<a routerLink = "/"></a>`}</span>. Στα
-              <span style={{ backgroundColor: '#f4f4f4' }}> {`<a routerLink = "/"></a>`}</span> tags μπορούμε να θέσουμε  την ιδιότητα
-              <span style={{ backgroundColor: '#f4f4f4' }}> routerLink </span> σε κάποιο url  για να υποδείξουμε σε ποιό path θα θέλαμε να μεταβούμε. Ας δούμε ένα παράδειγμα:
-            </Typography>
-            <div>
-              <CopyBlock
-                text={`<a routerLink = "about"> About</a>`}
-                language="html"
-                showLineNumbers={false}
-                theme={dracula}
-                codeBlock
-              />
-            </div>
-            <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-              Στο παράδειγμα  αυτό αν κάποιος πατήσει στο σύνδεσμο, θα πλοηγηθεί στην σελίδα που έχει συνδεθεί με το url /about.
-            </Typography>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Ο τρόπος για να χρησιμοποιήσουμε τα route  paths που φτιάξατε στο προηγούμενο μάθημα είναι μέσω των
+                <span style={{ backgroundColor: '#f4f4f4' }}> {`<a routerLink = "/"></a>`}</span>. Στα
+                <span style={{ backgroundColor: '#f4f4f4' }}> {`<a routerLink = "/"></a>`}</span> tags μπορούμε να θέσουμε  την ιδιότητα
+                <span style={{ backgroundColor: '#f4f4f4' }}> routerLink </span> σε κάποιο url  για να υποδείξουμε σε ποιό path θα θέλαμε να μεταβούμε. Ας δούμε ένα παράδειγμα:
+              </Typography>
+              <div>
+                <CopyBlock
+                  text={`<a routerLink = "about"> About</a>`}
+                  language="html"
+                  showLineNumbers={false}
+                  theme={dracula}
+                  codeBlock
+                />
+              </div>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Στο παράδειγμα  αυτό αν κάποιος πατήσει στο σύνδεσμο, θα πλοηγηθεί στην σελίδα που έχει συνδεθεί με το url /about.
+              </Typography>
 
 
-            <div style={{ marginTop: '4%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
-            <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+              <div style={{ marginTop: '4%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
 
-              Έχουμε αρχικοποιήσει ένα απλό πρότζεκτ. Πάρτε όσο χρόνο χρειάζεστε για να μελετήσετε τις δομές των αρχείων.
-            </Typography>
-            <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-              Σε αυτό το μάθημα πρέπει να προσθέσετε τα κατάλληλα <span style={{ fontWeight: 'bold' }}> {`<a router-links></a>`} </span>
-               έτσι ώστε :
-            </Typography>
-            <ul>
-              <li>
-                <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                  Στο home.component.html θα πρέπει να προσθεθούν τα links ώστε κάθε
-                  φορά που πατάει κάποιος τον σύνδεσμο να μεταφέρεται στο target property που περιέχει ο πίνακας messages
-                </Typography>
-              </li>
-              <li>
-                <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                  Στo  first.component.html να προστεθεί link που σε μεταφέρει στην αρχικη σελίδα (path = '')
-                </Typography>
-              </li>
-              <li>
-                <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                  Στo  second.component.html να προστεθεί link που σε μεταφέρει στην αρχικη σελίδα (path = '')
-                </Typography>
-              </li>
-              <li>
-                <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                  ΣTo third.component.html να προστεθεί link που σε μεταφέρει στην αρχικη σελίδα (path = '')
-                </Typography>
-              </li>
-            </ul>
-            <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-              <span style={{ fontWeight: 'bold' }}> Σημείωση: </span> πρέπει να τροποποιήσετε τα αρχεία home.component.html, first.component.html,
+                Έχουμε αρχικοποιήσει ένα απλό πρότζεκτ. Πάρτε όσο χρόνο χρειάζεστε για να μελετήσετε τις δομές των αρχείων.
+              </Typography>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Σε αυτό το μάθημα πρέπει να προσθέσετε τα κατάλληλα <span style={{ fontWeight: 'bold' }}> {`<a router-links></a>`} </span>
+                έτσι ώστε :
+              </Typography>
+              <ul>
+                <li>
+                  <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                    Στο home.component.html θα πρέπει να προσθεθούν τα links ώστε κάθε
+                    φορά που πατάει κάποιος τον σύνδεσμο να μεταφέρεται στο target property που περιέχει ο πίνακας messages
+                  </Typography>
+                </li>
+                <li>
+                  <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                    Στo  first.component.html να προστεθεί link που σε μεταφέρει στην αρχικη σελίδα (path = '')
+                  </Typography>
+                </li>
+                <li>
+                  <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                    Στo  second.component.html να προστεθεί link που σε μεταφέρει στην αρχικη σελίδα (path = '')
+                  </Typography>
+                </li>
+                <li>
+                  <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                    ΣTo third.component.html να προστεθεί link που σε μεταφέρει στην αρχικη σελίδα (path = '')
+                  </Typography>
+                </li>
+              </ul>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                <span style={{ fontWeight: 'bold' }}> Σημείωση: </span> πρέπει να τροποποιήσετε τα αρχεία home.component.html, first.component.html,
                 second.component.html και third.component.html.
-            </Typography>
+              </Typography>
             </Card>
           </Grid>
 
@@ -331,54 +338,54 @@ export default function Start() {
             <Card style={{ padding: "1%", width: '100%' }}>
               <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Angular js Tutorial  </Typography>
               <SandpackProvider template="angular" customSetup={{
-                 files: {
-                  "/src/app/components/home/home.component.ts": {code:  homecomponent, hidden : false},
-                  "/src/app/components/home/home.component.html": {code:  homecomponenthtml, hidden : false},
-                  "/src/app/components/home/home.component.css": {code:  appcss, hidden : true},
-                  "/src/app/components/first/first.component.ts": {code:  firstcomponent, hidden : false},
-                  "/src/app/components/first/first.component.html": {code:  firstcomponenthtml, hidden : false},
-                  "/src/app/components/first/first.component.css": {code:  appcss, hidden : true},
-                  "/src/app/components/second/second.component.ts": {code:  secondcomponent, hidden : false},
-                  "/src/app/components/second/second.component.html": {code:  secondcomponenthtml, hidden : false},
-                  "/src/app/components/second/second.component.css": {code:  appcss, hidden : true},
-                  "/src/app/components/third/third.component.ts": {code:  thirdcomponent, hidden : false},
-                  "/src/app/components/third/third.component.html": {code:  thirdcomponenthtml, hidden : false},
-                  "/src/app/components/third/third.component.css": {code:  appcss, hidden : true},
-                  "/src/app/app.component.css": {code:  appcss, hidden : true},
-                  "/src/app/services/news.service.ts": {code:  newservice, hidden : false},
+                files: {
+                  "/src/app/components/home/home.component.ts": { code: homecomponent, hidden: false },
+                  "/src/app/components/home/home.component.html": { code: homecomponenthtml, hidden: false },
+                  "/src/app/components/home/home.component.css": { code: appcss, hidden: true },
+                  "/src/app/components/first/first.component.ts": { code: firstcomponent, hidden: false },
+                  "/src/app/components/first/first.component.html": { code: firstcomponenthtml, hidden: false },
+                  "/src/app/components/first/first.component.css": { code: appcss, hidden: true },
+                  "/src/app/components/second/second.component.ts": { code: secondcomponent, hidden: false },
+                  "/src/app/components/second/second.component.html": { code: secondcomponenthtml, hidden: false },
+                  "/src/app/components/second/second.component.css": { code: appcss, hidden: true },
+                  "/src/app/components/third/third.component.ts": { code: thirdcomponent, hidden: false },
+                  "/src/app/components/third/third.component.html": { code: thirdcomponenthtml, hidden: false },
+                  "/src/app/components/third/third.component.css": { code: appcss, hidden: true },
+                  "/src/app/app.component.css": { code: appcss, hidden: true },
+                  "/src/app/services/news.service.ts": { code: newservice, hidden: false },
                   "/src/app/app.component.spec.ts": {
                     code: testing,
                     hidden: true
                   },
-                 
-                 "/src/app/components/second/second.component.spec.ts": {
+
+                  "/src/app/components/second/second.component.spec.ts": {
                     code: testing1,
                     hidden: true
                   },
-                  
-                  "/src/app/app.component.html": {
-                      code: appcomponenthtml,
-                      hidden: false,
-                      active: true
-                    },
-                    "/src/app/app.component.ts": {code: appcomponentjs, hidden: false},
 
-                  "/src/app/app.module.ts": {code: appmodule, hidden: false},
+                  "/src/app/app.component.html": {
+                    code: appcomponenthtml,
+                    hidden: false,
+                    active: true
+                  },
+                  "/src/app/app.component.ts": { code: appcomponentjs, hidden: false },
+
+                  "/src/app/app.module.ts": { code: appmodule, hidden: false },
                   "/src/app/components/third/third.component.spec.ts": {
                     code: testing2,
                     hidden: true
                   },
-                                   },
+                },
                 dependencies: {
                   "babel-runtime": "latest",
                   "@angular/router": "latest",
                 },
               }} entry>
                 <SandpackThemeProvider  >
-                  <SimpleCodeViewer />
                   <SandpackLayout theme="codesandbox-dark">
-                    <SandpackCodeEditor showLineNumbers={true} showTabs="true" customStyle={{ marginTop: '10px', height: '500px', width: '400px' }}    > </SandpackCodeEditor>
+                    <SandpackCodeEditor showLineNumbers={true} showTabs="true" customStyle={{ marginTop: '10px', height: '490px', width: '400px' }}    > </SandpackCodeEditor>
                     <SandpackPreview viewportSize={{ width: 500, height: 500 }} />
+                    <SimpleCodeViewer />
                   </SandpackLayout>
                 </SandpackThemeProvider>
               </SandpackProvider>
@@ -430,8 +437,21 @@ export default function Start() {
 
 
             </Card>
+          </Grid >
+
+          <Grid item xs={completed ? 6 : 8}></Grid>
+          <Grid item xs={2} key="fot">
+            <Button variant="contained" onClick={goBack} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+              ΠΙΣΩ
+            </Button>
           </Grid>
-          <Grid item xs={10}></Grid>
+          {completed && (
+            <Grid item xs={2} key="fot">
+              <Button variant="contained" onClick={goNext} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+                τελος
+              </Button>
+            </Grid>
+          )}
           <Grid item xs={2} key="fot">
             <Popconfirm
               title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}
@@ -441,7 +461,7 @@ export default function Start() {
 
             >
 
-              <Button variant="contained" color="secondary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+              <Button variant="contained" style={{ backgroundColor: '#19E619', minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
                 λυση
               </Button>
             </Popconfirm>
@@ -471,10 +491,10 @@ export default function Start() {
                           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                             <Tabs value={value} onChange={handleTabChange} aria-label="basic tabs example" indicatorColor="primary"
                               textColor="primary">
-                              <Tab label="First.js" {...a11yProps(0)} />
-                              <Tab label="Second.js" {...a11yProps(1)} />
-                              <Tab label="Third.js" {...a11yProps(2)} />
-                              <Tab label="Home.js" {...a11yProps(3)} />
+                              <Tab label="home.component.html" {...a11yProps(0)} />
+                              <Tab label="first.component.html" {...a11yProps(1)} />
+                              <Tab label="second.component.html" {...a11yProps(2)} />
+                              <Tab label="first.component.html" {...a11yProps(3)} />
                             </Tabs>
                           </Box>
                           <TabPanel value={value} index={0}>
@@ -524,12 +544,15 @@ export async function getServerSideProps(context) {
       token = token.replace('Bearer ', '');
       token = jwt.verify(token, KEY);
 
-      const bool = await validityCheck('a6',token.email);
-      if(bool){
+      const bool = await validityCheck('a6', token.email);
+      if (bool) {
+        const completed = await checkLessonTaken(token.email, 'a7')
         return {
-          props: {},
+          props: {
+            completed
+          },
         };
-      }else{
+      } else {
         return {
           redirect: {
             destination: '/angular/sixth',

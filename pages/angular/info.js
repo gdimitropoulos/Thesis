@@ -25,6 +25,9 @@ export default function Start() {
     const router = useRouter();
     const [openSuccess, setOpenSuccess] = useState(false);
 
+    const goBack = () => {
+        router.push('/user/dashboard')
+    }
     const Move = () => {
         router.push('/angular/info1')
     }
@@ -52,8 +55,8 @@ export default function Start() {
                             </Typography>
                             <ul>
                                 <li>  <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
-                                    O πιο δημοφιλής τρόπος αρχικοποίησης ενός Angular προτζεκτ είναι μέσω 
-                                    του  <span style={{ fontWeight:'bold' }}>@angular/cli</span>. Για να καταβάσουμε το cli
+                                    O πιο δημοφιλής τρόπος αρχικοποίησης ενός Angular προτζεκτ είναι μέσω
+                                    του  <span style={{ fontWeight: 'bold' }}>@angular/cli</span>. Για να καταβάσουμε το cli
                                     χρησιμοποιούμε την εντολή <span style={{ backgroundColor: '#f4f4f4' }}>npm install -g @angular/cli</span>. Για
                                     να αρχικοποιήσουμε το πρότζεκτ μας ξεκινάμε με την εντολή  <span style={{ backgroundColor: '#f4f4f4' }}>ng ng new my-app </span>. Έπειτα
                                     απο την ολοκλήρωση της αρχικοποίησης θα πρέπει η μορφή του να είναι η εξής:
@@ -75,7 +78,7 @@ export default function Start() {
                                 </li>
                             </ul>
                             <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
-                                Πολλά απο αυτά τα αρχεία που βλέπετε είναι για testing και για διάφορα άλλα configurations με τα οποία δεν θα 
+                                Πολλά απο αυτά τα αρχεία που βλέπετε είναι για testing και για διάφορα άλλα configurations με τα οποία δεν θα
                                 ασχοληθούμε σε αυτό το μάθημα. Αν θέλετε να βρείτε περισσότερες λεπομέρειες μπορείτε να τις βρείτε <a
                                     className="App-link"
                                     href="https://angular.io/docs"
@@ -107,7 +110,12 @@ export default function Start() {
                             </div>
                         </Card>
                     </Grid>
-                    <Grid item xs={10}></Grid>
+                    <Grid item xs={8}></Grid>
+                    <Grid item xs={2} key="fot">
+                        <Button variant="contained" onClick={goBack} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+                            ΠΑΜΕ ΠΙΣΩ
+                        </Button>
+                    </Grid>
                     <Grid item xs={2} key="fot">
 
                         <Button variant="contained" onClick={Move} color="secondary" style={{ marginTop: '5%', marginBottom: '5%' }}>

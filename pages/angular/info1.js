@@ -57,6 +57,9 @@ export default function Info1() {
         setValue(newValue);
     };
 
+    const goBack = () =>{
+        router.push('/angular/info')
+    }
     const Move = () => {
         router.push('/angular/start')
     }
@@ -80,23 +83,23 @@ export default function Info1() {
                                 Tο <span style={{ fontStyle: 'italic' }}>@NgModule</span> γίνεται import από την <span style={{ fontStyle: 'italic' }}>@angular/core </span> και περιέχει τις ακόλουθες ιδιότητες:
                                 <ul>
                                     <li>
-                                    <span style={{ fontWeight: 'bold' }}>Declarations</span>: Στα declarations, δηλώνουμε τα  components.
+                                        <span style={{ fontWeight: 'bold' }}>Declarations</span>: Στα declarations, δηλώνουμε τα  components.
                                         To AppComponent είναι το default component που δημιουργείται σε κάθε angular πρότζεκτ.
                                     </li>
                                     <li>
-                                    <span style={{ fontWeight: 'bold' }}>Imports</span> − Εδώ θα υπάρχουν τα  modules που χρειαζόμαστε.
+                                        <span style={{ fontWeight: 'bold' }}>Imports</span> − Εδώ θα υπάρχουν τα  modules που χρειαζόμαστε.
                                         Για αρχή,έχουμε το default  BrowserModule που γίνεται import από το
                                         @angular/platform-browser.
                                     </li>
                                     <li>
-                                    <span style={{ fontWeight: 'bold' }}>Providers</span> − Εδώ θα κάνουμε δήλωσε των services .
+                                        <span style={{ fontWeight: 'bold' }}>Providers</span> − Εδώ θα κάνουμε δήλωσε των services .
                                         Θα μιλήσουμε για αυτά αργότερα στο tutorial.
                                     </li>
                                     <li>
-                                    <span style={{ fontWeight: 'bold' }}>Bootstrap</span> − Εδώ κάνουμε δήλωση ενός default  component (π.χ AppComponent )  .
+                                        <span style={{ fontWeight: 'bold' }}>Bootstrap</span> − Εδώ κάνουμε δήλωση ενός default  component (π.χ AppComponent )  .
                                     </li>
                                     <li>
-                                    <span style={{ fontWeight: 'bold' }}>app.component.css</span> − Εδώ κάνουμε import το αρχείο με την css που θα μπεί στο app component.
+                                        <span style={{ fontWeight: 'bold' }}>app.component.css</span> − Εδώ κάνουμε import το αρχείο με την css που θα μπεί στο app component.
                                     </li>
                                 </ul>
 
@@ -125,7 +128,7 @@ export default function Info1() {
                                 χρειάζεται σε αυτό το στάδιο!
 
                             </Typography>
-                
+
 
                             <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }} >
                                 Όσον αφορά τα υπόλοιπα αρχεία, ο φάκελος assets χρησιμοποιείται  για να μπορούμε
@@ -197,7 +200,14 @@ export default function Info1() {
                             </div>
                         </Card>
                     </Grid>
-                    <Grid item xs={10}></Grid>
+                    <Grid item xs={8}></Grid>
+                    <Grid item xs={2} key="fot">
+
+                        <Button variant="contained" onClick={goBack} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+                            ΠΑΜΕ ΠΙΣΩ
+                        </Button>
+                    </Grid>
+
                     <Grid item xs={2} key="fot">
 
                         <Button variant="contained" onClick={Move} color="secondary" style={{ marginTop: '5%', marginBottom: '5%' }}>

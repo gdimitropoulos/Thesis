@@ -87,7 +87,9 @@ export default function Start() {
     statuses = [];
   }
 
-  
+  const goBack = ()=>{
+    router.push('/react/second')
+  }
   const eventHandler = (event)=>{
       
     if (event.path[0].className == 'cm-content') {
@@ -443,7 +445,14 @@ export default function Start() {
 
             </Card>
           </Grid>
-          <Grid item xs={10}></Grid>
+          
+          <Grid item xs={8}></Grid>
+          <Grid item xs={2} key="fot">
+            <Button variant="contained" onClick={goBack} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+              ΠΑΜΕ ΠΙΣΩ
+            </Button>
+          </Grid>
+
           <Grid item xs={2} key="fot">
             <Popconfirm
               title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}

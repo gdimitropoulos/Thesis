@@ -41,6 +41,9 @@ export default function Start() {
     const router = useRouter();
     const [openSuccess, setOpenSuccess] = useState(false);
 
+    const goBack = () =>{
+        router.push('/user/dashboard')
+    }
     const Move = ()=>{
         router.push('/react/info1')
     }
@@ -99,7 +102,7 @@ export default function Start() {
 
                     <Grid item md={12} lg={8}>
                         <Card style={{ display:'flex', flexDirection: 'column', justifyContent:'center', height: '75vh', padding: "1%", width: '100%' }}>
-                            <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Vue js Tutorial  </Typography>
+                            <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   React js Tutorial  </Typography>
                             <div style={{ overflow: "auto", flex: 1, maxHeight:'75vh' }}>
                                 <CopyBlock
                                     text={index}
@@ -111,7 +114,14 @@ export default function Start() {
                             </div>
                         </Card>
                     </Grid>
-                    <Grid item xs={10}></Grid>
+   
+                    <Grid item xs={8}></Grid>
+                    <Grid item xs={2} key="fot">
+                        <Button variant="contained" onClick={goBack} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+                            ΠΑΜΕ ΠΙΣΩ
+                        </Button>
+                    </Grid>
+
                     <Grid item xs={2} key="fot">
 
                             <Button variant="contained" onClick={Move} color="secondary" style={{ marginTop: '5%' , marginBottom: '5%' }}>

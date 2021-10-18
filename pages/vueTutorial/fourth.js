@@ -82,6 +82,9 @@ export default function VueFourth() {
     statuses = [];
   }
   
+  const goBack = ()=>{
+    router.push('/vueTutorial/third')
+  }
   const eventHandler = (event)=>{
       
     if (event.path[0].className == 'cm-content') {
@@ -108,7 +111,7 @@ export default function VueFourth() {
     const bodyData = {
       time,
       backspaces: backspaces,
-      lessonName: 'a4',
+      lessonName: 'v4',
       tutorailName:'vue',
       answer: answerShown,
       totalTries,
@@ -350,9 +353,14 @@ export default function VueFourth() {
 
             </Card>
           </Grid>
-          <Grid item xs={10}>
-
+          
+          <Grid item xs={8}></Grid>
+          <Grid item xs={2} key="fot">
+            <Button variant="contained" onClick={goBack} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+              ΠΑΜΕ ΠΙΣΩ
+            </Button>
           </Grid>
+
           <Grid item xs={2} key="fot">
             <Popconfirm
               title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}

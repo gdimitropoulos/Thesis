@@ -1,7 +1,7 @@
 /* eslint-disable  react/no-unescaped-entities*/
 
 import React, {
-  useState, useEffect, 
+  useState, useEffect,
 } from 'react';
 import jwt from 'jsonwebtoken';
 import { red } from '@mui/material/colors';
@@ -39,13 +39,13 @@ import showNotification from '../../Lib/notification'
 import { getAppCookies } from '../../Lib/utils'
 
 let backspaces = 0;
-let totalCharsWritten=0;
-let writeFlag=0;
-let totalTries=0;
-const timeStartingWriting=[]
-const timeFinishingTest=[];
-const backspacesPerTry=[];
-const totaltCharsPerTry=[];
+let totalCharsWritten = 0;
+let writeFlag = 0;
+let totalTries = 0;
+const timeStartingWriting = []
+const timeFinishingTest = [];
+const backspacesPerTry = [];
+const totaltCharsPerTry = [];
 const time = moment();
 
 const style = {
@@ -81,14 +81,17 @@ export default function Start() {
     statuses = [];
   }
 
-  const eventHandler = (event)=>{
-      
+  const goBack = () =>{
+    router.push('/react/info1')
+  }
+  const eventHandler = (event) => {
+
     if (event.path[0].className == 'cm-content') {
-      if( (event.which > 46 && event.which<91) || ( event.which>95 && event.which<112) || (event.which>183 && event.which<230) || (event.which>151 && event.which<165 )){
+      if ((event.which > 46 && event.which < 91) || (event.which > 95 && event.which < 112) || (event.which > 183 && event.which < 230) || (event.which > 151 && event.which < 165)) {
         totalCharsWritten++;
         console.log('im here');
-        if(writeFlag == 0){
-          writeFlag=1;
+        if (writeFlag == 0) {
+          writeFlag = 1;
           timeStartingWriting.push(moment());
         }
       }
@@ -97,17 +100,17 @@ export default function Start() {
       }
     }
 
-}
+  }
 
   const handlecloseSolution = async () => {
     setshowSolution(false)
   }
   const handleCloseSuccess = async () => {
-      const bodyData = {
+    const bodyData = {
       time,
       backspaces: backspaces,
       lessonName: 'r1',
-      tutorailName:'react',
+      tutorailName: 'react',
       answer: answerShown,
       totalTries,
       totaltCharsPerTry,
@@ -179,23 +182,24 @@ export default function Start() {
 
       console.log("im listening")
       return unsubscribe;
-    }, [listen,dispatch,setActiveFile]);
+    }, [listen, dispatch, setActiveFile]);
 
-   
+
 
     useEffect(() => {
-      window.addEventListener('keydown',eventHandler);
-      return () =>  window.removeEventListener('keydown',eventHandler);
+      window.addEventListener('keydown', eventHandler);
+      return () => window.removeEventListener('keydown', eventHandler);
 
-    },[]);
+    }, []);
 
-    const runTests = () => { 
-      writeFlag=0
+    const runTests = () => {
+      writeFlag = 0
       backspacesPerTry.push(backspaces);
       totaltCharsPerTry.push(totalCharsWritten);
       totalTries++;
       timeFinishingTest.push(moment());
-      dispatch({ type: 'run-all-tests' }); };
+      dispatch({ type: 'run-all-tests' });
+    };
 
     const codee = files[activePath].code;
 
@@ -339,7 +343,14 @@ export default function Start() {
 
             </Card>
           </Grid>
-          <Grid item xs={10}></Grid>
+
+          <Grid item xs={8}></Grid>
+          <Grid item xs={2} key="fot">
+            <Button variant="contained" onClick={goBack} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+              ΠΑΜΕ ΠΙΣΩ
+            </Button>
+          </Grid>
+
           <Grid item xs={2} key="fot">
             <Popconfirm
               title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}

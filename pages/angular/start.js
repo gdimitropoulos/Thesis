@@ -37,6 +37,7 @@ import React, {
     useSandpack,
   } from "@codesandbox/sandpack-react";
   import "@codesandbox/sandpack-react/dist/index.css";
+  import { checkLessonTaken } from '../../Lib/dao';
   import showNotification from '../../Lib/notification'
   import { getAppCookies } from '../../Lib/utils'
  
@@ -66,7 +67,7 @@ const time = moment();
     p: 4,
   };
   
-  export default function Start() {
+  export default function Start({completed}) {
     const router = useRouter();
     const [openSuccess, setOpenSuccess] = useState(false);
     const [openFail, setOpenFail] = useState(false);
@@ -145,7 +146,12 @@ const time = moment();
     const handleCloseFail = () => setOpenFail(false);
     const showSolutionModal = () => { setshowSolution(true); setAnswerShown(true) }
   
-  
+  const goBack = ()=>{
+     router.push('/angular/info1')
+  }
+  const goNext = ()=>{
+    router.push('/angular/second')
+ }
   
     const SimpleCodeViewer = () => {
       const { sandpack, dispatch, listen } = useSandpack();
@@ -193,7 +199,7 @@ const time = moment();
   
       return (
         <div style={{ width: '100%', height: '40px' }}>
-          <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }} onClick={runTests} > Run Tests  </Button>;
+          <Button variant="contained" color="primary" style={{ background: '6495ED' ,height: '40px', width: "100%",fontWeight: 'bold', textAlign: 'center' }} onClick={runTests} > ελεγχοσ </Button>;
         </div>
       );
     };
@@ -260,10 +266,10 @@ const time = moment();
                   },
                 }} entry>
                   <SandpackThemeProvider  >
-                    <SimpleCodeViewer />
                     <SandpackLayout theme="codesandbox-dark">
-                      <SandpackCodeEditor showLineNumbers={true} showTabs="true" customStyle={{ marginTop: '10px', height: '500px', width: '400px' }}    > </SandpackCodeEditor>
+                      <SandpackCodeEditor showLineNumbers={true} showTabs="true" customStyle={{ marginTop: '10px', height: '490px', width: '400px' }}    > </SandpackCodeEditor>
                       <SandpackPreview viewportSize={{ width: 500, height: 500 }} />
+                      <SimpleCodeViewer />
                     </SandpackLayout>
                   </SandpackThemeProvider>
                 </SandpackProvider>
@@ -321,7 +327,22 @@ const time = moment();
   
               </Card>
             </Grid>
-            <Grid item xs={10}></Grid>
+            <Grid item xs={completed?6:8}></Grid>
+            <Grid item xs={2} key="fot">
+            
+  
+                <Button variant="contained" onClick={goBack} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+                   ΠΙΣΩ
+                </Button>
+              </Grid>
+              { completed && (<Grid item xs={2} key="fot">
+            
+  
+            <Button variant="contained" onClick={goNext} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+               ΕΠΟΜΕΝΟ
+            </Button>
+          </Grid>)}
+              
             <Grid item xs={2} key="fot">
               <Popconfirm
                 title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}
@@ -331,7 +352,7 @@ const time = moment();
   
               >
   
-                <Button variant="contained" color="secondary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+                <Button variant="contained"  style={{ backgroundColor:'#19E619', minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
                   λυση
                 </Button>
               </Popconfirm>
@@ -382,10 +403,13 @@ const time = moment();
       if (token) {
         token = token.replace('Bearer ', '');
         token = jwt.verify(token, KEY);
-  
+        const completed= await checkLessonTaken(token.email,'a1')
+        console.log(completed)
   
         return {
-          props: {},
+          props: {
+            completed
+          },
         };
   
       }

@@ -309,3 +309,48 @@ export async function updateIntroForm(email) {
 	}
 	return rows;
 }
+
+export async function checkLessonTaken(email,lessonName) {
+	let client;
+	let rows = [];
+
+	try {
+		client = await pool.connect();
+		let result = await client.query(
+			`
+			select * from users  u where u.email=$1 
+            `,
+			[email]
+		);
+		if(result.rows.length > 0){
+			console.log(result.rows)
+			let secondResult = await client.query(
+				`
+				select  distinct lt.lesson_name from lesson_taken  lt 
+						inner join lesson l  on 
+						lt.lesson_name =l.lesson_name where l.lesson_name = $1 and lt.user_id = $2
+				`,
+				[lessonName,result.rows[0].user_id]
+			);
+
+			if(secondResult.rows.length >= 1){
+				return true
+			}else{
+				return false 
+			}
+		}else{
+			return false
+		}
+		
+		rows = result.rows;
+	}
+	catch (e) {
+		console.trace(e);
+	}
+	finally {
+		if (client) {
+			client.release();
+		}
+	}
+	return rows;
+}

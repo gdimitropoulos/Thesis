@@ -92,6 +92,10 @@ export default function Start() {
     }
     statuses = [];
   }
+
+  const goBack = ()=>{
+    router.push('/vueTutorial/fifth')
+  }
   
   const eventHandler = (event)=>{
       
@@ -119,7 +123,7 @@ export default function Start() {
     const bodyData = {
       time,
       backspaces: backspaces,
-      lessonName: 'a6',
+      lessonName: 'v6',
       tutorailName:'vue',
       answer: answerShown,
       totalTries,
@@ -440,9 +444,14 @@ export default function Start() {
 
             </Card>
           </Grid>
-          <Grid item xs={10}>
-
+          
+          <Grid item xs={8}></Grid>
+          <Grid item xs={2} key="fot">
+            <Button variant="contained" onClick={goBack} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+              ΠΑΜΕ ΠΙΣΩ
+            </Button>
           </Grid>
+
           <Grid item xs={2} key="fot">
             <Popconfirm
               title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}

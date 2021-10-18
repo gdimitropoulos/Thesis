@@ -76,6 +76,9 @@ export default function Info1() {
         setValue(newValue);
     };
 
+    const goBack = ()=>{
+        router.push('/react/info')
+    }
     const Move = () => {
         router.push('/react/start')
     }
@@ -193,7 +196,14 @@ export default function Info1() {
                             </div>
                         </Card>
                     </Grid>
-                    <Grid item xs={10}></Grid>
+                      
+                    <Grid item xs={8}></Grid>
+                    <Grid item xs={2} key="fot">
+                        <Button variant="contained" onClick={goBack} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+                            ΠΑΜΕ ΠΙΣΩ
+                        </Button>
+                    </Grid>
+
                     <Grid item xs={2} key="fot">
 
                         <Button variant="contained" onClick={Move} color="secondary" style={{ marginTop: '5%', marginBottom: '5%' }}>

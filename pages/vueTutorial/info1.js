@@ -1,5 +1,5 @@
 import React, {
-    useState, 
+    useState,
 } from 'react';
 import Image from 'next/image'
 import jwt from 'jsonwebtoken';
@@ -73,6 +73,9 @@ export default function Info1() {
         setValue(newValue);
     };
 
+    const goBack = () => {
+        router.push('/vueTutorial/info')
+    }
     const Move = () => {
         router.push('/vueTutorial/start')
     }
@@ -116,28 +119,28 @@ export default function Info1() {
                             </Typography>
                             <ul>
                                 <li>
-                                <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }} >
-                              {`To πρώτο  που παρατηρεί κάνεις είναι η δομή   <template> , που αποτελεί το πρώτο κομμάτι του αρχείου.
+                                    <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }} >
+                                        {`To πρώτο  που παρατηρεί κάνεις είναι η δομή   <template> , που αποτελεί το πρώτο κομμάτι του αρχείου.
                                 H δομή αυτή, εξυπηρετεί τον ίδιο ρόλο με την html δίνοντας μας πολλές δυνατότητες όσον αφορά την δυναμικότητα και 
                                 την ευελιξία που μπορούμε να έχουμε στον κώδικα μας.`}
-                            </Typography>
+                                    </Typography>
                                 </li>
                                 <li>
-                                <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }} >
-                              {`Έπειτα ακολουθεί η <script> δομή στην οποία μέσω του συντακτικού της Vue μπορούμε να διαχειριζόμαστε δεδομένα, components κ.ά.`}
-                            </Typography>
+                                    <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }} >
+                                        {`Έπειτα ακολουθεί η <script> δομή στην οποία μέσω του συντακτικού της Vue μπορούμε να διαχειριζόμαστε δεδομένα, components κ.ά.`}
+                                    </Typography>
                                 </li>
                                 <li>
-                                <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }} >
-                              {`Τέλος έχουμε  την <style> δομή, στην οποία προσθέτουμε όλη την css που χρειαζομάστε.`}
-                            </Typography>
+                                    <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }} >
+                                        {`Τέλος έχουμε  την <style> δομή, στην οποία προσθέτουμε όλη την css που χρειαζομάστε.`}
+                                    </Typography>
                                 </li>
                             </ul>
-                            
+
                             <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }} >
-                               Όσον αφορά τα υπόλοιπα αρχεία, ο φάκελος public και ο  φάκελος assets χρησιμοποιούνται για να μπορούμε 
-                               να κάνουμε import στατικά αρχεία, όπως π.χ. εικόνες , στο πρότζεκτ μας ενώ ο φάκελος test μας προσφέρεται 
-                               από την Vue για να διευκολύνει την διαδικασία του testing όπως π.χ. με την τεχνολογία jest.
+                                Όσον αφορά τα υπόλοιπα αρχεία, ο φάκελος public και ο  φάκελος assets χρησιμοποιούνται για να μπορούμε
+                                να κάνουμε import στατικά αρχεία, όπως π.χ. εικόνες , στο πρότζεκτ μας ενώ ο φάκελος test μας προσφέρεται
+                                από την Vue για να διευκολύνει την διαδικασία του testing όπως π.χ. με την τεχνολογία jest.
                             </Typography>
 
                             <div style={{ height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
@@ -186,7 +189,14 @@ export default function Info1() {
                             </div>
                         </Card>
                     </Grid>
-                    <Grid item xs={10}></Grid>
+
+                    <Grid item xs={8}></Grid>
+                    <Grid item xs={2} key="fot">
+                        <Button variant="contained" onClick={goBack} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+                            ΠΑΜΕ ΠΙΣΩ
+                        </Button>
+                    </Grid>
+
                     <Grid item xs={2} key="fot">
 
                         <Button variant="contained" onClick={Move} color="secondary" style={{ marginTop: '5%', marginBottom: '5%' }}>
