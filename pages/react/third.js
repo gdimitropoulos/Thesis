@@ -251,9 +251,9 @@ export default function Start({ completed }) {
                 </a> το διάγραμμα ως βοήθημα για να καταλάβετε πως λειτουργούν οι lifecycle μέθοδοι καθώς και την πορεία της ζωής ενός
                 component. Aς δούμε μερικά από τα βασικότερα χαρακτηριστικά των component της React!
               </Typography>
-              <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
-                Αρχικά να μιλήσουμε για τον <span style={{ fontWeight: 'bold' }}> constructor()</span> o οποίος λειτουργεί όπως σε όλες τις αντικειμενοστρεφείς
-                γλώσσες προγραμματισμού :
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
+                Η πρώτη lifecycle μέθοδος που θα δούμε είναι ο <span style={{ fontWeight: 'bold' }}> constructor()</span> o οποίος λειτουργεί όπως σε όλες 
+                τις αντικειμενοστρεφείς γλώσσες προγραμματισμού :
                 <CopyBlock
                   text=
                   {` 
@@ -269,10 +269,10 @@ export default function Start({ completed }) {
                 />
                 Είναι σημαντικό να καλούμε πάντα το super (props) για να σιγουρευτούμε ότι τα props δεν θα είναι undefined.
               </Typography>
-              <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
                 Ένα από τα πιο σημαντικά κομμάτια της React είναι το <span style={{ fontWeight: 'bold' }}> state</span>. To state είναι ο τρόπος
                 που κρατάμε πληροφορίες για την τωρινή κατάσταση του component και γίνεται updated κάθε φορά που υπάρχει κάποια αλλαγή σε αυτό.
-                Η αρχικοποιήση της γίνεται με τον εξής τρόπο:
+                Η αρχικοποίησή της γίνεται με τον εξής τρόπο:
               </Typography>
               <CopyBlock
                 text=
@@ -288,7 +288,7 @@ export default function Start({ completed }) {
                 theme={dracula}
                 codeBlock
               />
-              <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
                 Πρέπει να σημειώσουμε ότι το state πρέπει να είναι πάντα αντικείμενο και δεν μπορούμε να κάνουμε απευθείας ανάθεση σε αυτό
                 σε σημείο εκτός απο τον constructor/αρχικοποιητή του. Αν κάποια στιγμή θέλουμε να αλλάξουμε πρέπει να χρησιμοποιήσουμε το api setState().
               </Typography>
@@ -301,7 +301,7 @@ export default function Start({ completed }) {
                 theme={dracula}
                 codeBlock
               />
-              <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
                 Στο παραπάνω παράδειγμα η συνάρητηση setState θέτει τον counter του state σε μια τιμή value!
               </Typography>
 
@@ -312,7 +312,7 @@ export default function Start({ completed }) {
                 <CopyBlock
                   text=
                   {`  componentDidMount() {
-    setCounter(10);
+    this.setState({ counter : 1})
   }`} language="actionscript"
                   showLineNumbers={true}
                   theme={dracula}
@@ -320,11 +320,10 @@ export default function Start({ completed }) {
                 />
               </Typography>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                Στον παραπάνω κώδικα καλείται η συνάρτηση που ορίσαμε προηγουμένως
-                όταν αρχικοποιηθεί το component μας.
+                Στον παραπάνω κώδικα καλείται  η setState() όταν αρχικοποιηθεί το component μας και θέτει την τιμή του counter σε ένα.
               </Typography>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                Επειδή στα πλάισια του μαθημάτος δεν προλαβαίνουμε να καλύψουμε τα περισσότερα κομμάτια της React που αφορούν τα class components και
+                Επειδή στα πλαίσια του μαθημάτος δεν προλαβαίνουμε να καλύψουμε τα περισσότερα κομμάτια της React που αφορούν τα class components και
                 τις lifecycle μεθόδους αν θέλετε περισσότερες πληροφορίες μπορείτε να τις βρείτε <a
                   className="App-link"
                   href="https://reactjs.org/docs/state-and-lifecycle.html"
@@ -332,7 +331,7 @@ export default function Start({ completed }) {
                   rel="noopener noreferrer"
                 >
                   εδώ
-                </a>
+                </a>.
               </Typography>
 
 
@@ -398,8 +397,8 @@ export default function Start({ completed }) {
 
                 <SandpackThemeProvider  >
                   <SandpackLayout theme="codesandbox-dark">
-                    <SandpackCodeEditor showLineNumbers="true" showTabs="true" customStyle={{ marginTop: '10px', height: '490px', width: '400px' }}    > </SandpackCodeEditor>
-                    <SandpackPreview viewportSize={{ width: 500, height: 500 }} />
+                    <SandpackCodeEditor showLineNumbers="true" showTabs="true" customStyle={{ marginTop: '0.5vh', height: '59.5vh', width: '400px' }}    > </SandpackCodeEditor>
+                    <SandpackPreview viewportSize={{ width: 500, height: '60vh' }} />
                     <SimpleCodeViewer />
                   </SandpackLayout>
                 </SandpackThemeProvider>

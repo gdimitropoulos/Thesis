@@ -241,7 +241,7 @@ export default function Start({ completed }) {
               </Typography>
 
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                Αρχικά ας μιλήσουμε για τα states και πως μπορούμε να τα αρχικοποιήσουμε. Το γεγονός πως δεν έχουμε κλάση συνεπάγεται ότι δεν έχουμε constructor ().
+                Αρχικά ας μιλήσουμε για τα <span style={{ fontWeight: 'bold' }}> states </span> και πως μπορούμε να τα αρχικοποιήσουμε. Το γεγονός πως δεν έχουμε κλάση συνεπάγεται ότι δεν έχουμε constructor ().
                 Αυτό σημαίνει ότι δεν μπορούμε να κάνουμε απευθείας ανάθεση σε state. Για να προσομοιώσουμε τη λειτουργεία του state που είχαμε θα χρησιμοποποιήσουμε
                 κάποια api που μας δίνει η React και ονομάζονται <span style={{ fontWeight: 'bold' }}> Hooks </span>.
               </Typography>
@@ -285,23 +285,12 @@ import React, { useState } from 'react';
                 codeBlock
               />
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                Αυτό που κάνει αυτή η εντολή είναι να αρχικοποιεί μια μεταβλητή count όπου θα είναι το αντίστοιχο του state η οποία παίρνει
+                Αυτό που κάνει αυτή η εντολή είναι να αρχικοποιεί μια μεταβλητή count, αντίστοιχη του state η οποία παίρνει
                 την αρχική τιμή 0 λόγω του ορίσματος που βάλαμε στο useState. Αυτό που παρατηρούμε είναι ότι αρχικοποιείται και μια μέθοδος
-                στην συγκεκριμένη περίπτωση την ονομάζουμε setCount η οποία θα λειτουργεί όπως η setState που μάθαμε προηγουμένως αλλά μόνο για την
+                στην συγκεκριμένη περίπτωση που την ονομάζουμε setCount και θα λειτουργεί όπως η setState που μάθαμε προηγουμένως αλλά <span style={{ textDecoration: 'underline'}}> μόνο</span> για την
                 μεταβλητή count.
               </Typography>
-              <CopyBlock
-                text=
-                {` const [count, setCount] = useState(0); `}
-                language="actionscript"
-                showLineNumbers={true}
-                theme={dracula}
-                codeBlock
-              />
-
-              <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
-                Αρχικά να μιλήσουμε για τον <span style={{ fontWeight: 'bold' }}> constructor()</span> o οποίος λειτουργεί όπως σε όλες τις αντικειμενοστρεφείς
-                γλώσσες προγραμματισμού :
+               <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
                 <CopyBlock
                   text=
                   {` <button onClick={() => setCount(count + 1)}> `}
@@ -311,34 +300,15 @@ import React, { useState } from 'react';
                   codeBlock
                 />
                 Στην παραπάνω εντολή βλέπουμε πως χρησιμοποιείται η setCount για να αυξήσει κατά 1 την μεταβλητή count κάθε φορά που πατάμε 
-                το κουμπί.H συνάρτηση setCount δέχεται ένα όρισμα και αυτό το όρισμα θα είναι η τιμή η οποία θα πάρει το state μας.
+                το κουμπί. H συνάρτηση setCount δέχεται ένα όρισμα και αυτό το όρισμα θα είναι η τιμή την οποία θα πάρει το state μας.
 
               </Typography>
-              <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%',textAlign: 'justify', width: '100%' }}>
                 Στο προηγούμενο μάθημα μελετήσαμε τις lifecycle μεθόδους. Στα functional component δεν μπορούμε να τις χρησιμοποιήσουμε. Γι' αυτό η React δημιούργησε
-                την useEffect η οποία είναι ένα hook. Αυτό το hook σου επιτρέπει να ορίσεις ενα μπλοκ κώδικα και πότε θέλεις αυτό να εκτελείται.
+                την <span style={{ fontWeight: 'bold' }}> useEffect </span> η οποία είναι ένα hook. Αυτό το hook επιτρέπει να ορίσουμε ενα μπλοκ κώδικα και το πότε θέλουμε αυτό να εκτελείται.
                 Με αυτόν τον τρόπο μπορούμε να προσομοιώσουμε κάποιες απο τις lifecycle μεθόδους. Ας δούμε ένα παράδειγμα :
               </Typography>
-              <CopyBlock
-                text=
-                {` 
- constructor(props) {
-      super(props);
-      this.state={counter: 0}
-      
-                  }
-             `}
-                language="actionscript"
-                showLineNumbers={true}
-                theme={dracula}
-                codeBlock
-              />
-              <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
-                Πρέπει να σημειώσουμε ότι το state πρέπει να είναι πάντα αντικείμενο και δεν μπορούμε να κάνουμε απευθείας ανάθεση σε αυτό
-                σε σημείο εκτός απο τον constructor/αρχικοποιητή του. Αν κάποια στιγμή θέλουμε να αλλάξουμε πρέπει να χρησιμοποιήσουμε το  setState().
-              </Typography>
-
-              <CopyBlock
+               <CopyBlock
                 text=
                 {`import React, { useState } from 'react';
 
@@ -366,11 +336,11 @@ import React, { useState } from 'react';
                 theme={dracula}
                 codeBlock
               />
-              <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%',textAlign: 'justify', width: '100%' }}>
                 Στο παραπάνω παράδειγμα φαίνεται η useEffect η οποία προσομοιώνει κατα κάποιο τρόπο
                 την componentDidMount. Το πότε θα εκτελεστεί η useEffect προκύπτει απο το δεύτερο όρισμα που της περνάμε. Η React έχει ορίσει ότι
-                η useEffect θα εκτελείται όταν κάποιο από τα dependencies, δηλαδή το δεύτερο όρισμα, αλλάξει. Εμείς στο συγκεκριμένο παράδειγμα
-                δεν έχουμε βάλει κάποιο dependency το οποίο η React το μεταφράζει στο ότι η useEffect
+                η useEffect θα εκτελείται όταν αλλάξει κάποιο από τα dependencies (το δεύτερο όρισμα). Εμείς στο συγκεκριμένο παράδειγμα
+                δεν έχουμε ορίσει κάποιο dependency και άρα  η React θεωρεί πως η useEffect
                 θα εκτελεστεί μόνο όταν το component γίνει render και όταν
                 καταστραφεί.
               </Typography>
@@ -384,7 +354,7 @@ import React, { useState } from 'react';
                   rel="noopener noreferrer"
                 >
                   εδώ
-                </a>
+                </a>.
               </Typography>
 
 
@@ -450,8 +420,8 @@ import React, { useState } from 'react';
 
                 <SandpackThemeProvider  >
                   <SandpackLayout theme="codesandbox-dark">
-                    <SandpackCodeEditor showLineNumbers="true" showTabs="true" customStyle={{ marginTop: '10px', height: '490px', width: '400px' }}    > </SandpackCodeEditor>
-                    <SandpackPreview viewportSize={{ width: 500, height: 500 }} />
+                    <SandpackCodeEditor showLineNumbers="true" showTabs="true" customStyle={{ marginTop: '0.5vh', height: '59.5vh', width: '400px' }}    > </SandpackCodeEditor>
+                    <SandpackPreview viewportSize={{ width: 500, height: '60vh' }} />
                     <SimpleCodeViewer />
                   </SandpackLayout>
                 </SandpackThemeProvider>

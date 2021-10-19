@@ -115,7 +115,7 @@ export default function Info1() {
 
                             </Typography>
                             <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }} >
-                                To App.js είναι ο πυρήνας του application και στο οποίο μαζεύουμε όλα τα components και όλη την πληροφορία
+                                To App.js είναι ο πυρήνας του application στον οποίο μαζεύουμε όλα τα components και όλη την πληροφορία
                                 από τους φακέλους μας ώστε να ομαδοποιηθούν σωστά και να περαστούν στην οθόνη μέσω του main.js.
                                 Έχει πολύ ενδιαφέρον σε αυτό το σημείο να εξηγήσουμε το App.js δεδομένου ότι περιέχει το συντακτικό με το οποίο θα γράφουμε
                                 τα περισσότερα αρχεία μας.
@@ -124,12 +124,12 @@ export default function Info1() {
                                 <li>
                                     <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }} >
                                         {`Αυτό που παρατηρούμε αρχικά είναι ότι όλος ο φάκελος είναι ένα function
-                               το οποίο γίνεται exported για να μπορεί να διαβαστεί και σε άλλους φακέλους`}
+                               το οποίο γίνεται exported για να μπορεί να διαβαστεί και σε άλλους φακέλους.`}
                                     </Typography>
                                 </li>
                                 <li>
                                     <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }} >
-                                        {`Στο return του function παρατηρούμε ότι περιέχεται ένα συντακικό που μοίαζει με Ηtml και είναι το λεγόμενο JSX. Το συνατκικό της JSX μοιάζει πολύ
+                                        {`Στο return του function παρατηρούμε ότι περιέχεται ένα συντακτικό που μοιάζει με Ηtml και είναι το λεγόμενο JSX. Το συνατκικό της JSX μοιάζει πολύ
                               με αυτό της Ηtml αλλά μας προσφέρει την δυνατότητα να χρησιμοποιούμε javascript σε συνδυασμο με Ηtml έτσι ώστε να γίνει δυναμικό το πρόγραμμά μας.`}
                                     </Typography>
                                 </li>
@@ -207,7 +207,7 @@ export default function Info1() {
                     <Grid item xs={2} key="fot1">
 
                         <Button variant="contained" onClick={Move} color="primary" style={{ marginTop: '5%', marginBottom: '5%' }}>
-                            Παμε στο επομενο
+                         επομενο
                         </Button>
 
                     </Grid>

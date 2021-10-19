@@ -45,7 +45,7 @@ export default function Home() {
           showNotification(
             'success',
             'Επιτυχής σύνδεση',
-            'Επιτυχής σύνδεση. Καλώς ήθρατε στο σύστημα.'
+            'Επιτυχής σύνδεση. Καλώς ήρθατε στο σύστημα.'
           );
 					await router.push('user/dashboard');
          
@@ -64,7 +64,7 @@ export default function Home() {
 			showNotification(
 				'error',
 				'Σφάλμα πρόσβασης',
-				'Σφάλμα συστήματος. Επικοινωνείστε με τον διαχειριστή'
+				'Σφάλμα συστήματος. Επικοινωνήστε με τον διαχειριστή'
 			);
 		}
   }
@@ -88,6 +88,7 @@ export default function Home() {
             Συνδεθείτε στο σύστημα εισάγοντας το email και το password σας.
             </Typography>
           </div>
+		  <form method="POST" action="javascript:void(0);" > 
           <Box style={{  display: 'flex', width: '100%', justifyContent: 'center', marginBottom: '5%'}}>
             <TextField  size="small" label="email" variant="outlined" type="email" onChange={handleEmail}  />
           </Box>
@@ -100,6 +101,7 @@ export default function Home() {
               Συνδεση
             </Button>
           </div>
+		  </form>
           <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
           &nbsp; ή &nbsp;
 						<Link href="signup">

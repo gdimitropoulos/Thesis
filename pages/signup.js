@@ -96,7 +96,7 @@ export default function SignUp() {
       showNotification(
         'error',
         'Σφάλμα πρόσβασης',
-        'Σφάλμα συστήματος. Επικοινωνείστε με τον διαχειριστή'
+        'Σφάλμα συστήματος. Επικοινωνήστε με τον διαχειριστή'
       );
     }
   }
@@ -126,6 +126,7 @@ export default function SignUp() {
           <Typography variant="h5" color="text.secondary" style={{ marginBottom: '5%', textAlign: 'center' }} >
             Εγγραφείτε στο σύστημα .
           </Typography>
+          <form method="POST" action="javascript:void(0);" > 
           <Box style={{ display: 'flex', width: '100%', justifyContent: 'center', marginBottom: '5%' }}>
             <TextField onChange={handleName} size="small" label="Name" variant="outlined"  />
           </Box>
@@ -148,6 +149,7 @@ export default function SignUp() {
               Εγγραφη
             </Button>
           </div>
+          </form>
           <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
             &nbsp; ή &nbsp;
             <Link href="/">

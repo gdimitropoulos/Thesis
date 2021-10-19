@@ -227,7 +227,7 @@ return (
     <div style={{ height: '80%', marginBottom: '1%', marginTop: '2%', paddingTop: '2%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
       <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
         <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
-          <Card style={{ maxHeight: '80vh', overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
+          <Card style={{ maxHeight: '75vh', overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
             <div style={{ marginBottom: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
             <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}> To πρώτο σας Hello World </Typography>
             <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
@@ -277,8 +277,8 @@ return (
             }} entry>
               <SandpackThemeProvider  >
                 <SandpackLayout theme="codesandbox-dark">
-                  <SandpackCodeEditor showLineNumbers={true} showTabs="true" customStyle={{ marginTop: '10px', height: '490px', width: '400px' }}    > </SandpackCodeEditor>
-                  <SandpackPreview viewportSize={{ width: 500, height: 500 }} />
+                  <SandpackCodeEditor showLineNumbers={true} showTabs="true" customStyle={{marginTop: '0.5vh', height: '59.5vh', width: '400px' }}    > </SandpackCodeEditor>
+                  <SandpackPreview viewportSize={{ width: 500, height: '60vh' ,}} />
                   <SimpleCodeViewer />
                 </SandpackLayout>
               </SandpackThemeProvider>

@@ -82,9 +82,11 @@ export default function Home({ react, angular, vue, introForm, finishForm, email
                     <Typography variant="h4" align="center" style={{ marginBottom: '2%' }}>
                         Καλώς ήρθατε!
                     </Typography>
-                    <Typography variant="h5" align="center" style={{ marginBottom: '3%' }}> Στην ιστοσελίδα αυτήν μπορείτε να
-                        πάρετε μέρος στην συγκριτκή έρευνα που γίνεται πάνω σε single page application frameworks.Θα χρειαστεί να πραγματοποιήσετε  τρία tutorials
-                        πάνω στις τεχνολογίες που πραγματεύεται η έρευνα και έπειτα να απαντήσετε σε κάποιες σύντομες ερωτήσεις.  </Typography>
+                    <Typography variant="h5" align="center" style={{ marginBottom: '3%' }}> Μέσω της ιστοσελίδας <span style={{ fontStyle:"italic"}}>
+                        Web Frameworks Tutorials</span> θα γνωρίσετε σε 
+                    εισαγωγικό επίπεδο τα τρία πιο δημοφιλή Front-end Frameworks και τις βασικές τους λειτουργίες που τα καθιστούν κατάλληλα για την ανάπτυξη 
+                    ενός single page application.
+                       </Typography>
 
                 </Box>
                 <Card style={{ width: '50%', padding: '1%', display: 'flex', justifyContent: 'space-around', marginBottom: '5%' }}>

@@ -241,7 +241,7 @@ export default function Start({ completed }) {
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
                 Έχουμε αρχικοποιήσει για εσάς το HelloWorld.js  το οποίο είναι το component που θα πρέπει να χρησιμοποιήσετε.
                 Υπάρχουν δύο ειδών component,
-                τα <span style={{ fontStyle: 'italic' }}>functional</span> και τα <span style={{ fontStyle: 'italic' }}>class</span> όπου όπως δηλώνει και η ονοματολογία τα πρώτα τα δηλώνουμε ως συναρτήσεις ενώ
+                τα <span style={{ fontStyle: 'italic' }}>functional</span> και τα <span style={{ fontStyle: 'italic' }}>class</span> όπου όπως δηλώνεται και απο την ονοματολογία τα πρώτα τα δηλώνουμε ως συναρτήσεις ενώ
                 τα δεύτερα ως κλάσεις.
               </Typography>
 
@@ -258,7 +258,7 @@ export default function Start({ completed }) {
                 </a> .
               </Typography>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
-                Σε κάθε <span style={{ fontWeight: 'bold' }}> functional component</span> θα υπάρχει το export default "ComponentName"  :
+                Σε κάθε <span style={{ fontWeight: 'bold' }}> functional component</span> θα υπάρχει το export default <span style={{ fontStyle: 'italic' }}> "νομαComponent"</span>  :
                 <CopyBlock
                   text=
                   {` 
@@ -287,7 +287,7 @@ function MyComponent() {
                   theme={dracula}
                   codeBlock
                 />
-                Όλα τα imported components μπορούμε πλέον να τα χρησιμοποιούμε :
+                 Mπορούμε πλέον να χρησιμοποιούμε όλα τα imported componets :
                 <CopyBlock
                   text={`
 <div>              
@@ -398,8 +398,8 @@ function MyComponent({myprop}) {
 
                 <SandpackThemeProvider  >
                   <SandpackLayout theme="codesandbox-dark">
-                    <SandpackCodeEditor showLineNumbers="true" showTabs="true" customStyle={{ marginTop: '10px', height: '490px', width: '400px' }}    > </SandpackCodeEditor>
-                    <SandpackPreview viewportSize={{ width: 500, height: 500 }} />
+                    <SandpackCodeEditor showLineNumbers="true" showTabs="true" customStyle={{ marginTop: '0.5vh', height: '59.5vh', width: '400px' }}    > </SandpackCodeEditor>
+                    <SandpackPreview viewportSize={{ width: 500, height: '60vh' }} />
                     <SimpleCodeViewer />
                   </SandpackLayout>
                 </SandpackThemeProvider>

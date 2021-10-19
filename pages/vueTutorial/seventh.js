@@ -379,8 +379,8 @@ export default function Start({ completed }) {
               }} >
                 <SandpackThemeProvider  >
                   <SandpackLayout theme="codesandbox-dark">
-                    <SandpackCodeEditor showTabs="true" customStyle={{ height: '510px' }}    > </SandpackCodeEditor>
-                    <SandpackPreview viewportSize={{ width: 500, height: 510 }} />
+                    <SandpackCodeEditor showTabs="true" customStyle={{ marginTop: '0.5vh', height: '59.5vh', }}    > </SandpackCodeEditor>
+                    <SandpackPreview viewportSize={{ width: 500, height: '60vh' }} />
                     <SimpleCodeViewer />
                   </SandpackLayout>
                 </SandpackThemeProvider>

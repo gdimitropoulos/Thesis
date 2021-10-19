@@ -56,7 +56,7 @@ export default function AppHeader() {
               style={{ textTransform: 'none', textDecoration: 'none', color: 'white' }}
               color="inherit"
             >
-              <h4  style={{ textTransform: 'none', textDecoration: 'none', color: 'white' }}>{'Web frameworks Tutorials'}</h4>
+              <h4  style={{ textTransform: 'none', textDecoration: 'none', color: 'white' }}>{'Web Frameworks Tutorials'}</h4>
             </Button>
             </div>
           { user &&  (<Button variant="contained" color="text.primary" style={{ left: 0, pointerEvent:'auto', cursor: 'pointer', float: 'right'}} onClick={logout}> LogOut</Button>)}

@@ -60,7 +60,7 @@ export default function Start() {
                                 Η React είναι η πιο δημοφιλής βιβλιοθήκη JavaScript στο χώρο της ανάπτυξης ιστοσελίδων.
                                 Σχεδιάστηκε για τη δημιουργία γρήγορων και διαδραστικών διεπαφών χρήστη για εφαρμογές ιστού και κινητών. 
                                 Πρόκειται για μια βιβλιοθήκη ανοιχτού κώδικα, βασισμένη σε  <span style={{fontStyle:'italic'}}>Components</span> και είναι υπεύθυνη για το View επίπεδο της εφαρμογής
-                                 δηλαδή για την εμφάνιση και την αίσθηση της εφαρμογής. 
+                                 δηλαδή για την εμφάνιση και την κατάσταση της εφαρμογής. 
                             </Typography>
                             <Typography variant="subtitle1" style={{ marginTop: '2%' , textAlign: 'justify',width: '100%' }}> 
                             Κατά την διάρκεια αυτού του tutorial στόχος είναι η εξοικείωσή σας με τα βασικά γνώρισματα της React καθώς και με την 
@@ -72,7 +72,7 @@ export default function Start() {
                             </Typography>
                             <ul>
                                 <li>  <Typography variant="subtitle1" style={{ marginTop: '2%' , textAlign: 'justify',width: '100%' }}> 
-                             O πιο δημοφιλής τρόπος αρχικοποίησης ενώς React Single Page Application είναι μέσω του <span style={{fontStyle:'italic'}}>create-react-app</span>. 
+                             O πιο δημοφιλής τρόπος αρχικοποίησης ενός React Single Page Application είναι μέσω του <span style={{fontStyle:'italic'}}>create-react-app</span>. 
                              Τρέχουμε την εντολή <span style={{backgroundColor:'#f4f4f4'}}>npx create-react-app my-app </span> στο terminal 
                               για να αρχικοποιήσουμε το πρότζεκτ μας. Έπειτα απο την ολοκλήρωση της αρχικοποίησης θα πρέπει η μορφή του να είναι η εξής:
 
@@ -118,14 +118,14 @@ export default function Start() {
                     <Grid item xs={8}></Grid>
                     <Grid item xs={2} key="fot">
                         <Button variant="contained" onClick={goBack} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
-                            ΠΑΜΕ ΠΙΣΩ
+                             ΠΙΣΩ
                         </Button>
                     </Grid>
 
                     <Grid item xs={2} key="fot1">
 
                             <Button variant="contained" onClick={Move} color="primary" style={{ marginTop: '5%' , marginBottom: '5%' }}>
-                                Παμε στο επομενο
+                                επομενο
                             </Button>
 
                     </Grid>
