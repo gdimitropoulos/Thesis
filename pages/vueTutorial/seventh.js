@@ -19,6 +19,8 @@ import {
   Modal,
   Typography,
   Card,
+  Tab,
+  Tabs,
   Box,
 } from "@material-ui/core";
 import appvue from "!!raw-loader!../../components/VueTutorial/seventhTutorial/appvue";
@@ -30,7 +32,10 @@ import routerjs from "!!raw-loader!../../components/VueTutorial/seventhTutorial/
 import first from "!!raw-loader!../../components/VueTutorial/seventhTutorial/first";
 import second from "!!raw-loader!../../components/VueTutorial/seventhTutorial/second";
 import third from "!!raw-loader!../../components/VueTutorial/seventhTutorial/third";
-import solutionfile from "!!raw-loader!../../components/VueTutorial/seventhTutorial/solution";
+import solutionCode from "!!raw-loader!../../components/VueTutorial/seventhTutorial/solution";
+import solutionCode1 from "!!raw-loader!../../components/VueTutorial/seventhTutorial/solution1";
+import solutionCode2 from "!!raw-loader!../../components/VueTutorial/seventhTutorial/solution2";
+import solutionCode3 from "!!raw-loader!../../components/VueTutorial/seventhTutorial/solution3";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import {
   SandpackProvider,
@@ -40,7 +45,7 @@ import {
   SandpackPreview,
   useSandpack,
 } from "@codesandbox/sandpack-react";
-import { validityCheck } from '../../Lib/dao';
+import { validityCheck, checkLessonTaken } from '../../Lib/dao';
 import "@codesandbox/sandpack-react/dist/index.css";
 import showNotification from '../../Lib/notification'
 import { getAppCookies } from '../../Lib/utils'
@@ -63,16 +68,49 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '50vw',
-  height: '70vh',
+  width: '60vw',
+  height: '80vh',
   bgcolor: 'background.paper',
   borderRadius: '10%',
   boxShadow: 24,
   p: 4,
 };
 
-export default function Start() {
+
+function a11yProps(index) {
+  return {
+    id: `vertical-tab-${index}`,
+    'aria-controls': `vertical-tabpanel-${index}`,
+  };
+}
+
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+export default function Start({ completed }) {
   const router = useRouter();
+  const [value, setValue] = useState(0);
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
+  };
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openFail, setOpenFail] = useState(false);
   const [answerShown, setAnswerShown] = useState(false);
@@ -90,6 +128,18 @@ export default function Start() {
   const goBack = () => {
     router.push('/vueTutorial/sixth')
   }
+  const goNext = () => {
+    router.push('/user/dashboard')
+  }
+  const pasteHandler = (event) => {
+    if (event.path.length >15) {
+      var clipboardData, pastedData;
+      clipboardData = event.clipboardData || window.clipboardData;
+      pastedData = clipboardData.getData('Text');
+      const count = pastedData.length - 1   
+      totalCharsWritten += count;
+    }
+}
 
   const eventHandler = (event) => {
 
@@ -195,8 +245,13 @@ export default function Start() {
 
 
     useEffect(() => {
+      window.addEventListener('paste', pasteHandler)
       window.addEventListener('keydown', eventHandler);
-      return () => window.removeEventListener('keydown', eventHandler);
+      return () => {
+        window.removeEventListener('paste', pasteHandler)
+        window.removeEventListener('keydown', eventHandler);
+        return null
+      }
 
     }, []);
 
@@ -213,7 +268,7 @@ export default function Start() {
 
     return (
       <div style={{ width: '100%', height: '40px' }}>
-        <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }} onClick={runTests} > Run Tests  </Button>;
+        <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }} onClick={runTests} > ελεγχοσ  </Button>;
       </div>
     );
   };
@@ -324,9 +379,9 @@ export default function Start() {
               }} >
                 <SandpackThemeProvider  >
                   <SandpackLayout theme="codesandbox-dark">
-                    <SimpleCodeViewer />
                     <SandpackCodeEditor showTabs="true" customStyle={{ height: '510px' }}    > </SandpackCodeEditor>
                     <SandpackPreview viewportSize={{ width: 500, height: 510 }} />
+                    <SimpleCodeViewer />
                   </SandpackLayout>
                 </SandpackThemeProvider>
               </SandpackProvider>
@@ -345,10 +400,10 @@ export default function Start() {
                       <CheckCircleIcon color="success" styles={{ marginBottom: '20px' }} id="keep-mounted-modal-title" sx={{ fontSize: 80 }} />
                     </div>
                     <Box style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'column' }}>
-                      <Typography style={{ marginTop: '2%' }} align="center" id="keep-mounted-modal-description" >
-                        H απάντηση που δώσατε ήταν σωστή
+                      <Typography style={{ marginTop: '2%' }} align="center" variant="h5" id="keep-mounted-modal-description" >
+                        Συγχαρητηρία ολοκληρώσατε το tutorial της Vue js. 
                       </Typography>
-                      <Button style={{ marginTop: '10%' }} variant="contained" color="primary" onClick={handleCloseSuccess}> Παμε στο επομενο</Button>
+                      <Button style={{ marginTop: '10%' }} variant="contained" color="primary" onClick={handleCloseSuccess}>Επιστροφη στην αρχικη</Button>
                     </Box>
                   </Box>
                 </Card>
@@ -371,7 +426,7 @@ export default function Start() {
                       <BlockSharpIcon styles={{ marginBottom: '20px' }} id="keep-mounted-modal-title" sx={{ color: red[500], fontSize: 80 }} />
                     </div>
                     <Box style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'column' }}>
-                      <Typography style={{ marginTop: '2%' }} align="center" id="keep-mounted-modal-description" >
+                    <Typography style={{ marginTop: '2%' }} align="center" variant="h5" id="keep-mounted-modal-description" >
                         H απάντηση που δώσατε ήταν λανθασμένη
                       </Typography>
                       <Button style={{ marginTop: '10%' }} variant="contained" color="secondary" onClick={handleCloseFail}> Προσπαθηστε ξανα</Button>
@@ -385,12 +440,19 @@ export default function Start() {
             </Card>
           </Grid>
 
-          <Grid item xs={8}></Grid>
+          <Grid item xs={completed ? 6 : 8}></Grid>
           <Grid item xs={2} key="fot">
             <Button variant="contained" onClick={goBack} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
-              ΠΑΜΕ ΠΙΣΩ
+              ΠΙΣΩ
             </Button>
           </Grid>
+          {completed && (
+            <Grid item xs={2} key="fot">
+              <Button variant="contained" onClick={goNext} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+                τελοσ
+              </Button>
+            </Grid>
+          )}
 
           <Grid item xs={2} key="fot">
             <Popconfirm
@@ -400,8 +462,7 @@ export default function Start() {
               cancelText={'Οχι'}
 
             >
-
-              <Button variant="contained" color="secondary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+              <Button variant="contained" style={{ backgroundColor: '#19E619', minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
                 λυση
               </Button>
             </Popconfirm>
@@ -417,22 +478,54 @@ export default function Start() {
                 <Box sx={style} >
 
                   <Box >
+
                     <div style={{ width: '100%' }}>
-                      <Typography style={{ marginTop: '2%', marginBottom: '5%' }} align="center"  >
-                        Τό template του  App.vue  πρέπει να έχει την εξής μορφή :
-                      </Typography>
-                    </div>
-                    <div style={{ width: '100%' }}>
-                      <SyntaxHighlighter code={solutionfile} language="html" showLineNumbers={true} />
+
+                      <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                        <Typography variant="p" style={{ width: '100%', marginTop: '2%', marginBottom: '5%' }} align="center" id="keep-mounted-modal-description" >
+                          Τα αρχεία News.vue, First.vue, Second.vue και Third.vue πρέπει να έχουν την παρακάτω μορφή:
+                        </Typography>
+                      </div>
+
+                      <div>
+                        <Box sx={{ width: '100%', marginTop: '4%' }}>
+                          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                            <Tabs value={value} onChange={handleTabChange} aria-label="basic tabs example" indicatorColor="primary"
+                              textColor="primary">
+                              <Tab label="News.vue" {...a11yProps(0)} />
+                              <Tab label="First.vue" {...a11yProps(1)} />
+                              <Tab label="Second.vue" {...a11yProps(2)} />
+                              <Tab label="Third.vue" {...a11yProps(3)} />
+                            </Tabs>
+                          </Box>
+                          <TabPanel value={value} index={0}>
+                            <SyntaxHighlighter code={solutionCode} language="actionscript" showLineNumbers={true} />
+                          </TabPanel>
+                          <TabPanel value={value} index={1}>
+                            <SyntaxHighlighter code={solutionCode1} language="actionscript" showLineNumbers={true} />
+                          </TabPanel>
+                          <TabPanel value={value} index={2}>
+                            <SyntaxHighlighter code={solutionCode2} language="actionscript" showLineNumbers={true} />
+                          </TabPanel>
+                          <TabPanel value={value} index={3}>
+                            <SyntaxHighlighter code={solutionCode3} language="actionscript" showLineNumbers={true} />
+                          </TabPanel>
+                        </Box>
+                      </div>
+
+
+
+
                     </div>
                     <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                      <Button size="large" style={{ borderRadius: '50%', width: '40%', marginBottom: '1%', marginTop: '10%' }} variant="contained" color="primary" onClick={handlecloseSolution}>CLOSE</Button>
+                      <Button size="large" style={{ borderRadius: '50%', width: '40%', marginBottom: '1%', marginTop: '5%' }} variant="contained" color="primary" onClick={handlecloseSolution}>CLOSE</Button>
                     </div>
                   </Box>
                 </Box>
               </Card>
 
             </Modal>
+
 
           </Grid>
         </Grid>
@@ -446,6 +539,7 @@ export async function getServerSideProps(context) {
   const KEY = process.env.JWT_KEY;
   //console.log(process.env.JWT_KEY);
   try {
+
     let cookies = getAppCookies(context.req);
     let token = cookies.token;
 
@@ -453,11 +547,13 @@ export async function getServerSideProps(context) {
       token = token.replace('Bearer ', '');
       token = jwt.verify(token, KEY);
 
-
       const bool = await validityCheck('v6', token.email);
       if (bool) {
+        const completed = await checkLessonTaken(token.email, 'v7')
         return {
-          props: {},
+          props: {
+            completed
+          },
         };
       } else {
         return {

@@ -144,8 +144,8 @@ export default function SignUp() {
 
 
           <div style={{ display: 'flex', justifyContent: 'center', width: '100%', marginBottom: '5%' }}>
-            <Button variant="contained" color="secondary" onClick={signIn}>
-              Εγγραφή
+            <Button type="submit" variant="contained" color="secondary" onClick={signIn}>
+              Εγγραφη
             </Button>
           </div>
           <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>

@@ -9,7 +9,7 @@
    },
       // use the created() function bellow to write : Nέα πανεπηστημίου πατρών
    created(){
-     this.news='Nέα πανεπηστημίου πατρών'
+     this.news='Nέα πανεπιστημίου Πατρών'
    }
  }
  </script>

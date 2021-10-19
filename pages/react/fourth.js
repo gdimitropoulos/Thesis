@@ -15,7 +15,7 @@ import {
   Card,
   Box,
 } from "@material-ui/core";
-import { validityCheck } from '../../Lib/dao';
+import { validityCheck, checkLessonTaken } from '../../Lib/dao';
 import { CopyBlock, dracula } from "react-code-blocks";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -45,13 +45,13 @@ import { getAppCookies } from '../../Lib/utils'
 
 
 let backspaces = 0;
-let totalCharsWritten=0;
-let writeFlag=0;
-let totalTries=0;
-const timeStartingWriting=[]
-const timeFinishingTest=[];
-const backspacesPerTry=[];
-const totaltCharsPerTry=[];
+let totalCharsWritten = 0;
+let writeFlag = 0;
+let totalTries = 0;
+const timeStartingWriting = []
+const timeFinishingTest = [];
+const backspacesPerTry = [];
+const totaltCharsPerTry = [];
 const time = moment();
 
 
@@ -71,7 +71,7 @@ const style = {
   p: 4,
 };
 
-export default function Start() {
+export default function Start({ completed }) {
   const router = useRouter();
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openFail, setOpenFail] = useState(false);
@@ -88,15 +88,24 @@ export default function Start() {
     statuses = [];
   }
 
-  
-  const eventHandler = (event)=>{
-      
+  const pasteHandler = (event) => {
+    if (event.path.length >15) {
+      var clipboardData, pastedData;
+      clipboardData = event.clipboardData || window.clipboardData;
+      pastedData = clipboardData.getData('Text');
+      const count = pastedData.length - 1   
+      totalCharsWritten += count;
+    }
+}
+
+  const eventHandler = (event) => {
+
     if (event.path[0].className == 'cm-content') {
-      if( (event.which > 46 && event.which<91) || ( event.which>95 && event.which<112) || (event.which>183 && event.which<230) || (event.which>151 && event.which<165 )){
+      if ((event.which > 46 && event.which < 91) || (event.which > 95 && event.which < 112) || (event.which > 183 && event.which < 230) || (event.which > 151 && event.which < 165)) {
         totalCharsWritten++;
         console.log('im here');
-        if(writeFlag == 0){
-          writeFlag=1;
+        if (writeFlag == 0) {
+          writeFlag = 1;
           timeStartingWriting.push(moment());
         }
       }
@@ -105,9 +114,13 @@ export default function Start() {
       }
     }
 
-}
-  const goBack= ()=>{
+  }
+  const goBack = () => {
     router.push('/react/third')
+  }
+
+  const goNext = () => {
+    router.push('/react/fifth')
   }
   const handlecloseSolution = async () => {
     setshowSolution(false)
@@ -117,7 +130,7 @@ export default function Start() {
       time,
       backspaces: backspaces,
       lessonName: 'r4',
-      tutorailName:'react',
+      tutorailName: 'react',
       answer: answerShown,
       totalTries,
       totaltCharsPerTry,
@@ -164,10 +177,15 @@ export default function Start() {
 
 
     useEffect(() => {
-      window.addEventListener('keydown',eventHandler);
-      return () =>  window.removeEventListener('keydown',eventHandler);
+      window.addEventListener('paste', pasteHandler)
+      window.addEventListener('keydown', eventHandler);
+      return () => {
+        window.removeEventListener('paste', pasteHandler)
+        window.removeEventListener('keydown', eventHandler);
+        return null
+      }
 
-    },[]);
+    }, []);
 
     useEffect(() => {
       window.addEventListener('message', (event) => {
@@ -184,20 +202,21 @@ export default function Start() {
         }
 
       });
-    }, [listen,dispatch,setActiveFile]);
+    }, [listen, dispatch, setActiveFile]);
 
-    const runTests = () => { 
-      writeFlag=0
+    const runTests = () => {
+      writeFlag = 0
       backspacesPerTry.push(backspaces);
       totaltCharsPerTry.push(totalCharsWritten);
       totalTries++;
       timeFinishingTest.push(moment());
-      dispatch({ type: 'run-all-tests' }); };
+      dispatch({ type: 'run-all-tests' });
+    };
     const codee = files[activePath].code;
 
     return (
       <div style={{ width: '100%', height: '40px' }}>
-        <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }} onClick={runTests} > Run Tests  </Button>;
+        <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }} onClick={runTests} > ελεγχος </Button>;
       </div>
     );
   };
@@ -291,7 +310,9 @@ import React, { useState } from 'react';
                   theme={dracula}
                   codeBlock
                 />
-                Στην παραπάνω εντολή βλέπουμε πως χρησιμοποιείται η setCount για να αυξήσει κατά 1 την μεταβλητή count κάθε φορά που πατάμε το κουμπί.
+                Στην παραπάνω εντολή βλέπουμε πως χρησιμοποιείται η setCount για να αυξήσει κατά 1 την μεταβλητή count κάθε φορά που πατάμε 
+                το κουμπί.H συνάρτηση setCount δέχεται ένα όρισμα και αυτό το όρισμα θα είναι η τιμή η οποία θα πάρει το state μας.
+
               </Typography>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
                 Στο προηγούμενο μάθημα μελετήσαμε τις lifecycle μεθόδους. Στα functional component δεν μπορούμε να τις χρησιμοποιήσουμε. Γι' αυτό η React δημιούργησε
@@ -314,13 +335,12 @@ import React, { useState } from 'react';
               />
               <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
                 Πρέπει να σημειώσουμε ότι το state πρέπει να είναι πάντα αντικείμενο και δεν μπορούμε να κάνουμε απευθείας ανάθεση σε αυτό
-                σε σημείο εκτός απο τον constructor/αρχικοποιητή του. Αν κάποια στιγμή θέλουμε να αλλάξουμε πρέπει να χρησιμοποιήσουμε το api setState().
+                σε σημείο εκτός απο τον constructor/αρχικοποιητή του. Αν κάποια στιγμή θέλουμε να αλλάξουμε πρέπει να χρησιμοποιήσουμε το  setState().
               </Typography>
 
               <CopyBlock
                 text=
-                {` 
- fimport React, { useState } from 'react';
+                {`import React, { useState } from 'react';
 
  function Example() {
     // Declare a new state variable, which we'll call "count"
@@ -356,7 +376,7 @@ import React, { useState } from 'react';
               </Typography>
 
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                Επειδή δεν προλαβαίνουμε να αναλύσουμε όλες τις λεπτομέρειες και όλα τα hook σε αυτό το tutorial, μπορείτε να βρείτε περισσότερες
+                Επειδή δεν προλαβαίνουμε να αναλύσουμε όλες τις λεπτομέρειες και όλα τα hook σε αυτό το μάθημα, μπορείτε να βρείτε περισσότερες
                 πληροφορίες <a
                   className="App-link"
                   href="https://reactjs.org/docs/hooks-intro.html"
@@ -430,9 +450,9 @@ import React, { useState } from 'react';
 
                 <SandpackThemeProvider  >
                   <SandpackLayout theme="codesandbox-dark">
-                    <SimpleCodeViewer />
-                    <SandpackCodeEditor showLineNumbers="true" showTabs="true" customStyle={{ marginTop: '10px', height: '500px', width: '400px' }}    > </SandpackCodeEditor>
+                    <SandpackCodeEditor showLineNumbers="true" showTabs="true" customStyle={{ marginTop: '10px', height: '490px', width: '400px' }}    > </SandpackCodeEditor>
                     <SandpackPreview viewportSize={{ width: 500, height: 500 }} />
+                    <SimpleCodeViewer />
                   </SandpackLayout>
                 </SandpackThemeProvider>
               </SandpackProvider>
@@ -491,14 +511,20 @@ import React, { useState } from 'react';
 
             </Card>
           </Grid>
-         
-          <Grid item xs={8}></Grid>
+
+          <Grid item xs={completed ? 6 : 8}></Grid>
           <Grid item xs={2} key="fot">
             <Button variant="contained" onClick={goBack} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
-              ΠΑΜΕ ΠΙΣΩ
+              ΠΙΣΩ
             </Button>
           </Grid>
-
+          {completed && (
+            <Grid item xs={2} key="fot">
+              <Button variant="contained" onClick={goNext} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+                επομενο
+              </Button>
+            </Grid>
+          )}
           <Grid item xs={2} key="fot">
             <Popconfirm
               title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}
@@ -508,7 +534,8 @@ import React, { useState } from 'react';
 
             >
 
-              <Button variant="contained" color="secondary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+
+              <Button variant="contained" style={{ backgroundColor: '#19E619', minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
                 λυση
               </Button>
             </Popconfirm>
@@ -559,12 +586,16 @@ export async function getServerSideProps(context) {
     if (token) {
       token = token.replace('Bearer ', '');
       token = jwt.verify(token, KEY);
-      const bool = await validityCheck('r3',token.email);
-      if(bool){
+      const bool = await validityCheck('r3', token.email);
+      if (bool) {
+        const completed = await checkLessonTaken(token.email,'r4');
+
         return {
-          props: {},
+          props: {
+            completed
+          },
         };
-      }else{
+      } else {
         return {
           redirect: {
             destination: '/react/third',

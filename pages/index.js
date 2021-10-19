@@ -96,8 +96,8 @@ export default function Home() {
           </Box>
 
           <div style={{ display: 'flex', justifyContent: 'center', width: '100%',marginBottom: '5%' }}>
-            <Button variant="contained" color="primary" onClick={signIn}>
-              Σύνδεση
+            <Button type="submit" variant="contained" color="primary" onClick={signIn}>
+              Συνδεση
             </Button>
           </div>
           <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>

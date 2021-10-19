@@ -83,7 +83,7 @@ export default function Home({ react, angular, vue, introForm, finishForm, email
                         Καλώς ήρθατε!
                     </Typography>
                     <Typography variant="h5" align="center" style={{ marginBottom: '3%' }}> Στην ιστοσελίδα αυτήν μπορείτε να
-                        πάρετε μέρος στην συγκριτκή  έρευνα που γίνεται πάνω σε single page application frameworks.Θα χρειαστεί να πραγματοποιήσετε  τρία tutorials
+                        πάρετε μέρος στην συγκριτκή έρευνα που γίνεται πάνω σε single page application frameworks.Θα χρειαστεί να πραγματοποιήσετε  τρία tutorials
                         πάνω στις τεχνολογίες που πραγματεύεται η έρευνα και έπειτα να απαντήσετε σε κάποιες σύντομες ερωτήσεις.  </Typography>
 
                 </Box>

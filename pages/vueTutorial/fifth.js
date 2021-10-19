@@ -14,7 +14,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import BlockSharpIcon from '@mui/icons-material/BlockSharp';
 import treePic from '../../public/array.png'
 import { Popconfirm } from 'antd';
-import { validityCheck } from '../../Lib/dao';
+import { validityCheck, checkLessonTaken } from '../../Lib/dao';
 import {
   Button,
   Grid,
@@ -43,13 +43,13 @@ import showNotification from '../../Lib/notification'
 import { getAppCookies } from '../../Lib/utils'
 
 let backspaces = 0;
-let totalCharsWritten=0;
-let writeFlag=0;
-let totalTries=0;
-const timeStartingWriting=[]
-const timeFinishingTest=[];
-const backspacesPerTry=[];
-const totaltCharsPerTry=[];
+let totalCharsWritten = 0;
+let writeFlag = 0;
+let totalTries = 0;
+const timeStartingWriting = []
+const timeFinishingTest = [];
+const backspacesPerTry = [];
+const totaltCharsPerTry = [];
 const time = moment();
 
 
@@ -69,7 +69,7 @@ const style = {
   p: 4,
 };
 
-export default function VueFifth() {
+export default function VueFifth({ completed }) {
   const router = useRouter();
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openFail, setOpenFail] = useState(false);
@@ -86,17 +86,33 @@ export default function VueFifth() {
     statuses = [];
   }
 
-  const goBack= ()=>{
+  const goBack = () => {
     router.push('/vueTutorial/fourth')
   }
-  const eventHandler = (event)=>{
-      
+
+  const goNext = () => {
+    router.push('/vueTutorial/sixth')
+  }
+
+  const pasteHandler = (event) => {
+    if (event.path.length >15) {
+      var clipboardData, pastedData;
+      clipboardData = event.clipboardData || window.clipboardData;
+      pastedData = clipboardData.getData('Text');
+      const count = pastedData.length - 1   
+      totalCharsWritten += count;
+    }
+}
+
+
+  const eventHandler = (event) => {
+
     if (event.path[0].className == 'cm-content') {
-      if( (event.which > 46 && event.which<91) || ( event.which>95 && event.which<112) || (event.which>183 && event.which<230) || (event.which>151 && event.which<165 )){
+      if ((event.which > 46 && event.which < 91) || (event.which > 95 && event.which < 112) || (event.which > 183 && event.which < 230) || (event.which > 151 && event.which < 165)) {
         totalCharsWritten++;
         console.log('im here');
-        if(writeFlag == 0){
-          writeFlag=1;
+        if (writeFlag == 0) {
+          writeFlag = 1;
           timeStartingWriting.push(moment());
         }
       }
@@ -105,7 +121,7 @@ export default function VueFifth() {
       }
     }
 
-}
+  }
 
   const handlecloseSolution = async () => {
     setshowSolution(false)
@@ -115,7 +131,7 @@ export default function VueFifth() {
       time,
       backspaces: backspaces,
       lessonName: 'v5',
-      tutorailName:'vue',
+      tutorailName: 'vue',
       answer: answerShown,
       totalTries,
       totaltCharsPerTry,
@@ -188,28 +204,35 @@ export default function VueFifth() {
 
       console.log("im listening")
       return unsubscribe;
-    }, [listen,dispatch,setActiveFile]);
+    }, [listen, dispatch, setActiveFile]);
 
-   
+
 
     useEffect(() => {
-      window.addEventListener('keydown',eventHandler);
-      return () =>  window.removeEventListener('keydown',eventHandler);
+      window.addEventListener('paste', pasteHandler)
+      window.addEventListener('keydown', eventHandler);
+      return () => {
+        window.removeEventListener('paste', pasteHandler)
+        window.removeEventListener('keydown', eventHandler);
+        return null
+      }
 
-    },[]);
 
-    const runTests = () => { 
-      writeFlag=0
+    }, []);
+
+    const runTests = () => {
+      writeFlag = 0
       backspacesPerTry.push(backspaces);
       totaltCharsPerTry.push(totalCharsWritten);
       totalTries++;
       timeFinishingTest.push(moment());
-      dispatch({ type: 'run-all-tests' }); };
+      dispatch({ type: 'run-all-tests' });
+    };
 
 
     return (
       <div style={{ width: '100%', height: '40px' }}>
-        <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }} onClick={runTests} > Run Tests  </Button>;
+        <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }} onClick={runTests} > ελεγχοσ </Button>;
       </div>
     );
   };
@@ -299,12 +322,12 @@ a {
                 codeBlock
               />
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                μπορούμε να δούμε ακριβώς πως το χρησιμοποιούμε! 
-               
+                μπορούμε να δούμε ακριβώς πως το χρησιμοποιούμε!
+
               </Typography>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
                 Δεδομένου ενός πινάκα δηλώνουμε μια μεταβλητή με την οποία θα κάνουμε iteration,
-                 στην δική μας περίπτωση το "item" . Έπειτα αυτή την μεταβλητή μπορούμε να την χρησιμοποιήσουμε όπως εδώ :
+                στην δική μας περίπτωση το "item" . Έπειτα αυτή την μεταβλητή μπορούμε να την χρησιμοποιήσουμε όπως εδώ :
               </Typography>
               <CopyBlock
                 text={`<li v-for="item in items" :key="item.message">
@@ -324,7 +347,7 @@ a {
                 </div>
               </div>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                <span style={{ fontWeight: 'bold'}}>Σημείωση</span>: όταν χρησιμοποιούμε την <span style={{ fontWeight: 'bold' }}>v-for </span> πρέπει να ορίζουμε
+                <span style={{ fontWeight: 'bold' }}>Σημείωση</span>: όταν χρησιμοποιούμε την <span style={{ fontWeight: 'bold' }}>v-for </span> πρέπει να ορίζουμε
                 και unique keys στα component που γίνονται iterate.
               </Typography>
 
@@ -367,10 +390,10 @@ a {
                 },
               }} >
                 <SandpackThemeProvider  >
-                  <SimpleCodeViewer />
                   <SandpackLayout theme="codesandbox-dark">
-                    <SandpackCodeEditor showLineNumbers="true" showTabs="true" customStyle={{ marginTop: '10px', height: '500px', width: '400px' }}    > </SandpackCodeEditor>
-                    <SandpackPreview viewportSize={{ width: 500, height: '60vh' }} />
+                    <SandpackCodeEditor showLineNumbers="true" showTabs="true" customStyle={{ marginTop: '10px', height: '490px', width: '400px' }}    > </SandpackCodeEditor>
+                    <SandpackPreview viewportSize={{ width: 500, height: 500 }} />
+                    <SimpleCodeViewer />
                   </SandpackLayout>
                 </SandpackThemeProvider>
               </SandpackProvider>
@@ -428,15 +451,22 @@ a {
 
             </Card>
           </Grid>
-          
-          <Grid item xs={8}></Grid>
+
+          <Grid item xs={completed ? 6 : 8}></Grid>
           <Grid item xs={2} key="fot">
             <Button variant="contained" onClick={goBack} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
-              ΠΑΜΕ ΠΙΣΩ
+              ΠΙΣΩ
             </Button>
           </Grid>
+          {completed && (
+            <Grid item xs={2} key="fot">
+              <Button variant="contained" onClick={goNext} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+                επομενο
+              </Button>
+            </Grid>
+          )}
 
-          <Grid style={{ display: 'flex', width: '100%', marginTop: '2%' }} item xs={2} key="fot">
+          <Grid style={{ display: 'flex', width: '100%' }} item xs={2} key="fot">
             <Popconfirm
               title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}
               onConfirm={showSolutionModal}
@@ -446,7 +476,7 @@ a {
 
             >
 
-              <Button variant="contained" color="secondary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+              <Button variant="contained" style={{ backgroundColor: '#19E619', minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
                 λυση
               </Button>
             </Popconfirm>
@@ -498,12 +528,16 @@ export async function getServerSideProps(context) {
       token = token.replace('Bearer ', '');
       token = jwt.verify(token, KEY);
 
-      const bool = await validityCheck('v4',token.email);
-      if(bool){
+      const bool = await validityCheck('v4', token.email);
+      if (bool) {
+        const completed = await checkLessonTaken(token.email, 'v5');
+
         return {
-          props: {},
+          props: {
+            completed
+          },
         };
-      }else{
+      } else {
         return {
           redirect: {
             destination: '/vueTutorial/fourth',

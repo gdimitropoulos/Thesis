@@ -95,6 +95,15 @@ export default function Start({ completed }) {
     statuses = [];
   }
 
+  const pasteHandler = (event) => {
+    if (event.path.length >15) {
+      var clipboardData, pastedData;
+      clipboardData = event.clipboardData || window.clipboardData;
+      pastedData = clipboardData.getData('Text');
+      const count = pastedData.length - 1   
+      totalCharsWritten += count;
+    }
+}
   const eventHandler = (event) => {
 
     if (event.path[0].className == 'cm-content') {
@@ -194,8 +203,13 @@ export default function Start({ completed }) {
 
 
     useEffect(() => {
+      window.addEventListener('paste', pasteHandler)
       window.addEventListener('keydown', eventHandler);
-      return () => window.removeEventListener('keydown', eventHandler);
+      return () => {
+        window.removeEventListener('paste', pasteHandler)
+        window.removeEventListener('keydown', eventHandler);
+        return null
+      }
 
     }, []);
 

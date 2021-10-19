@@ -73,7 +73,7 @@ export default function Start() {
                             <ul>
                                 <li>  <Typography variant="subtitle1" style={{ marginTop: '2%' , textAlign: 'justify',width: '100%' }}> 
                              O πιο δημοφιλής τρόπος αρχικοποίησης ενώς React Single Page Application είναι μέσω του <span style={{fontStyle:'italic'}}>create-react-app</span>. 
-                             Xρησιμοποιούμε την εντολή <span style={{backgroundColor:'#f4f4f4'}}>npx create-react-app my-app </span> 
+                             Τρέχουμε την εντολή <span style={{backgroundColor:'#f4f4f4'}}>npx create-react-app my-app </span> στο terminal 
                               για να αρχικοποιήσουμε το πρότζεκτ μας. Έπειτα απο την ολοκλήρωση της αρχικοποίησης θα πρέπει η μορφή του να είναι η εξής:
 
                             </Typography>
@@ -122,9 +122,9 @@ export default function Start() {
                         </Button>
                     </Grid>
 
-                    <Grid item xs={2} key="fot">
+                    <Grid item xs={2} key="fot1">
 
-                            <Button variant="contained" onClick={Move} color="secondary" style={{ marginTop: '5%' , marginBottom: '5%' }}>
+                            <Button variant="contained" onClick={Move} color="primary" style={{ marginTop: '5%' , marginBottom: '5%' }}>
                                 Παμε στο επομενο
                             </Button>
 

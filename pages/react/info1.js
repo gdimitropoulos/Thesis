@@ -100,7 +100,7 @@ export default function Info1() {
                             </div>
 
                             <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
-                                To index.js   είναι ο φάκελος που δέχεται ολόκληρο το  application και το κάνει render στην
+                                To index.js   είναι το αρχείο που δέχεται ολόκληρο το  application και το κάνει render στην
                                 Ηtml μέσω των  μεθόδων ReactDOM.render()  που διαθέτει το framework.
                                 { /* 
                          <CopyBlock
@@ -200,13 +200,13 @@ export default function Info1() {
                     <Grid item xs={8}></Grid>
                     <Grid item xs={2} key="fot">
                         <Button variant="contained" onClick={goBack} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
-                            ΠΑΜΕ ΠΙΣΩ
+                             ΠΙΣΩ
                         </Button>
                     </Grid>
 
-                    <Grid item xs={2} key="fot">
+                    <Grid item xs={2} key="fot1">
 
-                        <Button variant="contained" onClick={Move} color="secondary" style={{ marginTop: '5%', marginBottom: '5%' }}>
+                        <Button variant="contained" onClick={Move} color="primary" style={{ marginTop: '5%', marginBottom: '5%' }}>
                             Παμε στο επομενο
                         </Button>
 

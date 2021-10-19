@@ -15,7 +15,7 @@ import {
   Card,
   Box,
 } from "@material-ui/core";
-import { validityCheck } from '../../Lib/dao';
+import { validityCheck, checkLessonTaken } from '../../Lib/dao';
 import { CopyBlock, dracula } from "react-code-blocks";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -45,13 +45,13 @@ import { getAppCookies } from '../../Lib/utils'
 
 
 let backspaces = 0;
-let totalCharsWritten=0;
-let writeFlag=0;
-let totalTries=0;
-const timeStartingWriting=[]
-const timeFinishingTest=[];
-const backspacesPerTry=[];
-const totaltCharsPerTry=[];
+let totalCharsWritten = 0;
+let writeFlag = 0;
+let totalTries = 0;
+const timeStartingWriting = []
+const timeFinishingTest = [];
+const backspacesPerTry = [];
+const totaltCharsPerTry = [];
 const time = moment();
 
 const style = {
@@ -70,7 +70,7 @@ const style = {
   p: 4,
 };
 
-export default function Start() {
+export default function Start({ completed }) {
   const router = useRouter();
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openFail, setOpenFail] = useState(false);
@@ -87,16 +87,28 @@ export default function Start() {
     statuses = [];
   }
 
-  const goBack = ()=>{
+  const goBack = () => {
     router.push('/react/second')
   }
-  const eventHandler = (event)=>{
-      
+  const goNext = () => {
+    router.push('/react/fourth')
+  }
+  const pasteHandler = (event) => {
+    if (event.path.length >15) {
+      var clipboardData, pastedData;
+      clipboardData = event.clipboardData || window.clipboardData;
+      pastedData = clipboardData.getData('Text');
+      const count = pastedData.length - 1   
+      totalCharsWritten += count;
+    }
+}
+  const eventHandler = (event) => {
+
     if (event.path[0].className == 'cm-content') {
-      if( (event.which > 46 && event.which<91) || ( event.which>95 && event.which<112) || (event.which>183 && event.which<230) || (event.which>151 && event.which<165 )){
+      if ((event.which > 46 && event.which < 91) || (event.which > 95 && event.which < 112) || (event.which > 183 && event.which < 230) || (event.which > 151 && event.which < 165)) {
         totalCharsWritten++;
-        if(writeFlag == 0){
-          writeFlag=1;
+        if (writeFlag == 0) {
+          writeFlag = 1;
           timeStartingWriting.push(moment());
         }
       }
@@ -105,7 +117,7 @@ export default function Start() {
       }
     }
 
-}
+  }
   const handlecloseSolution = async () => {
     setshowSolution(false)
   }
@@ -115,7 +127,7 @@ export default function Start() {
       time,
       backspaces: backspaces,
       lessonName: 'r3',
-      tutorailName:'react',
+      tutorailName: 'react',
       answer: answerShown,
       totalTries,
       totaltCharsPerTry,
@@ -161,12 +173,17 @@ export default function Start() {
     const { code, updateCode } = useActiveCode();
 
 
-    
-    useEffect(() => {
-      window.addEventListener('keydown',eventHandler);
-      return () =>  window.removeEventListener('keydown',eventHandler);
 
-    },[]);
+    useEffect(() => {
+      window.addEventListener('paste', pasteHandler)
+      window.addEventListener('keydown', eventHandler);
+      return () => {
+        window.removeEventListener('paste', pasteHandler)
+        window.removeEventListener('keydown', eventHandler);
+        return null
+      }
+
+    }, []);
 
     useEffect(() => {
       window.addEventListener('message', (event) => {
@@ -183,21 +200,22 @@ export default function Start() {
         }
 
       });
-    }, [listen,dispatch,setActiveFile]);
+    }, [listen, dispatch, setActiveFile]);
 
-    const runTests = () => { 
-      writeFlag=0
+    const runTests = () => {
+      writeFlag = 0
       backspacesPerTry.push(backspaces);
       totaltCharsPerTry.push(totalCharsWritten);
       totalTries++;
       timeFinishingTest.push(moment());
-      dispatch({ type: 'run-all-tests' }); };
-      
+      dispatch({ type: 'run-all-tests' });
+    };
+
     const codee = files[activePath].code;
 
     return (
       <div style={{ width: '100%', height: '40px' }}>
-        <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }} onClick={runTests} > Run Tests  </Button>;
+        <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }} onClick={runTests} > ελεγχος  </Button>;
       </div>
     );
   };
@@ -208,10 +226,10 @@ export default function Start() {
   return (
 
     <div style={{ height: '60%' }}>
-    <div style={{ height: '80%', marginBottom: '1%', marginTop: '2%', paddingTop: '2%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
-    <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
-      <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
-        <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
+      <div style={{ height: '80%', marginBottom: '1%', marginTop: '2%', paddingTop: '2%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
+        <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
+          <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
+            <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
               <div style={{ marginBottom: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
               <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}> Lifecycle Methods and Class Component </Typography>
               <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
@@ -277,18 +295,14 @@ export default function Start() {
 
               <CopyBlock
                 text=
-                {` 
- function setCounter(value) {
-      this.setState={counter: value}
-                  }
-             `}
+                {`this.setState({counter: value})`}
                 language="actionscript"
                 showLineNumbers={true}
                 theme={dracula}
                 codeBlock
               />
               <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
-                Στο παραπάνω παράδειγμα η συνάρητηση setCounter θέτει τον counter του state σε μια τιμή value!
+                Στο παραπάνω παράδειγμα η συνάρητηση setState θέτει τον counter του state σε μια τιμή value!
               </Typography>
 
               <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
@@ -305,11 +319,11 @@ export default function Start() {
                   codeBlock
                 />
               </Typography>
-              <Typography variant="subtitle1" style={{ marginBottom: '2%',textAlign: 'justify', width: '100%' }}>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
                 Στον παραπάνω κώδικα καλείται η συνάρτηση που ορίσαμε προηγουμένως
                 όταν αρχικοποιηθεί το component μας.
               </Typography>
-              <Typography variant="subtitle1" style={{ marginBottom: '2%',textAlign: 'justify', width: '100%' }}>
+              <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
                 Επειδή στα πλάισια του μαθημάτος δεν προλαβαίνουμε να καλύψουμε τα περισσότερα κομμάτια της React που αφορούν τα class components και
                 τις lifecycle μεθόδους αν θέλετε περισσότερες πληροφορίες μπορείτε να τις βρείτε <a
                   className="App-link"
@@ -384,9 +398,9 @@ export default function Start() {
 
                 <SandpackThemeProvider  >
                   <SandpackLayout theme="codesandbox-dark">
-                    <SimpleCodeViewer />
-                    <SandpackCodeEditor showLineNumbers="true" showTabs="true" customStyle={{ marginTop: '10px', height: '500px', width: '400px' }}    > </SandpackCodeEditor>
+                    <SandpackCodeEditor showLineNumbers="true" showTabs="true" customStyle={{ marginTop: '10px', height: '490px', width: '400px' }}    > </SandpackCodeEditor>
                     <SandpackPreview viewportSize={{ width: 500, height: 500 }} />
+                    <SimpleCodeViewer />
                   </SandpackLayout>
                 </SandpackThemeProvider>
               </SandpackProvider>
@@ -445,14 +459,20 @@ export default function Start() {
 
             </Card>
           </Grid>
-          
-          <Grid item xs={8}></Grid>
+
+          <Grid item xs={completed ? 6 : 8}></Grid>
           <Grid item xs={2} key="fot">
             <Button variant="contained" onClick={goBack} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
-              ΠΑΜΕ ΠΙΣΩ
+              ΠΙΣΩ
             </Button>
           </Grid>
-
+          {completed && (
+            <Grid item xs={2} key="fot">
+              <Button variant="contained" onClick={goNext} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+                επομενο
+              </Button>
+            </Grid>
+          )}
           <Grid item xs={2} key="fot">
             <Popconfirm
               title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}
@@ -463,7 +483,7 @@ export default function Start() {
             >
 
 
-              <Button variant="contained" color="secondary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+              <Button variant="contained" style={{ backgroundColor: '#19E619', minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
                 λυση
               </Button>
             </Popconfirm>
@@ -514,12 +534,15 @@ export async function getServerSideProps(context) {
     if (token) {
       token = token.replace('Bearer ', '');
       token = jwt.verify(token, KEY);
-      const bool = await validityCheck('r2',token.email);
-      if(bool){
+      const bool = await validityCheck('r2', token.email);
+      if (bool) {
+        const completed = await checkLessonTaken(token.email,'r3')
         return {
-          props: {},
+          props: {
+            completed
+          },
         };
-      }else{
+      } else {
         return {
           redirect: {
             destination: '/react/second',

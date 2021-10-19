@@ -199,7 +199,7 @@ export default function Info1() {
 
                     <Grid item xs={2} key="fot">
 
-                        <Button variant="contained" onClick={Move} color="secondary" style={{ marginTop: '5%', marginBottom: '5%' }}>
+                        <Button variant="contained" onClick={Move} color="primary" style={{ marginTop: '5%', marginBottom: '5%' }}>
                             Παμε στο επομενο
                         </Button>
 

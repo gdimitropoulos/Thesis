@@ -36,6 +36,7 @@ import {
 } from "@codesandbox/sandpack-react";
 import "@codesandbox/sandpack-react/dist/index.css";
 import showNotification from '../../Lib/notification'
+import { checkLessonTaken } from '../../Lib/dao';
 import { getAppCookies } from '../../Lib/utils'
 
 let backspaces = 0;
@@ -64,7 +65,7 @@ const style = {
   p: 4,
 };
 
-export default function Start() {
+export default function Start({ completed }) {
   const router = useRouter();
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openFail, setOpenFail] = useState(false);
@@ -81,9 +82,22 @@ export default function Start() {
     statuses = [];
   }
 
-  const goBack = () =>{
+  const goBack = () => {
     router.push('/react/info1')
   }
+  const goNext = () => {
+    router.push('/react/second')
+  }
+  const pasteHandler = (event) => {
+    if (event.path.length >15) {
+      var clipboardData, pastedData;
+      clipboardData = event.clipboardData || window.clipboardData;
+      pastedData = clipboardData.getData('Text');
+      const count = pastedData.length - 1   
+      totalCharsWritten += count;
+    }
+}
+
   const eventHandler = (event) => {
 
     if (event.path[0].className == 'cm-content') {
@@ -187,8 +201,13 @@ export default function Start() {
 
 
     useEffect(() => {
+      window.addEventListener('paste', pasteHandler)
       window.addEventListener('keydown', eventHandler);
-      return () => window.removeEventListener('keydown', eventHandler);
+      return () => {
+        window.removeEventListener('paste', pasteHandler)
+        window.removeEventListener('keydown', eventHandler);
+        return null
+      }
 
     }, []);
 
@@ -205,7 +224,7 @@ export default function Start() {
 
     return (
       <div style={{ width: '100%', height: '40px' }}>
-        <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }} onClick={runTests} > Run Tests  </Button>;
+        <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }} onClick={runTests} > ελεγχος </Button>;
       </div>
     );
   };
@@ -283,9 +302,9 @@ export default function Start() {
 
                 <SandpackThemeProvider  >
                   <SandpackLayout theme="codesandbox-dark">
-                    <SimpleCodeViewer />
-                    <SandpackCodeEditor showTabs="true" customStyle={{ marginTop: '10px', height: '500px', width: '400px' }}    > </SandpackCodeEditor>
+                    <SandpackCodeEditor showLineNumbers="true" showTabs="true" customStyle={{ marginTop: '10px', height: '490px', width: '400px' }}    > </SandpackCodeEditor>
                     <SandpackPreview viewportSize={{ width: 500, height: 500 }} />
+                    <SimpleCodeViewer />
                   </SandpackLayout>
                 </SandpackThemeProvider>
               </SandpackProvider>
@@ -344,12 +363,19 @@ export default function Start() {
             </Card>
           </Grid>
 
-          <Grid item xs={8}></Grid>
+          <Grid item xs={completed ? 6 : 8}></Grid>
           <Grid item xs={2} key="fot">
             <Button variant="contained" onClick={goBack} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
-              ΠΑΜΕ ΠΙΣΩ
+              ΠΙΣΩ
             </Button>
           </Grid>
+          {completed && (
+            <Grid item xs={2} key="fot">
+              <Button variant="contained" onClick={goNext} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+                ΕΠΟΜΕΝΟ
+              </Button>
+            </Grid>
+          )}
 
           <Grid item xs={2} key="fot">
             <Popconfirm
@@ -360,7 +386,7 @@ export default function Start() {
 
             >
 
-              <Button variant="contained" color="secondary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+              <Button variant="contained" style={{ backgroundColor: '#19E619', minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
                 λυση
               </Button>
             </Popconfirm>
@@ -412,9 +438,12 @@ export async function getServerSideProps(context) {
       token = token.replace('Bearer ', '');
       token = jwt.verify(token, KEY);
 
+      const completed = await checkLessonTaken(token.email,'r1');
 
       return {
-        props: {},
+        props: {
+          completed
+        },
       };
 
     }

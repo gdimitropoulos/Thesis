@@ -14,7 +14,7 @@ import {
   Card,
   Box,
 } from "@material-ui/core";
-import { validityCheck } from '../../Lib/dao';
+import { validityCheck, checkLessonTaken } from '../../Lib/dao';
 import { CopyBlock, dracula } from "react-code-blocks";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -68,7 +68,7 @@ const style = {
   p: 4,
 };
 
-export default function Start() {
+export default function Start({ completed }) {
   const router = useRouter();
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openFail, setOpenFail] = useState(false);
@@ -88,6 +88,15 @@ export default function Start() {
   const handlecloseSolution = async () => {
     setshowSolution(false)
   }
+  const pasteHandler = (event) => {
+    if (event.path.length >15) {
+      var clipboardData, pastedData;
+      clipboardData = event.clipboardData || window.clipboardData;
+      pastedData = clipboardData.getData('Text');
+      const count = pastedData.length - 1   
+      totalCharsWritten += count;
+    }
+}
   const eventHandler = (event) => {
 
     if (event.path[0].className == 'cm-content') {
@@ -106,8 +115,11 @@ export default function Start() {
 
   }
 
-  const goBack= ()=>{
+  const goBack = () => {
     router.push('/react/start')
+  }
+  const goNext = () => {
+    router.push('/react/third')
   }
   const handleCloseSuccess = async () => {
     console.log(moment().diff(time, 'seconds'));
@@ -162,9 +174,13 @@ export default function Start() {
 
 
     useEffect(() => {
+      window.addEventListener('paste', pasteHandler)
       window.addEventListener('keydown', eventHandler);
-      return () => window.removeEventListener('keydown', eventHandler);
-
+      return () => {
+        window.removeEventListener('paste', pasteHandler)
+        window.removeEventListener('keydown', eventHandler);
+        return null
+      }
     }, []);
 
     useEffect(() => {
@@ -197,7 +213,7 @@ export default function Start() {
 
     return (
       <div style={{ width: '100%', height: '40px' }}>
-        <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }} onClick={runTests} > Run Tests  </Button>;
+        <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }} onClick={runTests} > ελεγχος  </Button>;
       </div>
     );
   };
@@ -306,7 +322,7 @@ function MyComponent({myprop}) {
                 Στο παραπάνω παράδειγμα δηλώνουμε  ως prop την μεταβλήτη myprop που δέχεται ως είσοδο το component.
               </Typography>
               <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
-                Για να χρησιμοποιήσουμε τώρα αυτήν την μεταβλητή στο <span style={{ backgroundColor: '#f4f4f4' }}>{`<template>`}</span> tag μπορούμε να ακολουθήσουμε το παρακάτω παράδειγμα :
+                Για να χρησιμοποιήσουμε τώρα αυτήν την μεταβλητή π.χ. στο <span style={{ backgroundColor: '#f4f4f4' }}>{`<h1>`}</span> tag μπορούμε να ακολουθήσουμε το παρακάτω παράδειγμα :
                 <CopyBlock
                   text=
                   {`
@@ -382,9 +398,9 @@ function MyComponent({myprop}) {
 
                 <SandpackThemeProvider  >
                   <SandpackLayout theme="codesandbox-dark">
-                    <SimpleCodeViewer />
-                    <SandpackCodeEditor showLineNumbers="true" showTabs="true" customStyle={{ marginTop: '10px', height: '500px', width: '400px' }}    > </SandpackCodeEditor>
+                    <SandpackCodeEditor showLineNumbers="true" showTabs="true" customStyle={{ marginTop: '10px', height: '490px', width: '400px' }}    > </SandpackCodeEditor>
                     <SandpackPreview viewportSize={{ width: 500, height: 500 }} />
+                    <SimpleCodeViewer />
                   </SandpackLayout>
                 </SandpackThemeProvider>
               </SandpackProvider>
@@ -442,13 +458,20 @@ function MyComponent({myprop}) {
 
             </Card>
           </Grid>
-         
-          <Grid item xs={8}></Grid>
+
+          <Grid item xs={completed ? 6 : 8}></Grid>
           <Grid item xs={2} key="fot">
             <Button variant="contained" onClick={goBack} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
-              ΠΑΜΕ ΠΙΣΩ
+              ΠΙΣΩ
             </Button>
           </Grid>
+          {completed && (
+            <Grid item xs={2} key="fot">
+              <Button variant="contained" onClick={goNext} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+                επομενο
+              </Button>
+            </Grid>
+          )}
 
           <Grid item xs={2} key="fot">
             <Popconfirm
@@ -459,7 +482,7 @@ function MyComponent({myprop}) {
 
             >
 
-              <Button variant="contained" color="secondary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
+              <Button variant="contained" style={{ backgroundColor: '#19E619', minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
                 λυση
               </Button>
             </Popconfirm>
@@ -510,12 +533,15 @@ export async function getServerSideProps(context) {
     if (token) {
       token = token.replace('Bearer ', '');
       token = jwt.verify(token, KEY);
-      const bool = await validityCheck('r1',token.email);
-      if(bool){
+      const bool = await validityCheck('r1', token.email);
+      if (bool) {
+        const completed = await checkLessonTaken(token.email,'r2')
         return {
-          props: {},
+          props: {
+            completed
+          },
         };
-      }else{
+      } else {
         return {
           redirect: {
             destination: '/react/info',
