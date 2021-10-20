@@ -206,7 +206,7 @@ export default function Info1() {
 
                     <Grid item xs={2} key="fot1">
 
-                        <Button variant="contained" onClick={Move} color="primary" style={{ marginTop: '5%', marginBottom: '5%' }}>
+                        <Button variant="contained" onClick={Move} color="primary" style={{ minWidth: 200, marginTop: '5%', marginBottom: '5%' }}>
                          επομενο
                         </Button>
 
