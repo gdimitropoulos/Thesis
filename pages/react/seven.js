@@ -134,14 +134,14 @@ export default function Eight({ completed }) {
     router.push('/user/dashboard')
   }
   const pasteHandler = (event) => {
-    if (event.path.length >15) {
+    if (event.path.length > 15) {
       var clipboardData, pastedData;
       clipboardData = event.clipboardData || window.clipboardData;
       pastedData = clipboardData.getData('Text');
-      const count = pastedData.length - 1   
+      const count = pastedData.length - 1
       totalCharsWritten += count;
     }
-}
+  }
   const eventHandler = (event) => {
 
     if (event.path[0].className == 'cm-content') {
@@ -209,7 +209,7 @@ export default function Eight({ completed }) {
 
   const SimpleCodeViewer = () => {
     const { sandpack, dispatch, listen } = useSandpack();
-    const { files, activePath, setActiveFile, openFile } = sandpack;
+    const { files, activePath, setActiveFile, openFile, resetAllFiles } = sandpack;
     const { refresh } = useSandpackNavigation();
     const { code, updateCode } = useActiveCode();
 
@@ -255,9 +255,12 @@ export default function Eight({ completed }) {
     const codee = files[activePath].code;
 
     return (
-      <div style={{ width: '100%', height: '40px' }}>
-        <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }} onClick={runTests} > ελεγχοσ </Button>;
-      </div>
+      <>
+        <div style={{ width: '100%', display: 'flex', justifyContent: 'center', backgroundColor: 'white' }}>
+          <Button variant="contained" color='primary' style={{ height: '40px', width: "50%", textAlign: 'center' }} onClick={resetAllFiles} > επαναφορα κωδικα  </Button>;
+          <Button variant="contained" color='primary' style={{ height: '40px', width: "50%", textAlign: 'center' }} onClick={runTests} > ελεγχοσ  </Button>;
+        </div>
+      </>
     );
   };
 
@@ -279,11 +282,11 @@ export default function Eight({ completed }) {
               </Typography>
 
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                Ο τρόπος για να χρησιμοποιήσουμε τα route  paths που φτιάξατε στο προηγούμενο μάθημα και να δημιουργήσουμε 
+                Ο τρόπος για να χρησιμοποιήσουμε τα route  paths που φτιάξατε στο προηγούμενο μάθημα και να δημιουργήσουμε
                 ένα single page application  είναι μέσω των
                 <span style={{ backgroundColor: '#f4f4f4' }}> {`<Links></Links>`}</span>. Στα<span style={{ backgroundColor: '#f4f4f4' }}> {`<Links></links>`}</span> tags
-                 μπορούμε να χρησιμοποιήσουμε την ιδιότητα <span style={{ backgroundColor: '#f4f4f4' }}> to</span> για να υποδείξουμε σε ποιο 
-                 path θα θέλαμε να μεταβούμε ενώ δεν πρέπει να ξεχνάμε ότι πάντα χρειάζονται
+                μπορούμε να χρησιμοποιήσουμε την ιδιότητα <span style={{ backgroundColor: '#f4f4f4' }}> to</span> για να υποδείξουμε σε ποιο
+                path θα θέλαμε να μεταβούμε ενώ δεν πρέπει να ξεχνάμε ότι πάντα χρειάζονται
                 λεκτικό εμφωλευμενο στο tag τους γιατι αλλιώς δεν θα εμφανιστούν στην οθόνη.
                 Ας δούμε ένα παράδειγμα.
               </Typography>
@@ -554,7 +557,7 @@ export async function getServerSideProps(context) {
       if (bool) {
         const completed = await checkLessonTaken(token.email, 'r7')
         return {
-          props: {completed},
+          props: { completed },
         };
       } else {
         return {

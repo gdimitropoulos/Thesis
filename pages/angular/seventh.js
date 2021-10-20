@@ -135,14 +135,14 @@ export default function Start({ completed }) {
     statuses = [];
   }
   const pasteHandler = (event) => {
-    if (event.path.length >15) {
+    if (event.path.length > 15) {
       var clipboardData, pastedData;
       clipboardData = event.clipboardData || window.clipboardData;
       pastedData = clipboardData.getData('Text');
-      const count = pastedData.length - 1   
+      const count = pastedData.length - 1
       totalCharsWritten += count;
     }
-}
+  }
   const eventHandler = (event) => {
 
     if (event.path[0].className == 'cm-content') {
@@ -214,7 +214,7 @@ export default function Start({ completed }) {
 
   const SimpleCodeViewer = () => {
     const { sandpack, dispatch, listen } = useSandpack();
-    const { files, activePath, setActiveFile, openFile } = sandpack;
+    const { files, activePath, setActiveFile, openFile, resetAllFiles } = sandpack;
 
 
 
@@ -264,9 +264,12 @@ export default function Start({ completed }) {
 
 
     return (
-      <div style={{ width: '100%', height: '40px' }}>
-        <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }} onClick={runTests} > ελεγχος  </Button>;
-      </div>
+      <>
+        <div style={{ width: '100%', display: 'flex', justifyContent: 'center', backgroundColor: 'white' }}>
+          <Button variant="contained" color='primary' style={{ height: '40px', width: "50%", textAlign: 'center' }} onClick={resetAllFiles} > επαναφορα κωδικα  </Button>;
+          <Button variant="contained" color='primary' style={{ height: '40px', width: "50%", textAlign: 'center' }} onClick={runTests} > ελεγχοσ  </Button>;
+        </div>
+      </>
     );
   };
 

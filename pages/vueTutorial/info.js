@@ -69,11 +69,12 @@ export default function VueInfo() {
                             </Typography>
                             <ul>
                                 <li>  <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
-                                    O πιο δημοφιλής τρόπος αρχικοποίησης είναι μέσω του Vue CLI. Για να κατεβάσουμε το Vue CLI χρησιμοποιούμε την εντολή <span style={{ backgroundColor: '#f4f4f4' }}>npm install -g @vue/cli</span>
+                                    O πιο δημοφιλής τρόπος αρχικοποίησης είναι μέσω του Vue CLI. Για να κατεβάσουμε το Vue CLI τρέχουμε την εντολή <span style={{ backgroundColor: '#f4f4f4' }}>npm install -g @vue/cli</span> στο terminal
 
                                 </Typography></li>
                                 <li>  <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
-                                    Έπειτα χρησιμοποιώντας την εντολή <span style={{ backgroundColor: '#f4f4f4' }}>vue create όνομα_πρότζεκτ</span> μπορούμε να δημιουργήσουμε το πρότζεκτ μας, το οποίο για την πιο καινούρια έκδοση του Vue θα έχει την εξής μορφή :
+                                    Έπειτα χρησιμοποιώντας την εντολή <span style={{ backgroundColor: '#f4f4f4' }}>vue create όνομα_πρότζεκτ</span> μπορούμε
+                                     να δημιουργήσουμε το πρότζεκτ μας, το οποίο για την πιο καινούρια έκδοση της Vue θα έχει την εξής μορφή :
                                 </Typography>
                                     <Image style={{ marginTop: 5 }} src={treePic} alt="Picture of the folders tree" />
                                     <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>

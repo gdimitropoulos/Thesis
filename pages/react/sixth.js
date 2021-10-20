@@ -175,7 +175,7 @@ export default function Start({ completed }) {
 
   const SimpleCodeViewer = () => {
     const { sandpack, dispatch, listen } = useSandpack();
-    const { files, activePath, setActiveFile, openFile } = sandpack;
+    const { files, activePath, setActiveFile, openFile, resetAllFiles } = sandpack;
     const { refresh } = useSandpackNavigation();
     const { code, updateCode } = useActiveCode();
 
@@ -222,9 +222,12 @@ export default function Start({ completed }) {
     const codee = files[activePath].code;
 
     return (
-      <div style={{ width: '100%', height: '40px' }}>
-        <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }} onClick={runTests} > ελεγχος </Button>;
+      <>
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', backgroundColor: 'white' }}>
+        <Button variant="contained" color='primary' style={{ height: '40px', width: "50%", textAlign: 'center' }} onClick={resetAllFiles} > επαναφορα κωδικα  </Button>;
+        <Button variant="contained" color='primary' style={{ height: '40px', width: "50%", textAlign: 'center' }} onClick={runTests} > ελεγχοσ  </Button>;
       </div>
+    </>
     );
   };
 

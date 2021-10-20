@@ -88,14 +88,14 @@ export default function Start({ completed }) {
   }
 
   const pasteHandler = (event) => {
-    if (event.path.length >15) {
+    if (event.path.length > 15) {
       var clipboardData, pastedData;
       clipboardData = event.clipboardData || window.clipboardData;
       pastedData = clipboardData.getData('Text');
-      const count = pastedData.length - 1   
+      const count = pastedData.length - 1
       totalCharsWritten += count;
     }
-}
+  }
 
   const eventHandler = (event) => {
 
@@ -160,7 +160,7 @@ export default function Start({ completed }) {
   const showSolutionModal = () => { setshowSolution(true); setAnswerShown(true) }
   const SimpleCodeViewer = () => {
     const { sandpack, dispatch, listen } = useSandpack();
-    const { files, activePath, setActiveFile, openFile } = sandpack;
+    const { files, activePath, setActiveFile, openFile, resetAllFiles } = sandpack;
 
 
 
@@ -188,10 +188,10 @@ export default function Start({ completed }) {
 
 
     useEffect(() => {
-      window.addEventListener('paste',pasteHandler )
+      window.addEventListener('paste', pasteHandler)
       window.addEventListener('keydown', eventHandler);
       return () => {
-        window.removeEventListener('paste',pasteHandler )
+        window.removeEventListener('paste', pasteHandler)
         window.removeEventListener('keydown', eventHandler);
         return null
       }
@@ -209,9 +209,12 @@ export default function Start({ completed }) {
 
 
     return (
-      <div style={{ width: '100%', height: '40px' }}>
-        <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }} onClick={runTests} > ελεγχοσ </Button>;
+      <>
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', backgroundColor: 'white' }}>
+        <Button variant="contained" color='primary' style={{ height: '40px', width: "50%", textAlign: 'center' }} onClick={resetAllFiles} > επαναφορα κωδικα  </Button>;
+        <Button variant="contained" color='primary' style={{ height: '40px', width: "50%", textAlign: 'center' }} onClick={runTests} > ελεγχοσ  </Button>;
       </div>
+    </>
     );
   };
 
@@ -220,10 +223,10 @@ export default function Start({ completed }) {
 
   return (
     <div style={{ height: '60%' }}>
-    <div style={{ height: '80%', marginBottom: '1%', marginTop: '2%', paddingTop: '2%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
-      <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
-        <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
-          <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
+      <div style={{ height: '80%', marginBottom: '1%', marginTop: '2%', paddingTop: '2%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
+        <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
+          <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
+            <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
               <div style={{ marginBottom: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
               <Typography variant="h6" style={{ marginBottom: '2%', width: '100%', marginBottom: '1%' }}> To πρώτο σας custom Component </Typography>
               <Typography variant="subtitle1" style={{ textAlign: 'justify', width: '100%' }}>
@@ -302,7 +305,20 @@ export default function Start({ completed }) {
                   codeBlock
                 />
               </Typography>
-
+              <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
+                O τρόπος για να περνάμε props στα component είναι ο εξής
+                <CopyBlock
+                  text=
+                  {`<template>
+   <MyComponent  title="This is my prop" />
+</template>`
+ } language="html"
+                  showLineNumbers={true}
+                  theme={dracula}
+                  codeBlock
+                />
+                Στον παραπάνω κώδικα καλούμε το componet ΜyComponent και του περνάμε το prop "title" με τιμή : "this is my prop"
+              </Typography>
 
               <div style={{ marginTop: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <CheckCircleOutlineIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Οδηγίες </h3>  </div>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
@@ -481,7 +497,7 @@ export async function getServerSideProps(context) {
 
       const bool = await validityCheck('v1', token.email);
       if (bool) {
-        const completed= await checkLessonTaken(token.email, 'v2');
+        const completed = await checkLessonTaken(token.email, 'v2');
 
         return {
           props: {

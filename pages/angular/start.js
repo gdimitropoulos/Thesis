@@ -165,7 +165,7 @@ const time = moment();
   
     const SimpleCodeViewer = () => {
       const { sandpack, dispatch, listen } = useSandpack();
-      const { files, activePath, setActiveFile, openFile } = sandpack;
+      const { files, activePath, setActiveFile, openFile, resetAllFiles } = sandpack;
   
   
   
@@ -213,9 +213,12 @@ const time = moment();
         dispatch({ type: 'run-all-tests' }); };  
   
       return (
-        <div style={{ width: '100%', height: '40px' }}>
-          <Button variant="contained" color="primary" style={{ background: '6495ED' ,height: '40px', width: "100%",fontWeight: 'bold', textAlign: 'center' }} onClick={runTests} > ελεγχοσ </Button>;
+        <>
+        <div style={{ width: '100%', display: 'flex', justifyContent: 'center', backgroundColor: 'white' }}>
+          <Button variant="contained" color='primary' style={{ height: '40px', width: "50%", textAlign: 'center' }} onClick={resetAllFiles} > επαναφορα κωδικα  </Button>;
+          <Button variant="contained" color='primary' style={{ height: '40px', width: "50%", textAlign: 'center' }} onClick={runTests} > ελεγχοσ  </Button>;
         </div>
+      </>
       );
     };
   
