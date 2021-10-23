@@ -188,20 +188,24 @@ export default function Start({ completed }) {
     }, []);
 
     useEffect(() => {
-      window.addEventListener('message', (event) => {
-        console.log(event)
-        if (event.data.event == 'test_end') {
-          if (event.data.test.status == 'fail') {
+      const unsubscribe = listen((msg) => {
+        if (msg.event == 'test_end') {
+          if (msg.test.status == 'fail') {
             dispatch({ type: 'refresh' });
             setActiveFile('/App.js')
           }
-          statuses.push(event.data.test.status);
+          statuses.push(msg.test.status);
         }
-        if (event.data.event == 'total_test_end') {
+        if(msg.event=='file_error' && msg.type=='test'){
+          statuses.push('fail')
+        }
+        if (msg.event == 'total_test_end') {
           handleOpen();
         }
 
+
       });
+      return unsubscribe;
     }, [listen, dispatch, setActiveFile]);
 
     const runTests = () => {

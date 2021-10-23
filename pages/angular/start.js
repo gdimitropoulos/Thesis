@@ -179,6 +179,9 @@ const time = moment();
             }
             statuses.push(event.data.test.status);
           }
+          if(msg.event=='file_error' && msg.type=='test'){
+            statuses.push('fail')
+          }
           if (msg.event == 'total_test_end') {
             handleOpen();
           }

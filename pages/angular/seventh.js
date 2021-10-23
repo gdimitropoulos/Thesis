@@ -220,7 +220,6 @@ export default function Start({ completed }) {
 
     useEffect(() => {
       const unsubscribe = listen((msg) => {
-        console.log(msg);
         if (msg.event == 'test_end') {
           if (msg.test.status == 'fail') {
             dispatch({ type: 'refresh' });
@@ -228,14 +227,13 @@ export default function Start({ completed }) {
           }
           statuses.push(event.data.test.status);
         }
+        if(msg.event=='file_error' && msg.type=='test'){
+          statuses.push('fail')
+        }
         if (msg.event == 'total_test_end') {
           handleOpen();
         }
-
-
       });
-
-      console.log("im listening")
       return unsubscribe;
     }, [listen, dispatch, setActiveFile]);
 

@@ -185,7 +185,10 @@ export default function Start({ completed }) {
             dispatch({ type: 'refresh' });
             setActiveFile('/App.js')
           }
-          statuses.push(event.data.test.status);
+          statuses.push(msg.test.status);
+        }
+        if(msg.event=='file_error' && msg.type=='test'){
+          statuses.push('fail')
         }
         if (msg.event == 'total_test_end') {
           handleOpen();
@@ -193,8 +196,6 @@ export default function Start({ completed }) {
 
 
       });
-
-      console.log("im listening")
       return unsubscribe;
     }, [listen, dispatch, setActiveFile]);
 
