@@ -212,14 +212,24 @@ const time = moment();
         timeFinishingTest.push(moment());
         dispatch({ type: 'run-all-tests' }); };  
   
-      return (
-        <>
-        <div style={{ width: '100%', display: 'flex', justifyContent: 'center', backgroundColor: 'white' }}>
-          <Button variant="contained" color='primary' style={{ height: '40px', width: "50%", textAlign: 'center' }} onClick={resetAllFiles} > επαναφορα κωδικα  </Button>;
-          <Button variant="contained" color='primary' style={{ height: '40px', width: "50%", textAlign: 'center' }} onClick={runTests} > ελεγχοσ  </Button>;
-        </div>
-      </>
-      );
+        return (
+          <>
+          <div style={{ width: '100%', display: 'flex', justifyContent: 'center', backgroundColor: 'white' }}>
+          <div  style={{ height: '40px', width: "50%", textAlign: 'center' }}>
+          <Popconfirm
+                  title={'Είστε σίγουρος ότι θέλετε να επαναφέρετε τον κώδικα στην αρχική του κατάσταση? Όλη η πρόοδος σας θα χαθεί.'}
+                  onConfirm={resetAllFiles}
+                  okText={'Ναι'}
+                  cancelText={'Οχι'}
+    
+                >
+            <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }}  > επαναφορα κωδικα  </Button>;
+            </Popconfirm>
+            </div>
+             <Button variant="contained" color='primary' style={{ height: '40px', width: "50%", textAlign: 'center' }} onClick={runTests} > ελεγχοσ  </Button>;
+          </div>
+        </>
+        );
     };
   
     const code = `import '@testing-library/jest-dom';

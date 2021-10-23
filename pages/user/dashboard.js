@@ -70,7 +70,7 @@ export default function Home({ react, angular, vue, introForm, finishForm, email
         await router.push('/vueTutorial/info')
     };
     const handleAngular = async (event) => {
-        await router.push('/angular/start')
+        await router.push('/angular/info')
     };
 
 
