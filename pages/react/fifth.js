@@ -178,7 +178,7 @@ export default function Start({ completed }) {
         if (msg.event == 'test_end') {
           if (msg.test.status == 'fail') {
             dispatch({ type: 'refresh' });
-            setActiveFile('/App.js')
+            setActiveFile('/News.js')
           }
           statuses.push(msg.test.status);
         }
@@ -210,6 +210,9 @@ export default function Start({ completed }) {
       backspacesPerTry.push(backspaces);
       totaltCharsPerTry.push(totalCharsWritten);
       totalTries++;
+      if(timeStartingWriting.length<timeFinishingTest.length + 1){
+        timeStartingWriting.push(moment())
+      }
       timeFinishingTest.push(moment());
       dispatch({ type: 'run-all-tests' });
     };

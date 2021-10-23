@@ -210,6 +210,9 @@ export default function Start({ completed }) {
       backspacesPerTry.push(backspaces);
       totaltCharsPerTry.push(totalCharsWritten);
       totalTries++;
+      if(timeStartingWriting.length<timeFinishingTest.length + 1){
+        timeStartingWriting.push(moment())
+      }
       timeFinishingTest.push(moment());
       dispatch({ type: 'run-all-tests' });
     };

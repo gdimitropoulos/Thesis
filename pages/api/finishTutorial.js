@@ -52,7 +52,8 @@ export default async function handler(req, res) {
 			totaltCharsPerTry[totaltCharsPerTry.length - 1]);
 
 		console.log(rows);
-
+		console.log(timeFinishingTest)
+		console.log(timeStartingWriting)
 		const tryrows = await insertLessonTry(
 			rows[0].id,
 			moment(timeFinishingTest[0]).diff(moment(timeStartingWriting[0]), 'seconds'),
@@ -61,6 +62,8 @@ export default async function handler(req, res) {
 
 		if (totalTries > 1) {
 			for (let i = 1; i < totalTries; i++) {
+				 console.log(moment(timeFinishingTest[i]), i)
+				 console.log(moment(timeStartingWriting[i]), i)
 				const tryrows = await insertLessonTry(
 					rows[0].id,
 					moment(timeFinishingTest[i]).diff(moment(timeStartingWriting[i]), 'seconds'),

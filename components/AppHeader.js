@@ -59,7 +59,7 @@ export default function AppHeader() {
               <h4  style={{ textTransform: 'none', textDecoration: 'none', color: 'white' }}>{'Web Frameworks Tutorials'}</h4>
             </Button>
             </div>
-          { user &&  (<Button variant="contained" color="text.primary" style={{ left: 0, pointerEvent:'auto', cursor: 'pointer', float: 'right'}} onClick={logout}> LogOut</Button>)}
+          { user &&  (<Button variant="contained" style={{ left: 0, pointerEvent:'auto', cursor: 'pointer', float: 'right'}} onClick={logout}> LogOut</Button>)}
         </Toolbar>
       </AppBar>
     </div>
