@@ -113,13 +113,13 @@ export default function Start() {
                     <Grid item xs={8}></Grid>
                     <Grid item xs={2} key="fot">
                         <Button variant="contained" onClick={goBack} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
-                            ΠΑΜΕ ΠΙΣΩ
+                             ΠΙΣΩ
                         </Button>
                     </Grid>
                     <Grid item xs={2} key="fot">
 
-                        <Button variant="contained" onClick={Move} color="secondary" style={{ marginTop: '5%', marginBottom: '5%' }}>
-                            Παμε στο επομενο
+                        <Button variant="contained" onClick={Move} color="primary" style={{ marginTop: '5%', marginBottom: '5%' }}>
+                             επομενο
                         </Button>
 
                     </Grid>

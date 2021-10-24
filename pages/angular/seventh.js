@@ -355,8 +355,8 @@ export default function Start({ completed }) {
                 </li>
               </ul>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                <span style={{ fontWeight: 'bold' }}> Σημείωση: </span> πρέπει να τροποποιήσετε τα αρχεία home.component.html, first.component.html,
-                second.component.html και third.component.html.
+                <span style={{ fontWeight: 'bold' }}> Σημείωση: </span> πρέπει να 
+                τροποποιήσετε τα αρχεία home.component.html,first.component.html,second.component.html και third.component.html.
               </Typography>
             </Card>
           </Grid>

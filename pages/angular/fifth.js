@@ -310,7 +310,7 @@ export default function Start({ completed }) {
               <SandpackProvider template="angular" customSetup={{
                 files: {
                   "/src/app/components/hello-world/hello-world.component.ts": { code: Helloworldjs, hidden: false },
-                  "/src/app/components/hello-world/hello-world.component.html": { code: helloworldhtml, hidden: false },
+                  "/src/app/components/hello-world/hello-world.component.html": { code: helloworldhtml, hidden: false, active: true },
                   "/src/app/components/hello-world/hello-world.component.css": { code: appcss, hidden: true },
                   "/src/app/app.component.css": { code: appcss, hidden: true },
                   "/src/app/services/hello-world.service.ts": { code: HelloWorldServicejs, hidden: true },
@@ -321,7 +321,7 @@ export default function Start({ completed }) {
                   "/src/app/app.component.html": {
                     code: appcomponenthtml,
                     hidden: false,
-                    active: true
+                    active: false
                   },
                   "/src/app/app.component.ts": { code: appcomponentjs, hidden: false },
 

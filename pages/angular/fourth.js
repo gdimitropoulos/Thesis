@@ -357,9 +357,9 @@ sum :  number;
               <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Angular js Tutorial  </Typography>
               <SandpackProvider template="angular" customSetup={{
                 files: {
-                  "/src/app/components/hello-world/hello-world.component.ts": { code: Helloworldjs, hidden: false },
+                  "/src/app/components/hello-world/hello-world.component.ts": { code: Helloworldjs, hidden: false,active: true },
                   "/src/app/components/hello-world/hello-world.component.html": { code: helloworldhtml, hidden: false },
-                  "/src/app/components/hello-world/hello-world.component.css": { code: '', hidden: false },
+                  "/src/app/components/hello-world/hello-world.component.css": { code: '', hidden: true },
                   "/src/app/app.component.css": { code: appcss, hidden: true },
                   "/src/app/services/hello-world.service.ts": { code: HelloWorldServicejs, hidden: true },
                   "/src/app/app.component.spec.ts": {
@@ -369,7 +369,7 @@ sum :  number;
                   "/src/app/app.component.html": {
                     code: appcomponenthtml,
                     hidden: false,
-                    active: true
+                    active: false
                   },
                   "/src/app/app.component.ts": { code: appcomponentjs, hidden: false },
 

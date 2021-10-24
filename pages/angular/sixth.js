@@ -184,7 +184,7 @@ export default function Start({ completed }) {
         if (msg.event == 'test_end') {
           if (msg.test.status == 'fail') {
             dispatch({ type: 'refresh' });
-            setActiveFile('/src/app/app.component.html')
+            setActiveFile('/src/app/app.module.ts')
           }
           statuses.push(event.data.test.status);
         }
@@ -418,6 +418,7 @@ const routes: Routes = [
               <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Angular js Tutorial  </Typography>
               <SandpackProvider template="angular" customSetup={{
                 files: {
+                  "/src/app/app.module.ts": { code: appmodule, hidden: false, active: true},
                   "/src/app/components/home/home.component.ts": { code: homecomponent, hidden: false },
                   "/src/app/components/home/home.component.html": { code: homecomponenthtml, hidden: false },
                   "/src/app/components/home/home.component.css": { code: appcss, hidden: true },
@@ -447,11 +448,10 @@ const routes: Routes = [
                   "/src/app/app.component.html": {
                     code: appcomponenthtml,
                     hidden: false,
-                    active: true
                   },
                   "/src/app/app.component.ts": { code: appcomponentjs, hidden: false },
 
-                  "/src/app/app.module.ts": { code: appmodule, hidden: false },
+                 
                 },
                 dependencies: {
                   "babel-runtime": "latest",
