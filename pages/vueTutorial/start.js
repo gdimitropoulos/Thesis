@@ -90,10 +90,13 @@ export default function Start({ completed }) {
 
 
   const eventHandler = (event) => {
+    console.log(event);
 
     if (event.path[0].className == 'cm-content') {
       if ((event.which > 46 && event.which < 91) || (event.which > 95 && event.which < 112) || (event.which > 183 && event.which < 230) || (event.which > 151 && event.which < 165)) {
         totalCharsWritten++;
+        console.log('hereee')
+
         console.log('im here');
         if (writeFlag == 0) {
           writeFlag = 1;
@@ -101,6 +104,7 @@ export default function Start({ completed }) {
         }
       }
       if (event.key == 'Backspace') {
+        console.log('hereee')
         backspaces++;
       }
     }

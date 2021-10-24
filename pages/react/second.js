@@ -278,7 +278,7 @@ export default function Start({ completed }) {
                 </a> .
               </Typography>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', width: '100%' }}>
-                Σε κάθε <span style={{ fontWeight: 'bold' }}> functional component</span> θα υπάρχει το export default <span style={{ fontStyle: 'italic' }}> "νομαComponent"</span>  :
+                Σε κάθε <span style={{ fontWeight: 'bold' }}> functional component</span> θα υπάρχει το export default <span style={{ fontStyle: 'italic' }}> "ΌνομαComponent"</span>  :
                 <CopyBlock
                   text=
                   {` 
