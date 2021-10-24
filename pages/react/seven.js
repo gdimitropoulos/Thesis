@@ -120,10 +120,11 @@ export default function Eight({ completed }) {
 
   let statuses = [];
   const handleOpen = () => {
-    if (statuses.includes('fail')) {
-      setOpenFail(true);
-    } else {
+    if (statuses.includes('pass') && !statuses.includes('fail') ) {
       setOpenSuccess(true);
+
+    } else {
+      setOpenFail(true);
     }
     statuses = [];
   }
@@ -220,13 +221,13 @@ export default function Eight({ completed }) {
           if (msg.test.status == 'fail') {
             dispatch({ type: 'refresh' });
             setActiveFile('/App.js')
+            statuses.push(msg.test.status);
           }
-          statuses.push(msg.test.status);
+          if(msg.test.status == 'pass'){
+            statuses.push(msg.test.status);
+          }
         }
         if(msg.event=='file_error' && msg.type=='test'){
-          statuses.push('fail')
-        }
-        if(msg.type=='action' && msg.action=='clear-errors'){
           statuses.push('fail')
         }
         if (msg.event == 'total_test_end') {

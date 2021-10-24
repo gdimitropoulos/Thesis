@@ -6,7 +6,7 @@ export default  function Home({msg}){
   const [message, setMessage] = React.useState(msg);
 
   React.useEffect(()=>{
-      // change state here so every time it mounts message is 'Νέα Πανεπηστημίου πατρών'
+      // change state here so every time it mounts message is 'Νέα Πανεπιστημίου Πατρών'
 
     },[]);
 

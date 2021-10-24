@@ -80,10 +80,11 @@ export default function Start({ completed }) {
 
   let statuses = [];
   const handleOpen = () => {
-    if (statuses.includes('fail')) {
-      setOpenFail(true);
-    } else {
+    if (statuses.includes('pass') && !statuses.includes('fail') ) {
       setOpenSuccess(true);
+
+    } else {
+      setOpenFail(true);
     }
     statuses = [];
   }
@@ -103,7 +104,6 @@ export default function Start({ completed }) {
     if (event.path[0].className.includes('cm-content')) {
       if ((event.which > 46 && event.which < 91) || (event.which > 95 && event.which < 112) || (event.which > 183 && event.which < 230) || (event.which > 151 && event.which < 165)) {
         totalCharsWritten++;
-        console.log('im here');
         if (writeFlag == 0) {
           writeFlag = 1;
           timeStartingWriting.push(moment());
@@ -189,17 +189,18 @@ export default function Start({ completed }) {
 
     useEffect(() => {
       const unsubscribe = listen((msg) => {
+        console.log(msg)
         if (msg.event == 'test_end') {
           if (msg.test.status == 'fail') {
             dispatch({ type: 'refresh' });
             setActiveFile('/App.js')
+            statuses.push(msg.test.status);
           }
-          statuses.push(msg.test.status);
+          if(msg.test.status == 'pass'){
+            statuses.push(msg.test.status);
+          }
         }
         if(msg.event=='file_error' && msg.type=='test'){
-          statuses.push('fail')
-        }
-        if(msg.type=='action' && msg.action=='clear-errors'){
           statuses.push('fail')
         }
         if (msg.event == 'total_test_end') {

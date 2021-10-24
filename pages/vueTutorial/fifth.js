@@ -78,13 +78,15 @@ export default function VueFifth({ completed }) {
 
   let statuses = [];
   const handleOpen = () => {
-    if (statuses.includes('fail')) {
-      setOpenFail(true);
-    } else {
+    if (statuses.includes('pass') && !statuses.includes('fail') ) {
       setOpenSuccess(true);
+
+    } else {
+      setOpenFail(true);
     }
     statuses = [];
   }
+
 
   const goBack = () => {
     router.push('/vueTutorial/fourth')
@@ -192,13 +194,15 @@ export default function VueFifth({ completed }) {
           if (msg.test.status == 'fail') {
             dispatch({ type: 'refresh' });
             setActiveFile('/src/App.vue')
+            statuses.push(event.data.test.status);
+
           }
-          statuses.push(event.data.test.status);
+          if(msg.test.status == 'pass'){
+            statuses.push(msg.test.status);
+          }
+          
         }
         if(msg.event=='file_error' && msg.type=='test'){
-          statuses.push('fail')
-        }
-        if(msg.type=='action' && msg.action=='clear-errors'){
           statuses.push('fail')
         }
         if (msg.event == 'total_test_end') {
@@ -381,6 +385,11 @@ a {
                 και να τροποποιήσετε το αρχείο News.vue στην γραμμή 4 έτσι ώστε να φαίνεται το title των Νέων στο <span style={{ backgroundColor: '#f4f4f4' }}> {`<h3></h3>`}</span> και
                 το text στο <span style={{ backgroundColor: '#f4f4f4' }}>{`<p></p>`}</span>
               </Typography>
+              <Typography variant="subtitle1" style={{ marginTop: '2%', textAlign: 'justify', width: '100%' }}>
+                 <span style={{ fontWeight: 'bold' }}>{`Σημείωση: `}</span> για <span style={{ fontWeight: 'bold' }}>{`key `}</span> στο 
+                 div χρησιμοποιήστε το id που έχει αρχικοποιηθεί στον πίνακα articles!
+              </Typography>
+
 
             </Card>
           </Grid>

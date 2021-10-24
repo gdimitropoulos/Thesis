@@ -73,10 +73,11 @@ export default function Start({ completed }) {
 
   let statuses = [];
   const handleOpen = () => {
-    if (statuses.includes('fail')) {
-      setOpenFail(true);
-    } else {
+    if (statuses.includes('pass') && !statuses.includes('fail') ) {
       setOpenSuccess(true);
+
+    } else {
+      setOpenFail(true);
     }
     statuses = [];
   }
@@ -168,21 +169,24 @@ export default function Start({ completed }) {
 
     useEffect(() => {
       const unsubscribe = listen((msg) => {
+        console.log('here')
+        console.log(msg);
         if (msg.event == 'test_end') {
           if (msg.test.status == 'fail') {
             dispatch({ type: 'refresh' });
             setActiveFile('/src/App.vue')
+            statuses.push(msg.test.status);
           }
-          statuses.push(msg.test.status);
+          if(msg.test.status == 'pass'){
+            statuses.push(msg.test.status);
+          }
         }
         if(msg.event=='file_error' && msg.type=='test'){
           statuses.push('fail')
         }
-        if(msg.type=='action' && msg.action=='clear-errors'){
-          statuses.push('fail')
-        }
+      
         if (msg.event == 'total_test_end') {
-          handleOpen();
+           handleOpen();
         }
 
 
