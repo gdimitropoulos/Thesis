@@ -105,7 +105,7 @@ export default function Start({ completed }) {
         }
       }
       if (event.key == 'Backspace') {
-        console.log('hereee')
+        console.log('hereddddee')
         backspaces++;
       }
     }
