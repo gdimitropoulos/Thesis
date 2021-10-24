@@ -187,6 +187,7 @@ export default function VueFifth({ completed }) {
 
     useEffect(() => {
       const unsubscribe = listen((msg) => {
+        console.log(msg);
         if (msg.event == 'test_end') {
           if (msg.test.status == 'fail') {
             dispatch({ type: 'refresh' });
@@ -195,6 +196,9 @@ export default function VueFifth({ completed }) {
           statuses.push(event.data.test.status);
         }
         if(msg.event=='file_error' && msg.type=='test'){
+          statuses.push('fail')
+        }
+        if(msg.type=='action' && msg.action=='clear-errors'){
           statuses.push('fail')
         }
         if (msg.event == 'total_test_end') {

@@ -192,6 +192,9 @@ export default function Start({ completed }) {
         if(msg.event=='file_error' && msg.type=='test'){
           statuses.push('fail')
         }
+        if(msg.type=='action' && msg.action=='clear-errors'){
+          statuses.push('fail')
+        }
         if (msg.event == 'total_test_end') {
           handleOpen();
         }

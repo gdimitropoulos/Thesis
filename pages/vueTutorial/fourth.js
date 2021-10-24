@@ -184,9 +184,12 @@ export default function VueFourth({ completed }) {
             dispatch({ type: 'refresh' });
             setActiveFile('/src/Home.vue')
           }
-          statuses.push(event.data.test.status);
+          statuses.push(msg.test.status);
         }
         if(msg.event=='file_error' && msg.type=='test'){
+          statuses.push('fail')
+        }
+        if(msg.type=='action' && msg.action=='clear-errors'){
           statuses.push('fail')
         }
         if (msg.event == 'total_test_end') {
