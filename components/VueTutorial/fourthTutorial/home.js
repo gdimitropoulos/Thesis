@@ -14,7 +14,7 @@ export default {
       news : this.myprop
     }
   },
-  // use the created() function bellow to write : Nέα πανεπιστημίου Πατρών
+  // use the created() function bellow to write : Νέα πανεπιστημίου Πατρών
 
 }
 </script>

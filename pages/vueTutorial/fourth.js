@@ -182,7 +182,7 @@ export default function VueFourth({ completed }) {
         if (msg.event == 'test_end') {
           if (msg.test.status == 'fail') {
             dispatch({ type: 'refresh' });
-            setActiveFile('/src/App.vue')
+            setActiveFile('/src/Home.vue')
           }
           statuses.push(event.data.test.status);
         }
@@ -293,7 +293,7 @@ export default function VueFourth({ completed }) {
               </Typography>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
                 Σε αυτό το μάθημα πρέπει να αρχικοποιήσετε την συνάρτηση created() στο αρχείο Home.vue και να θέσετε την τιμή της 
-                 μεταβλητής <span style={{ fontWeight: 'bold', fontStyle: 'italic' }}> news </span> σε  <span style={{ backgroundColor: '#f4f4f4' }}> Nέα πανεπιστημίου Πατρών </span>
+                 μεταβλητής <span style={{ fontWeight: 'bold', fontStyle: 'italic' }}> news </span> σε  <span style={{ backgroundColor: '#f4f4f4' }}> Νέα πανεπιστημίου Πατρών </span>
               </Typography>
 
 
