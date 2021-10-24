@@ -292,7 +292,8 @@ export default function VueFourth({ completed }) {
                 Έχουμε αρχικοποιήσει ένα απλό πρότζεκτ  Vue js. Πάρτε όσο χρόνο χρειάζεστε για να μελετήστε τις δομές των αρχείων Home.vue και App.vue
               </Typography>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                Σε αυτό το μάθημα πρέπει να αρχικοποιήσετε την συνάρτηση created() και να θέσετε την τιμή της  μεταβλητής <span style={{ fontWeight: 'bold', fontStyle: 'italic' }}> news </span> σε  <span style={{ backgroundColor: '#f4f4f4' }}> Nέα πανεπιστημίου Πατρών </span>
+                Σε αυτό το μάθημα πρέπει να αρχικοποιήσετε την συνάρτηση created() στο αρχείο Home.vue και να θέσετε την τιμή της 
+                 μεταβλητής <span style={{ fontWeight: 'bold', fontStyle: 'italic' }}> news </span> σε  <span style={{ backgroundColor: '#f4f4f4' }}> Nέα πανεπιστημίου Πατρών </span>
               </Typography>
 
 
