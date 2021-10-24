@@ -143,10 +143,9 @@ export default function Start({ completed }) {
 
   const eventHandler = (event) => {
 
-    if (event.path[0].className == 'cm-content') {
+    if (event.path[0].className.includes('cm-content')) {
       if ((event.which > 46 && event.which < 91) || (event.which > 95 && event.which < 112) || (event.which > 183 && event.which < 230) || (event.which > 151 && event.which < 165)) {
         totalCharsWritten++;
-        console.log('im here');
         if (writeFlag == 0) {
           writeFlag = 1;
           timeStartingWriting.push(moment());
