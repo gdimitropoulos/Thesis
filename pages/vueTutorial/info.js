@@ -51,7 +51,7 @@ export default function VueInfo() {
 
         <div style={{ height: '75%' }}>
             <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', height: '75%', marginBottom: '1%', marginTop: '1%', paddingTop: '1%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
-                <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
+                <Grid container overflow="auto" flex={1}  display="flex"  >
                     <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
                         <Card style={{ maxHeight: '75vh', overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
                             <div style={{ height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
@@ -117,14 +117,14 @@ export default function VueInfo() {
                     <Grid item xs={8}></Grid>
                     <Grid item xs={2} key="fot">
                         <Button variant="contained" onClick={goBack} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
-                            ΠΑΜΕ ΠΙΣΩ
+                             ΠΙΣΩ
                         </Button>
                     </Grid>
 
-                    <Grid item xs={2} key="fot">
+                    <Grid item xs={2} key="fot1">
 
-                        <Button variant="contained" onClick={Move} color="primary" style={{ marginTop: '5%', marginBottom: '5%' }}>
-                            Παμε στο επομενο
+                        <Button variant="contained" onClick={Move} color="primary" style={{  minWidth: 200, marginTop: '5%', marginBottom: '5%' }}>
+                             επομενο
                         </Button>
 
                     </Grid>

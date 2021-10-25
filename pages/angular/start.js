@@ -101,7 +101,6 @@ const time = moment();
     if (event.path[0].className.includes('cm-content')) {
       if( (event.which > 46 && event.which<91) || ( event.which>95 && event.which<112) || (event.which>183 && event.which<230) || (event.which>151 && event.which<165 )){
         totalCharsWritten++;
-        console.log('im here');
         if(writeFlag == 0){
           writeFlag=1;
           timeStartingWriting.push(moment());
@@ -172,7 +171,6 @@ const time = moment();
   
       useEffect(() => {
         const unsubscribe = listen((msg) => {
-          console.log(msg);
           if (msg.event == 'test_end') {
             if (msg.test.status == 'fail') {
               dispatch({ type: 'refresh' });
@@ -249,7 +247,7 @@ const time = moment();
   
       <div style={{ height: '60%' }}>
         <div style={{ height: '80%', marginBottom: '1%', marginTop: '2%', paddingTop: '2%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
-          <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
+          <Grid container overflow="auto" flex={1}  display="flex"  >
             <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
               <Card style={{ maxHeight: '80vh', overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
                 <div style={{ marginBottom: '2%' , height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
@@ -366,14 +364,14 @@ const time = moment();
               </Card>
             </Grid>
             <Grid item xs={completed?6:8}></Grid>
-            <Grid item xs={2} key="fot">
+            <Grid item xs={2} key="fot1">
             
   
                 <Button variant="contained" onClick={goBack} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
                    ΠΙΣΩ
                 </Button>
               </Grid>
-              { completed && (<Grid item xs={2} key="fot">
+              { completed && (<Grid item xs={2} key="fot2">
             
   
             <Button variant="contained" onClick={goNext} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>

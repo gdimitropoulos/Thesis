@@ -21,13 +21,13 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import BlockSharpIcon from '@mui/icons-material/BlockSharp';
-import testAppCode from "!!raw-loader!../../components/reactTutorial/FifthTutorial/tutorialAppTest";
-import testAppCode1 from "!!raw-loader!../../components/reactTutorial/FifthTutorial/tutorialAppTest1";
-import Appcode from "!!raw-loader!../../components/reactTutorial/FifthTutorial/tutorialApp";
-import indexFile from "!!raw-loader!../../components/reactTutorial/FifthTutorial/tutorialIndex";
-import componentCode from "!!raw-loader!../../components/reactTutorial/FifthTutorial/tutorialComponent";
+import testAppCode from "!!raw-loader!../../components/reactTutorial/FifthTutorial/tutorialAppTest.txt";
+import testAppCode1 from "!!raw-loader!../../components/reactTutorial/FifthTutorial/tutorialAppTest1.txt";
+import Appcode from "!!raw-loader!../../components/reactTutorial/FifthTutorial/tutorialApp.txt";
+import indexFile from "!!raw-loader!../../components/reactTutorial/FifthTutorial/tutorialIndex.txt";
+import componentCode from "!!raw-loader!../../components/reactTutorial/FifthTutorial/tutorialComponent.html";
 import appcss from "!!raw-loader!../../components/reactTutorial/FifthTutorial/App.css";
-import solutionCode from "!!raw-loader!../../components/reactTutorial/FifthTutorial/solution";
+import solutionCode from "!!raw-loader!../../components/reactTutorial/FifthTutorial/solution.html";
 import { useActiveCode } from "@codesandbox/sandpack-react";
 import SyntaxHighlighter from '../../Lib/syntaxHighlighter';
 import {
@@ -189,7 +189,6 @@ export default function Start({ completed }) {
 
     useEffect(() => {
       const unsubscribe = listen((msg) => {
-        console.log(msg)
         if (msg.event == 'test_end') {
           if (msg.test.status == 'fail') {
             dispatch({ type: 'refresh' });
@@ -252,7 +251,7 @@ export default function Start({ completed }) {
 
     <div style={{ height: '60%' }}>
       <div style={{ height: '80%', marginBottom: '1%', marginTop: '2%', paddingTop: '2%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
-        <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
+        <Grid container overflow="auto" flex={1}  display="flex"  >
           <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
             <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
               <div style={{ marginBottom: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
@@ -513,13 +512,13 @@ import React, { useState } from 'react';
             </Button>
           </Grid>
           {completed && (
-            <Grid item xs={2} key="fot">
+            <Grid item xs={2} key="fot1">
               <Button variant="contained" onClick={goNext} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
                 επομενο
               </Button>
             </Grid>
           )}
-          <Grid item xs={2} key="fot">
+          <Grid item xs={2} key="fot2">
             <Popconfirm
               title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}
               onConfirm={showSolutionModal}

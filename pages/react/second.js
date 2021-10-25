@@ -249,7 +249,7 @@ export default function Start({ completed }) {
 
     <div style={{ height: '60%' }}>
       <div style={{ height: '80%', marginBottom: '1%', marginTop: '2%', paddingTop: '2%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
-        <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
+        <Grid container overflow="auto" flex={1} display="flex"  >
           <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
             <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
               <div style={{ marginBottom: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
@@ -490,14 +490,14 @@ function MyComponent({myprop}) {
             </Button>
           </Grid>
           {completed && (
-            <Grid item xs={2} key="fot">
+            <Grid item xs={2} key="fot1">
               <Button variant="contained" onClick={goNext} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
                 επομενο
               </Button>
             </Grid>
           )}
 
-          <Grid item xs={2} key="fot">
+          <Grid item xs={2} key="fot2">
             <Popconfirm
               title={'Είστε σίγουρος ότι θέλετε να δείτε την απάντηση'}
               onConfirm={showSolutionModal}

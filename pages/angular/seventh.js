@@ -106,7 +106,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+         {children}
         </Box>
       )}
     </div>
@@ -149,7 +149,6 @@ export default function Start({ completed }) {
     if (event.path[0].className.includes('cm-content')) {
       if ((event.which > 46 && event.which < 91) || (event.which > 95 && event.which < 112) || (event.which > 183 && event.which < 230) || (event.which > 151 && event.which < 165)) {
         totalCharsWritten++;
-        console.log('im here');
         if (writeFlag == 0) {
           writeFlag = 1;
           timeStartingWriting.push(moment());
@@ -296,7 +295,7 @@ export default function Start({ completed }) {
 
     <div style={{ height: '60%' }}>
       <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', height: '80%', marginBottom: '1%', marginTop: '5%', paddingTop: '3%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
-        <Grid container overflow="auto" flex={1} flexDirection="column" display="flex"  >
+        <Grid container overflow="auto" flex={1}  display="flex"  >
           <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
             <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
               <div style={{ marginBottom: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
@@ -471,13 +470,13 @@ export default function Start({ completed }) {
           </Grid >
 
           <Grid item xs={completed ? 6 : 8}></Grid>
-          <Grid item xs={2} key="fot">
+          <Grid item xs={2} key="fot1">
             <Button variant="contained" onClick={goBack} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
               ΠΙΣΩ
             </Button>
           </Grid>
           {completed && (
-            <Grid item xs={2} key="fot">
+            <Grid item xs={2} key="fot2">
               <Button variant="contained" onClick={goNext} color="primary" style={{ minWidth: 200, marginTop: '4%', marginBottom: '2%' }}>
                 τελος
               </Button>
@@ -512,7 +511,7 @@ export default function Start({ completed }) {
                     <div style={{ width: '100%' }}>
 
                       <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                        <Typography variant="p" style={{ width: '100%', marginTop: '2%', marginBottom: '5%' }} align="center" id="keep-mounted-modal-description" >
+                        <Typography  style={{ width: '100%', marginTop: '2%', marginBottom: '5%' }} align="center" id="keep-mounted-modal-description" >
                           Τα αρχεία First.js, Second.js και Third.js πρέπει να έχουν την παρακάτω μορφή:
                         </Typography>
                       </div>

@@ -186,7 +186,6 @@ export default function Start({ completed }) {
 
     useEffect(() => {
       const unsubscribe = listen((msg) => {
-        console.log(msg)
         if (msg.event == 'test_end') {
           if (msg.test.status == 'fail') {
             dispatch({ type: 'refresh' });
