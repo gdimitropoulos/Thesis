@@ -63,6 +63,7 @@ let backspaces = 0;
 let totalCharsWritten = 0;
 let writeFlag = 0;
 let totalTries = 0;
+let selectedText = '';
 const timeStartingWriting = []
 const timeFinishingTest = [];
 const backspacesPerTry = [];
@@ -144,18 +145,40 @@ export default function Start({ completed }) {
       totalCharsWritten += count;
     }
   }
-  const eventHandler = (event) => {
+  const selectHandle = (event) => {
+    if (event.srcElement.activeElement.className.includes('cm-content')) {
+      selectedText = document.getSelection().toString();
+    } else {
+      selectedText = ''
+    }
+  }
 
+
+  const eventHandler = (event) => {
     if (event.path[0].className.includes('cm-content')) {
       if ((event.which > 46 && event.which < 91) || (event.which > 95 && event.which < 112) || (event.which > 183 && event.which < 230) || (event.which > 151 && event.which < 165)) {
         totalCharsWritten++;
+        if (selectedText.replace(/\s/g, '').length) {
+          backspaces += selectedText.replace(/\s/g, '').length
+        }
         if (writeFlag == 0) {
           writeFlag = 1;
           timeStartingWriting.push(moment());
         }
       }
       if (event.key == 'Backspace') {
-        backspaces++;
+        if (!selectedText.replace(/\s/g, '').length) {
+          backspaces++;
+        } else {     
+          backspaces += selectedText.replace(/\s/g, '').length
+        }
+        /*if (selectedText != '') {
+          backspaces += selectedText.length
+          console.log(selectedText)
+        } else {
+          backspaces++;
+        }
+        */
       }
     }
 
@@ -242,12 +265,15 @@ export default function Start({ completed }) {
 
 
 
+    
     useEffect(() => {
+      document.addEventListener('selectionchange', selectHandle);
       window.addEventListener('paste', pasteHandler)
       window.addEventListener('keydown', eventHandler);
       return () => {
         window.removeEventListener('paste', pasteHandler)
         window.removeEventListener('keydown', eventHandler);
+        document.removeEventListener('selectionchange', selectHandle);
         return null
       }
 
@@ -524,7 +550,7 @@ export default function Start({ completed }) {
                               <Tab label="home.component.html" {...a11yProps(0)} />
                               <Tab label="first.component.html" {...a11yProps(1)} />
                               <Tab label="second.component.html" {...a11yProps(2)} />
-                              <Tab label="first.component.html" {...a11yProps(3)} />
+                              <Tab label="third.component.html" {...a11yProps(3)} />
                             </Tabs>
                           </Box>
                           <TabPanel value={value} index={0}>

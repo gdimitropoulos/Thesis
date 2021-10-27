@@ -43,6 +43,7 @@ let backspaces = 0;
 let totalCharsWritten = 0;
 let writeFlag = 0;
 let totalTries = 0;
+let selectedText = '';
 const timeStartingWriting = []
 const timeFinishingTest = [];
 const backspacesPerTry = [];
@@ -74,7 +75,7 @@ export default function Start({ completed }) {
 
   let statuses = [];
   const handleOpen = () => {
-    if (statuses.includes('pass') && !statuses.includes('fail') ) {
+    if (statuses.includes('pass') && !statuses.includes('fail')) {
       setOpenSuccess(true);
 
     } else {
@@ -89,7 +90,7 @@ export default function Start({ completed }) {
     router.push('/react/second')
   }
   const pasteHandler = (event) => {
-    if (event.path.length >15) {
+    if (event.path.length > 15) {
       if (writeFlag == 0) {
         writeFlag = 1;
         console.log('here start')
@@ -98,25 +99,46 @@ export default function Start({ completed }) {
       var clipboardData, pastedData;
       clipboardData = event.clipboardData || window.clipboardData;
       pastedData = clipboardData.getData('Text');
-      const count = pastedData.length - 1   
+      const count = pastedData.length - 1
       totalCharsWritten += count;
     }
-}
+  }
+
+
+  const selectHandle = (event) => {
+    if (event.srcElement.activeElement.className.includes('cm-content')) {
+      selectedText = document.getSelection().toString();
+    } else {
+      selectedText = ''
+    }
+  }
+
 
   const eventHandler = (event) => {
-
     if (event.path[0].className.includes('cm-content')) {
       if ((event.which > 46 && event.which < 91) || (event.which > 95 && event.which < 112) || (event.which > 183 && event.which < 230) || (event.which > 151 && event.which < 165)) {
         totalCharsWritten++;
-        console.log('im here');
+        if (selectedText.replace(/\s/g, '').length) {
+          backspaces += selectedText.replace(/\s/g, '').length
+        }
         if (writeFlag == 0) {
           writeFlag = 1;
-          console.log('here start')
           timeStartingWriting.push(moment());
         }
       }
       if (event.key == 'Backspace') {
-        backspaces++;
+        if (!selectedText.replace(/\s/g, '').length) {
+          backspaces++;
+        } else {     
+          backspaces += selectedText.replace(/\s/g, '').length
+        }
+        /*if (selectedText != '') {
+          backspaces += selectedText.length
+          console.log(selectedText)
+        } else {
+          backspaces++;
+        }
+        */
       }
     }
 
@@ -192,11 +214,11 @@ export default function Start({ completed }) {
             setActiveFile('/App.js')
             statuses.push(msg.test.status);
           }
-          if(msg.test.status == 'pass'){
+          if (msg.test.status == 'pass') {
             statuses.push(msg.test.status);
           }
         }
-        if(msg.event=='file_error' && msg.type=='test'){
+        if (msg.event == 'file_error' && msg.type == 'test') {
           statuses.push('fail')
         }
         if (msg.event == 'total_test_end') {
@@ -211,11 +233,13 @@ export default function Start({ completed }) {
 
 
     useEffect(() => {
+      document.addEventListener('selectionchange', selectHandle);
       window.addEventListener('paste', pasteHandler)
       window.addEventListener('keydown', eventHandler);
       return () => {
         window.removeEventListener('paste', pasteHandler)
         window.removeEventListener('keydown', eventHandler);
+        document.removeEventListener('selectionchange', selectHandle);
         return null
       }
 
@@ -227,7 +251,7 @@ export default function Start({ completed }) {
       totaltCharsPerTry.push(totalCharsWritten);
       totalTries++;
 
-      if(timeStartingWriting.length<timeFinishingTest.length + 1){
+      if (timeStartingWriting.length < timeFinishingTest.length + 1) {
         timeStartingWriting.push(moment())
       }
       timeFinishingTest.push(moment());
@@ -238,21 +262,21 @@ export default function Start({ completed }) {
 
     return (
       <>
-      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', backgroundColor: 'white' }}>
-        <div  style={{ height: '40px', width: "50%", textAlign: 'center' }}>
-      <Popconfirm
+        <div style={{ width: '100%', display: 'flex', justifyContent: 'center', backgroundColor: 'white' }}>
+          <div style={{ height: '40px', width: "50%", textAlign: 'center' }}>
+            <Popconfirm
               title={'Είστε σίγουρος ότι θέλετε να επαναφέρετε τον κώδικα στην αρχική του κατάσταση? Όλη η πρόοδος σας θα χαθεί.'}
               onConfirm={resetAllFiles}
               okText={'Ναι'}
               cancelText={'Οχι'}
 
             >
-        <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }}  > επαναφορα κωδικα  </Button>;
-        </Popconfirm>
+              <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }}  > επαναφορα κωδικα  </Button>;
+            </Popconfirm>
+          </div>
+          <Button variant="contained" color='primary' style={{ height: '40px', width: "50%", textAlign: 'center' }} onClick={runTests} > ελεγχοσ  </Button>;
         </div>
-        <Button variant="contained" color='primary' style={{ height: '40px', width: "50%", textAlign: 'center' }} onClick={runTests} > ελεγχοσ  </Button>;
-      </div>
-    </>
+      </>
     );
   };
 
@@ -262,7 +286,7 @@ export default function Start({ completed }) {
   return (
     <div style={{ height: '60%' }}>
       <div style={{ height: '80%', marginBottom: '1%', marginTop: '2%', paddingTop: '2%', paddingBottom: '3%', paddingLeft: '2%', paddingRight: '2%' }}>
-        <Grid container overflow="auto" flex={1}  display="flex"  >
+        <Grid container overflow="auto" flex={1} display="flex"  >
           <Grid style={{ display: "flex", flex: 1 }} item md={12} lg={4} key="geo">
             <Card style={{ maxHeight: "75vh", overflow: "auto", flex: 1, flexDirection: "column", display: "flex", padding: '2%' }}>
               <div style={{ marginBottom: '2%', height: '40px', backgroundColor: '#f4f4f4', display: 'flex', justifyContent: 'Center' }}>  <MenuBookIcon style={{ fontSize: 30 }} />  <h3 style={{ marginLeft: '5px', display: 'flex', justifyContent: 'center' }}>Εκμάθηση </h3>  </div>
@@ -465,7 +489,7 @@ export async function getServerSideProps(context) {
       token = token.replace('Bearer ', '');
       token = jwt.verify(token, KEY);
 
-      const completed = await checkLessonTaken(token.email,'r1');
+      const completed = await checkLessonTaken(token.email, 'r1');
 
       return {
         props: {

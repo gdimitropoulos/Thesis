@@ -11,7 +11,6 @@ export class HelloWorldComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    // write code here
   }
 
 }
