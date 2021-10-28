@@ -221,10 +221,6 @@ const eventHandler = (event) => {
       return unsubscribe;
     }, [listen, dispatch, setActiveFile]);
 
-
-
-    u
-
     useEffect(() => {
       document.addEventListener('selectionchange', selectHandle);
       window.addEventListener('paste', pasteHandler)
