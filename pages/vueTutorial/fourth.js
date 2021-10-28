@@ -196,81 +196,81 @@ const eventHandler = (event) => {
     `
 
 
-  const SimpleCodeViewer = () => {
-    const { sandpack, dispatch, listen } = useSandpack();
-    const { files, activePath, setActiveFile, openFile, resetAllFiles } = sandpack;
-
-
-    useEffect(() => {
-      const unsubscribe = listen((msg) => {
-        if (msg.event == 'test_end') {
-          if (msg.test.status == 'fail') {
-            dispatch({ type: 'refresh' });
-            setActiveFile('/src/Home.vue')
-            statuses.push(msg.test.status);
-          }
-          if(msg.test.status == 'pass'){
-            statuses.push(msg.test.status);
-          }
-        }
-        if(msg.event=='file_error' && msg.type=='test'){
-          statuses.push('fail')
-        }
-        if (msg.event == 'total_test_end') {
-          handleOpen();
-        }
-      });
-      return unsubscribe;
-    }, [listen, dispatch, setActiveFile]);
-
-
-
  
-    useEffect(() => {
-      document.addEventListener('selectionchange', selectHandle);
-      window.addEventListener('paste', pasteHandler)
-      window.addEventListener('keydown', eventHandler);
-      return () => {
-        window.removeEventListener('paste', pasteHandler)
-        window.removeEventListener('keydown', eventHandler);
-        document.removeEventListener('selectionchange', selectHandle);
-        return null
-      }
-
-    }, []);
-
-    const runTests = () => {
-      writeFlag = 0
-      backspacesPerTry.push(backspaces);
-      totaltCharsPerTry.push(totalCharsWritten);
-      totalTries++;
-      if(timeStartingWriting.length<timeFinishingTest.length + 1){
-        timeStartingWriting.push(moment())
-      }
-      timeFinishingTest.push(moment());
-      dispatch({ type: 'run-all-tests' });
-    };
-
-    return (
-      <>
-      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', backgroundColor: 'white' }}>
-      <div  style={{ height: '40px', width: "50%", textAlign: 'center' }}>
-      <Popconfirm
-              title={'Είστε σίγουρος ότι θέλετε να επαναφέρετε τον κώδικα στην αρχική του κατάσταση? Όλη η πρόοδος σας θα χαθεί.'}
-              onConfirm={resetAllFiles}
-              okText={'Ναι'}
-              cancelText={'Οχι'}
-
-            >
-        <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }}  > επαναφορα κωδικα  </Button>;
-        </Popconfirm>
+    const SimpleCodeViewer = () => {
+      const { sandpack, dispatch, listen } = useSandpack();
+      const { files, activePath, setActiveFile, openFile, resetAllFiles } = sandpack;
+  
+  
+  
+      useEffect(() => {
+        const unsubscribe = listen((msg) => {
+          if (msg.event == 'test_end') {
+            if (msg.test.status == 'fail') {
+              dispatch({ type: 'refresh' });
+              setActiveFile('/src/components/Home.vue')
+              statuses.push(msg.test.status);
+            }
+            if(msg.test.status == 'pass'){
+              statuses.push(msg.test.status);
+            }
+          }
+          if(msg.event=='file_error' && msg.type=='test'){
+            statuses.push('fail')
+          }
+          if (msg.event == 'total_test_end') {
+            handleOpen();
+          }
+  
+  
+        });
+        return unsubscribe;
+      }, [listen, dispatch, setActiveFile]);
+  
+      useEffect(() => {
+        document.addEventListener('selectionchange', selectHandle);
+        window.addEventListener('paste', pasteHandler)
+        window.addEventListener('keydown', eventHandler,{ passive: true} );
+        return () => {
+          window.removeEventListener('paste', pasteHandler)
+          window.removeEventListener('keydown', eventHandler);
+          document.removeEventListener('selectionchange', selectHandle);
+          return null
+        }
+  
+      }, []);
+  
+  
+      const runTests = () => {
+        writeFlag = 0
+        backspacesPerTry.push(backspaces);
+        totaltCharsPerTry.push(totalCharsWritten);
+        totalTries++;
+        if(timeStartingWriting.length<timeFinishingTest.length + 1){
+          timeStartingWriting.push(moment())
+        }
+        timeFinishingTest.push(moment());
+        dispatch({ type: 'run-all-tests' });
+      };
+      return (
+        <>
+        <div style={{ width: '100%', display: 'flex', justifyContent: 'center', backgroundColor: 'white' }}>
+        <div  style={{ height: '40px', width: "50%", textAlign: 'center' }}>
+        <Popconfirm
+                title={'Είστε σίγουρος ότι θέλετε να επαναφέρετε τον κώδικα στην αρχική του κατάσταση? Όλη η πρόοδος σας θα χαθεί.'}
+                onConfirm={resetAllFiles}
+                okText={'Ναι'}
+                cancelText={'Οχι'}
+  
+              >
+          <Button variant="contained" color='primary' style={{ height: '40px', width: "100%", textAlign: 'center' }}  > επαναφορα κωδικα  </Button>;
+          </Popconfirm>
+          </div>
+           <Button variant="contained" color='primary' style={{ height: '40px', width: "50%", textAlign: 'center' }} onClick={runTests} > ελεγχοσ  </Button>;
         </div>
-         <Button variant="contained" color='primary' style={{ height: '40px', width: "50%", textAlign: 'center' }} onClick={runTests} > ελεγχοσ  </Button>;
-      </div>
-    </>
-    );
-  };
-
+      </>
+      );
+    };
   const code = `import '@testing-library/jest-dom';
     `
 
@@ -353,14 +353,15 @@ const eventHandler = (event) => {
 
                 },
               }} >
-                <SandpackThemeProvider  >
+              <SandpackThemeProvider  >
                   <SandpackLayout theme="codesandbox-dark">
-                    <SandpackCodeEditor showTabs="true" customStyle={{marginTop: '0.5vh', height: '59.5vh', width: '400px' }}    > </SandpackCodeEditor>
+                    <SandpackCodeEditor showLineNumbers={true} showTabs="true" customStyle={{marginTop: '0.5vh', height: '59.5vh',width: '400px' }}    > </SandpackCodeEditor>
                     <SandpackPreview viewportSize={{ width: 500, height: '60vh' }} />
                     <SimpleCodeViewer />
                   </SandpackLayout>
                 </SandpackThemeProvider>
               </SandpackProvider>
+
 
               <Modal
                 keepMounted

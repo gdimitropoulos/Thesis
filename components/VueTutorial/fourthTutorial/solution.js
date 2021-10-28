@@ -7,9 +7,9 @@
        news : this.myprop
      }
    },
-      // use the created() function bellow to write : Νέα πανεπηστημίου πατρών
+      // use the created() function bellow to write : Νέα πανεπιστημίου Πατρών
    created(){
-     this.news='Nέα πανεπιστημίου Πατρών'
+     this.news='Νέα πανεπιστημίου Πατρών'
    }
  }
  </script>
