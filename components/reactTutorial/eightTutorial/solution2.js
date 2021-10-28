@@ -6,7 +6,8 @@ class Third extends React.Component {
   render() {
 
     return <div> <h2> I am on the Third page</h2>
-    <Link to='/'>Go back</Link></div>;
+    <Link to='/'>Go back</Link>
+    </div>
   }
 }
 

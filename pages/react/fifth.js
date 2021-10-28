@@ -347,7 +347,7 @@ export default function Home({ completed }) {
 
           <Grid item md={12} lg={8}>
             <Card style={{ padding: "1%", height: '75vh', width: '100%' }}>
-              <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   React Tutorial  </Typography>
+              <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   React Tutorial  5 / 7  </Typography>
 
               <SandpackProvider template="react" customSetup={{
                 files: {

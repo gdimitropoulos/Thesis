@@ -420,16 +420,16 @@ a {
 
           <Grid item md={12} lg={8}>
             <Card style={{ height: '75vh', padding: "1%", width: '100%' }}>
-              <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Vue js Tutorial  </Typography>
+              <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Vue js Tutorial  5 / 7  </Typography>
 
               <SandpackProvider template="vue" customSetup={{
                 files: {
-                  "/src/App.vue": { code: appvue, active: true },
+                  "/src/App.vue": { code: appvue, active: false },
                   "/src/main.js": {
                     code: mainjs,
                   },
                   "/tests/unit/app.spec.js": { code: testing, hidden: true },
-                  "/src/components/News.vue": { code: helloworld, active: false }
+                  "/src/components/News.vue": { code: helloworld, active: true }
 
                 },
                 dependencies: {

@@ -330,7 +330,7 @@ const eventHandler = (event) => {
           </Grid>
           <Grid item md={12} lg={8}>
             <Card style={{ padding: "1%", height: '75vh', width: '100%' }}>
-              <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Vue js  Tutorial  </Typography>
+              <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Vue js  Tutorial  4 / 7  </Typography>
 
               <SandpackProvider template="vue" customSetup={{
                 files: {

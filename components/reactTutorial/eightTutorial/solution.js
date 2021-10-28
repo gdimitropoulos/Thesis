@@ -7,7 +7,8 @@ class First extends React.Component {
   render() {
 
     return <div> <h2> I am on the first page</h2>
-    <Link to='/'>Go back</Link></div>;
+    <Link to='/'>Go back</Link>
+    </div>
   }
 }
 

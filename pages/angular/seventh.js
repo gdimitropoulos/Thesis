@@ -392,7 +392,7 @@ export default function Start({ completed }) {
 
           <Grid item md={12} lg={8}>
             <Card style={{ padding: "1%", width: '100%' }}>
-              <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Angular js Tutorial  </Typography>
+              <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Angular js Tutorial  7 / 7  </Typography>
               <SandpackProvider template="angular" customSetup={{
                 files: {
                   "/src/app/components/home/home.component.ts": { code: homecomponent, hidden: false },
@@ -460,9 +460,9 @@ export default function Start({ completed }) {
                     </div>
                     <Box style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'column' }}>
                       <Typography style={{ marginTop: '2%' }} align="center" id="keep-mounted-modal-description" >
-                        H απάντηση που δώσατε ήταν σωστή
+                      Συγχαρητηρία ολοκληρώσατε το tutorial της Vue js. 
                       </Typography>
-                      <Button style={{ marginTop: '10%' }} variant="contained" color="primary" onClick={handleCloseSuccess}> Παμε στο επομενο</Button>
+                      <Button style={{ marginTop: '10%' }} variant="contained" color="primary" onClick={handleCloseSuccess}>Επιστροφη στην αρχικη</Button>
                     </Box>
                   </Box>
                 </Card>

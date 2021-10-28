@@ -214,7 +214,7 @@ const eventHandler = (event) => {
         'Επιτυχής καταγραφή ',
         'Επιτυχής καταγραφή της προσπάθειας'
       );
-      await router.push('/vueTutorial/seventh')
+      await router.push('/user/dashboard')
     } else {
       showNotification(
         'error',
@@ -395,7 +395,7 @@ const eventHandler = (event) => {
 
           <Grid item md={12} lg={8}>
             <Card style={{ padding: "1%", height: '75vh', width: '100%' }}>
-              <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Vue js Tutorial  </Typography>
+              <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Vue js Tutorial  7 / 7  </Typography>
 
               <SandpackProvider template="vue" customSetup={{
                 files: {
