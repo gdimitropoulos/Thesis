@@ -460,7 +460,7 @@ export default function Start({ completed }) {
                     </div>
                     <Box style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'column' }}>
                       <Typography style={{ marginTop: '2%' }} align="center" id="keep-mounted-modal-description" >
-                      Συγχαρητηρία ολοκληρώσατε το tutorial της Vue js. 
+                      Συγχαρητηρία ολοκληρώσατε το tutorial της angular. 
                       </Typography>
                       <Button style={{ marginTop: '10%' }} variant="contained" color="primary" onClick={handleCloseSuccess}>Επιστροφη στην αρχικη</Button>
                     </Box>
