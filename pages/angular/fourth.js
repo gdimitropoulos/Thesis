@@ -383,7 +383,7 @@ sum :  number;
 
           <Grid item md={12} lg={8}>
             <Card style={{ padding: "1%", width: '100%' }}>
-              <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Angular js Tutorial  4 / 7  </Typography>
+              <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Angular  Tutorial  4 / 7  </Typography>
               <SandpackProvider template="angular" customSetup={{
                 files: {
                   "/src/app/components/hello-world/hello-world.component.ts": { code: Helloworldjs, hidden: false,active: true },

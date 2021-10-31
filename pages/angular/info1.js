@@ -153,7 +153,7 @@ export default function Info1() {
 
                     <Grid item md={12} lg={8}>
                         <Card style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '75vh', padding: "1%", width: '100%' }}>
-                            <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   React Tutorial  </Typography>
+                            <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Angular Tutorial  </Typography>
 
 
                             <div style={{ overflow: "auto", flex: 1, maxHeight: '75vh' }}>

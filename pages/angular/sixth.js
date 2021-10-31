@@ -445,7 +445,7 @@ const routes: Routes = [
 
           <Grid item md={12} lg={8}>
             <Card style={{ padding: "1%", width: '100%' }}>
-              <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Angular js Tutorial  6 / 7  </Typography>
+              <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Angular  Tutorial  6 / 7  </Typography>
               <SandpackProvider template="angular" customSetup={{
                 files: {
                   "/src/app/app.module.ts": { code: appmodule, hidden: false, active: true},

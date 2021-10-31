@@ -392,7 +392,7 @@ export default function Start({ completed }) {
 
           <Grid item md={12} lg={8}>
             <Card style={{ padding: "1%", width: '100%' }}>
-              <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Angular js Tutorial  7 / 7  </Typography>
+              <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Angular  Tutorial  7 / 7  </Typography>
               <SandpackProvider template="angular" customSetup={{
                 files: {
                   "/src/app/components/home/home.component.ts": { code: homecomponent, hidden: false },

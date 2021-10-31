@@ -303,7 +303,7 @@ const time = moment();
   
             <Grid item md={12} lg={8}>
               <Card style={{ padding: "1%", width: '100%' }}>
-                <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Angular js Tutorial  1 / 7  </Typography>
+                <Typography variant="overline" style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>   Angular  Tutorial  1 / 7  </Typography>
 
                 <SandpackProvider template="angular" customSetup={{
                    files: {
