@@ -375,7 +375,7 @@ export default function Eight({ completed }) {
                 </li>
               </ul>
               <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                <span style={{ fontWeight: 'bold' }}> Σημείωση: </span> πρέπει να τροποιήσετε τα αρχεία News.js, First.js,  Second.js και Third.js.
+                <span style={{ fontWeight: 'bold' }}> Σημείωση: </span> πρέπει να τροποιήσετε τα αρχεία  First.js,  Second.js και Third.js.
               </Typography>
 
             </Card>
