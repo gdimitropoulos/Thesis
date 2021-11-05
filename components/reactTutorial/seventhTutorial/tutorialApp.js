@@ -13,6 +13,7 @@ import Third from "./Third";
 
 export default function App() {
     return (
+        <>
         <Router>
             {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
@@ -24,6 +25,7 @@ export default function App() {
 
             </Switch>
         </Router>
+        </>
     );
 }
 
