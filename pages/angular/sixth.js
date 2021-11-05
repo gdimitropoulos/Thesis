@@ -25,7 +25,7 @@ import appcomponentjs from "!!raw-loader!../../components/AngularTutorial/sixthT
 import homecomponent from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/homecomponent";
 import homecomponenthtml from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/homecomponenthtml";
 import firstcomponent from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/firstcomponent";
-import firstcomponenthtml from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/firstcomponenthtml";
+import firstcomponenthtml from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/firstcomponenthtml.html";
 import secondcomponent from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/secondcomponent";
 import secondcomponenthtml from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/secondcomponenthtml";
 import thirdcomponent from "!!raw-loader!../../components/AngularTutorial/sixthTutotorial/thirdcomponent";
