@@ -485,7 +485,7 @@ const routes: Routes = [
                 },
                 dependencies: {
                   "babel-runtime": "latest",
-                  "@angular/router": "latest",
+                  "@angular/router": "12.2.11",
 
                 },
               }} entry>

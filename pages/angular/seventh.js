@@ -434,7 +434,7 @@ export default function Start({ completed }) {
                 },
                 dependencies: {
                   "babel-runtime": "latest",
-                  "@angular/router": "latest",
+                  "@angular/router": "12.2.11",
                 },
               }} entry>
                 <SandpackThemeProvider  >
