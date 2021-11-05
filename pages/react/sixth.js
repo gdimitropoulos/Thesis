@@ -415,10 +415,10 @@ const eventHandler = (event) => {
                 dependencies: {
                   "react-markdown": "latest",
                   "jest-matchers": "latest",
-                  "history": "latest",
+                  "history": "5.0.1",
                   "react-dom": "latest",
                   "react-test-renderer": "latest",
-                  "react-router-dom": "latest",
+                  "react-router-dom": "5.1.2",
                   "babel-runtime": "latest",
                   "@testing-library/jest-dom": "^5.14.1",
                   "@testing-library/react": "^11.2.7",
