@@ -369,17 +369,17 @@ export default function Start({ completed }) {
                 </li>
                 <li>
                   <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                    Στo  first.component.html να προστεθεί link που σε μεταφέρει στην αρχικη σελίδα (path = '')
+                    Στo  first.component.html να προστεθεί link που σε μεταφέρει στην αρχικη σελίδα (path = ' ')
                   </Typography>
                 </li>
                 <li>
                   <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                    Στo  second.component.html να προστεθεί link που σε μεταφέρει στην αρχικη σελίδα (path = '')
+                    Στo  second.component.html να προστεθεί link που σε μεταφέρει στην αρχικη σελίδα (path = ' ')
                   </Typography>
                 </li>
                 <li>
                   <Typography variant="subtitle1" style={{ marginBottom: '2%', textAlign: 'justify', width: '100%' }}>
-                    ΣTo third.component.html να προστεθεί link που σε μεταφέρει στην αρχικη σελίδα (path = '')
+                    ΣTo third.component.html να προστεθεί link που σε μεταφέρει στην αρχικη σελίδα (path = ' ')
                   </Typography>
                 </li>
               </ul>
